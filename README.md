@@ -1,5 +1,14 @@
 # Agent Skills for production-ready Golang projects
 
+<!-- prettier-ignore-start -->
+
+> [!NOTE]
+> **Fork Notice**
+>
+> This repository is an actively maintained, production-oriented fork of [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang), tailored and extended for real-world Go engineering workflows. Special thanks to [Samuel Berthe (@samber)](https://github.com/samber) and all upstream contributors for building such a strong foundation! For the original upstream project, please visit [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang).
+
+<!-- prettier-ignore-end -->
+
 AI agent skills are reusable instruction sets that extend your coding assistant with domain-specific expertise, loaded on demand so they don't bloat your context. This repository covers **Go-specific** skills only (language, testing, security, observability, etc.); for dev workflow skills (git conventions, CI/CD, PR reviews) you'll want to add a separate skills plugin.
 
 For non-Golang skills, please visit [cc-skills](https://github.com/samber/cc-skills).
@@ -492,6 +501,10 @@ For more guidelines, please check `CLAUDE.md`.
 - ☕️ **Buy me a coffee** - I'll literally use it to build more skills while drinking actual coffee
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/samber?style=for-the-badge)](https://github.com/sponsors/samber)
+
+## 🙏 Acknowledgments
+
+This project builds upon [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang), originally created by [Samuel Berthe (@samber)](https://github.com/samber). Special thanks to Samuel and all upstream contributors for establishing such a solid, high-signal foundation of Go agent skills — please consider starring the [upstream repository](https://github.com/samber/cc-skills-golang) or sponsoring the original author as well.
 
 ## 📝 License
 
