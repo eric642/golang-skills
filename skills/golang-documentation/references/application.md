@@ -1,6 +1,6 @@
 # Application Documentation
 
-→ See `samber/cc-skills-golang@golang-cli` skill for CLI application patterns and frameworks.
+→ See `eric642/cc-skills-golang@golang-cli` skill for CLI application patterns and frameworks.
 
 ## Table of Contents
 

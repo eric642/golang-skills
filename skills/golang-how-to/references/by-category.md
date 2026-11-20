@@ -7,43 +7,43 @@
 ## Table of Contents
 
 - [Code Quality](#code-quality)
-  - [`samber/cc-skills-golang@golang-code-style` ⭐️ ⚙️](#sambercc-skills-golanggolang-code-style-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-documentation` ⭐️ ⚙️](#sambercc-skills-golanggolang-documentation-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-error-handling` ⭐️ ⚙️](#sambercc-skills-golanggolang-error-handling-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-lint`](#sambercc-skills-golanggolang-lint)
-  - [`samber/cc-skills-golang@golang-naming` ⭐️ ⚙️](#sambercc-skills-golanggolang-naming-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-safety` ⭐️](#sambercc-skills-golanggolang-safety-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-security` ⭐️ 🧠](#sambercc-skills-golanggolang-security-%EF%B8%8F-)
-  - [`samber/cc-skills-golang@golang-structs-interfaces` ⚙️](#sambercc-skills-golanggolang-structs-interfaces-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-code-style` ⭐️ ⚙️](#eric642cc-skills-golanggolang-code-style-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-documentation` ⭐️ ⚙️](#eric642cc-skills-golanggolang-documentation-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-error-handling` ⭐️ ⚙️](#eric642cc-skills-golanggolang-error-handling-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-lint`](#eric642cc-skills-golanggolang-lint)
+  - [`eric642/cc-skills-golang@golang-naming` ⭐️ ⚙️](#eric642cc-skills-golanggolang-naming-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-safety` ⭐️](#eric642cc-skills-golanggolang-safety-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-security` ⭐️ 🧠](#eric642cc-skills-golanggolang-security-%EF%B8%8F-)
+  - [`eric642/cc-skills-golang@golang-structs-interfaces` ⚙️](#eric642cc-skills-golanggolang-structs-interfaces-%EF%B8%8F)
 - [Architecture & Design](#architecture--design)
-  - [`samber/cc-skills-golang@golang-concurrency` ⚙️](#sambercc-skills-golanggolang-concurrency-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-context` ⚙️](#sambercc-skills-golanggolang-context-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-data-structures` ⭐️](#sambercc-skills-golanggolang-data-structures-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-database` ⭐️ ⚙️](#sambercc-skills-golanggolang-database-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-dependency-injection` ⚙️](#sambercc-skills-golanggolang-dependency-injection-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-design-patterns` ⭐️ ⚙️](#sambercc-skills-golanggolang-design-patterns-%EF%B8%8F-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-modernize` ⭐️](#sambercc-skills-golanggolang-modernize-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-refactoring` ⭐️ 🧠 ⚙️](#sambercc-skills-golanggolang-refactoring-%EF%B8%8F--%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-concurrency` ⚙️](#eric642cc-skills-golanggolang-concurrency-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-context` ⚙️](#eric642cc-skills-golanggolang-context-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-data-structures` ⭐️](#eric642cc-skills-golanggolang-data-structures-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-database` ⭐️ ⚙️](#eric642cc-skills-golanggolang-database-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-dependency-injection` ⚙️](#eric642cc-skills-golanggolang-dependency-injection-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-design-patterns` ⭐️ ⚙️](#eric642cc-skills-golanggolang-design-patterns-%EF%B8%8F-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-modernize` ⭐️](#eric642cc-skills-golanggolang-modernize-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-refactoring` ⭐️ 🧠 ⚙️](#eric642cc-skills-golanggolang-refactoring-%EF%B8%8F--%EF%B8%8F)
 - [QA & Performance](#qa--performance)
-  - [`samber/cc-skills-golang@golang-benchmark` 🧠](#sambercc-skills-golanggolang-benchmark-)
-  - [`samber/cc-skills-golang@golang-observability` ⚙️](#sambercc-skills-golanggolang-observability-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-performance` 🧠](#sambercc-skills-golanggolang-performance-)
-  - [`samber/cc-skills-golang@golang-testing` ⭐️ 🧠 ⚙️](#sambercc-skills-golanggolang-testing-%EF%B8%8F--%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-troubleshooting` ⭐️ 🧠](#sambercc-skills-golanggolang-troubleshooting-%EF%B8%8F-)
+  - [`eric642/cc-skills-golang@golang-benchmark` 🧠](#eric642cc-skills-golanggolang-benchmark-)
+  - [`eric642/cc-skills-golang@golang-observability` ⚙️](#eric642cc-skills-golanggolang-observability-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-performance` 🧠](#eric642cc-skills-golanggolang-performance-)
+  - [`eric642/cc-skills-golang@golang-testing` ⭐️ 🧠 ⚙️](#eric642cc-skills-golanggolang-testing-%EF%B8%8F--%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-troubleshooting` ⭐️ 🧠](#eric642cc-skills-golanggolang-troubleshooting-%EF%B8%8F-)
 - [Project Setup](#project-setup)
-  - [`samber/cc-skills-golang@golang-cli`](#sambercc-skills-golanggolang-cli)
-  - [`samber/cc-skills-golang@golang-continuous-integration`](#sambercc-skills-golanggolang-continuous-integration)
-  - [`samber/cc-skills-golang@golang-dependency-management`](#sambercc-skills-golanggolang-dependency-management)
-  - [`samber/cc-skills-golang@golang-gopls`](#sambercc-skills-golanggolang-gopls)
-  - [`samber/cc-skills-golang@golang-how-to` ⭐️](#sambercc-skills-golanggolang-how-to-%EF%B8%8F)
-  - [`samber/cc-skills-golang@golang-pkg-go-dev`](#sambercc-skills-golanggolang-pkg-go-dev)
-  - [`samber/cc-skills-golang@golang-popular-libraries`](#sambercc-skills-golanggolang-popular-libraries)
-  - [`samber/cc-skills-golang@golang-project-layout`](#sambercc-skills-golanggolang-project-layout)
-  - [`samber/cc-skills-golang@golang-stay-updated`](#sambercc-skills-golanggolang-stay-updated)
+  - [`eric642/cc-skills-golang@golang-cli`](#eric642cc-skills-golanggolang-cli)
+  - [`eric642/cc-skills-golang@golang-continuous-integration`](#eric642cc-skills-golanggolang-continuous-integration)
+  - [`eric642/cc-skills-golang@golang-dependency-management`](#eric642cc-skills-golanggolang-dependency-management)
+  - [`eric642/cc-skills-golang@golang-gopls`](#eric642cc-skills-golanggolang-gopls)
+  - [`eric642/cc-skills-golang@golang-how-to` ⭐️](#eric642cc-skills-golanggolang-how-to-%EF%B8%8F)
+  - [`eric642/cc-skills-golang@golang-pkg-go-dev`](#eric642cc-skills-golanggolang-pkg-go-dev)
+  - [`eric642/cc-skills-golang@golang-popular-libraries`](#eric642cc-skills-golanggolang-popular-libraries)
+  - [`eric642/cc-skills-golang@golang-project-layout`](#eric642cc-skills-golanggolang-project-layout)
+  - [`eric642/cc-skills-golang@golang-stay-updated`](#eric642cc-skills-golanggolang-stay-updated)
 
 ## Code Quality
 
-### `samber/cc-skills-golang@golang-code-style` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-code-style` ⭐️ ⚙️
 
 Golang code formatting, conventions, and project-level style consistency — gofmt, goimports, line length, var declarations, blank lines, comment heuristics.
 
@@ -51,7 +51,7 @@ Use when: the user asks about formatting rules, style review, or project coding 
 
 ---
 
-### `samber/cc-skills-golang@golang-documentation` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-documentation` ⭐️ ⚙️
 
 Golang documentation standards — package docs, godoc conventions, example functions, README structure, CHANGELOG, llms.txt, API reference generation.
 
@@ -59,7 +59,7 @@ Use when: writing or reviewing Go doc comments, README files, or API reference. 
 
 ---
 
-### `samber/cc-skills-golang@golang-error-handling` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-error-handling` ⭐️ ⚙️
 
 Golang error handling best practices — error creation, wrapping with fmt.Errorf and errors.Is/As, sentinel errors, custom error types, panic recovery, and structured error context with `github.com/samber/oops`.
 
@@ -67,7 +67,7 @@ Use when: writing or reviewing error propagation, wrapping, logging, structured 
 
 ---
 
-### `samber/cc-skills-golang@golang-lint`
+### `eric642/cc-skills-golang@golang-lint`
 
 Golang linting — golangci-lint configuration, presets, custom rules, CI integration, nolint suppressions, linter selection and output interpretation.
 
@@ -75,7 +75,7 @@ Use when: setting up or tuning golangci-lint, interpreting lint failures, or dec
 
 ---
 
-### `samber/cc-skills-golang@golang-naming` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-naming` ⭐️ ⚙️
 
 Golang naming conventions across all identifier types — packages, constructors, structs, interfaces, constants, errors, receivers, acronyms, test functions. Covers MixedCaps rules, Get-prefix, and utils/helpers anti-patterns.
 
@@ -83,7 +83,7 @@ Use when: naming a new type, function, package, or constant. Not for broader for
 
 ---
 
-### `samber/cc-skills-golang@golang-safety` ⭐️
+### `eric642/cc-skills-golang@golang-safety` ⭐️
 
 Defensive Golang coding — prevents panics, silent data corruption, and runtime bugs. Nil safety, append aliasing, map concurrent access, float comparison, zero-value design, numeric overflow.
 
@@ -91,7 +91,7 @@ Use when: writing or reviewing code that could silently produce wrong results or
 
 ---
 
-### `samber/cc-skills-golang@golang-security` ⭐️ 🧠
+### `eric642/cc-skills-golang@golang-security` ⭐️ 🧠
 
 Golang security best practices — injection prevention (SQL, command, XSS), cryptography, filesystem/network safety, secrets management, cookie security, tool configuration. Audit and review modes.
 
@@ -99,7 +99,7 @@ Use when: auditing a codebase for vulnerabilities, writing security-sensitive co
 
 ---
 
-### `samber/cc-skills-golang@golang-structs-interfaces` ⚙️
+### `eric642/cc-skills-golang@golang-structs-interfaces` ⚙️
 
 Golang struct and interface design — composition, embedding, type assertions, interface segregation, struct tags (JSON/YAML/DB), pointer vs value receivers.
 
@@ -109,7 +109,7 @@ Use when: designing types, choosing between value vs pointer receivers, writing 
 
 ## Architecture & Design
 
-### `samber/cc-skills-golang@golang-concurrency` ⚙️
+### `eric642/cc-skills-golang@golang-concurrency` ⚙️
 
 Golang concurrency patterns — goroutines, channels, sync primitives, context cancellation, worker pools, fan-out/fan-in, pipelines, errgroup.
 
@@ -117,7 +117,7 @@ Use when: writing concurrent code, coordinating goroutines, or reviewing for rac
 
 ---
 
-### `samber/cc-skills-golang@golang-context` ⚙️
+### `eric642/cc-skills-golang@golang-context` ⚙️
 
 Idiomatic context.Context usage — creation, cancellation, timeouts, values, propagation patterns, WithoutCancel, common anti-patterns.
 
@@ -125,7 +125,7 @@ Use when: propagating deadlines and cancellation signals, or passing request-sco
 
 ---
 
-### `samber/cc-skills-golang@golang-data-structures` ⭐️
+### `eric642/cc-skills-golang@golang-data-structures` ⭐️
 
 Golang data structures internals and usage — slices (capacity growth, append aliasing), maps, channels, sync primitives, container/\*, generic collections, and when to use each.
 
@@ -133,7 +133,7 @@ Use when: choosing a data structure, understanding slice/map performance charact
 
 ---
 
-### `samber/cc-skills-golang@golang-database` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-database` ⭐️ ⚙️
 
 Golang database access patterns — parameter binding, connection pooling, transactions, migrations, sqlboiler/sqlc code generation, query builders.
 
@@ -141,7 +141,7 @@ Use when: writing SQL queries, designing repository patterns, or configuring dat
 
 ---
 
-### `samber/cc-skills-golang@golang-dependency-injection` ⚙️
+### `eric642/cc-skills-golang@golang-dependency-injection` ⚙️
 
 Dependency injection patterns in Golang — constructor injection, interface-based DI, `uber-go/dig`, `uber-go/fx`, and `samber/do` comparison, and when DI is worth the complexity.
 
@@ -149,7 +149,7 @@ Use when: deciding whether to use DI, designing constructor signatures, comparin
 
 ---
 
-### `samber/cc-skills-golang@golang-design-patterns` ⭐️ ⚙️
+### `eric642/cc-skills-golang@golang-design-patterns` ⭐️ ⚙️
 
 Idiomatic Golang design patterns — functional options, constructors, builder pattern, middleware chains, circuit breaker, and architecture guides.
 
@@ -157,7 +157,7 @@ Use when: choosing architectural patterns, designing APIs, or implementing resil
 
 ---
 
-### `samber/cc-skills-golang@golang-modernize` ⭐️
+### `eric642/cc-skills-golang@golang-modernize` ⭐️
 
 Modernize Golang code using recent language features — range-over-int, min/max builtins, iterators, slices/maps/cmp/slog stdlib packages, testing patterns (t.Context, b.Loop, synctest), and tooling upgrades.
 
@@ -165,7 +165,7 @@ Use when: upgrading a codebase to a newer Go version or replacing pre-generics p
 
 ---
 
-### `samber/cc-skills-golang@golang-refactoring` ⭐️ 🧠 ⚙️
+### `eric642/cc-skills-golang@golang-refactoring` ⭐️ 🧠 ⚙️
 
 Safe, staged, at-scale refactoring process for existing Golang code — blast-radius mapping, coverage-adaptive safety nets, tool-driven transforms (`gopls`, `gofmt -r`), breaking import cycles, type-alias gradual repair, and staged PR workflows.
 
@@ -175,7 +175,7 @@ Use when: restructuring existing packages, renaming or moving symbols across man
 
 ## QA & Performance
 
-### `samber/cc-skills-golang@golang-benchmark` 🧠
+### `eric642/cc-skills-golang@golang-benchmark` 🧠
 
 Golang benchmarking, profiling, and performance measurement — pprof, trace, CPU/memory/block profiles, flame graphs, benchstat, CI regression detection, continuous profiling.
 
@@ -183,7 +183,7 @@ Use when: measuring performance, capturing profiles, comparing benchmark runs, o
 
 ---
 
-### `samber/cc-skills-golang@golang-observability` ⚙️
+### `eric642/cc-skills-golang@golang-observability` ⚙️
 
 Golang production observability — structured logging (slog), Prometheus metrics, OpenTelemetry tracing, pprof profiling endpoints, alerting, Grafana dashboards.
 
@@ -191,7 +191,7 @@ Use when: instrumenting a service for production monitoring. Not for temporary d
 
 ---
 
-### `samber/cc-skills-golang@golang-performance` 🧠
+### `eric642/cc-skills-golang@golang-performance` 🧠
 
 Golang performance optimization — allocation reduction, CPU efficiency, memory layout, GC tuning, pooling, caching, hot-path optimization.
 
@@ -199,7 +199,7 @@ Use when: applying optimization patterns after profiling. Not for measurement me
 
 ---
 
-### `samber/cc-skills-golang@golang-testing` ⭐️ 🧠 ⚙️
+### `eric642/cc-skills-golang@golang-testing` ⭐️ 🧠 ⚙️
 
 Production-ready Golang tests — table-driven tests, fuzzing, fixtures, goroutine leak detection (goleak), snapshot testing, code coverage, integration tests, parallel tests.
 
@@ -207,7 +207,7 @@ Use when: writing or reviewing unit, integration, or fuzz tests (including suite
 
 ---
 
-### `samber/cc-skills-golang@golang-troubleshooting` ⭐️ 🧠
+### `eric642/cc-skills-golang@golang-troubleshooting` ⭐️ 🧠
 
 Systematic Golang debugging — common pitfalls, test-driven debugging, pprof capture, Delve debugger, race detection, GODEBUG tracing, production debugging.
 
@@ -217,7 +217,7 @@ Use when: debugging a panic, unexpected output, or hard-to-reproduce bug. Not fo
 
 ## Project Setup
 
-### `samber/cc-skills-golang@golang-cli`
+### `eric642/cc-skills-golang@golang-cli`
 
 Golang CLI application development — project layout, exit codes, signal handling, I/O patterns, argument parsing, terminal UX, Cobra command trees, and Viper configuration layering.
 
@@ -225,7 +225,7 @@ Use when: building, extending, or reviewing a CLI tool (including codebases usin
 
 ---
 
-### `samber/cc-skills-golang@golang-continuous-integration`
+### `eric642/cc-skills-golang@golang-continuous-integration`
 
 CI/CD pipeline configuration for Golang projects using GitHub Actions — build, test, lint, and release workflows.
 
@@ -233,7 +233,7 @@ Use when: setting up or improving a CI pipeline for a Go project.
 
 ---
 
-### `samber/cc-skills-golang@golang-dependency-management`
+### `eric642/cc-skills-golang@golang-dependency-management`
 
 Golang module dependency strategies — go.mod conventions, versioning, replace directives, tool dependencies, and multi-module workspaces.
 
@@ -241,7 +241,7 @@ Use when: managing go.mod, dealing with replace directives, or structuring a mul
 
 ---
 
-### `samber/cc-skills-golang@golang-gopls`
+### `eric642/cc-skills-golang@golang-gopls`
 
 Semantic code intelligence for the local Golang build via `gopls` — go-to-definition, find references, call/implementation hierarchy, workspace symbol search, compiler diagnostics, safe rename, and structural refactors.
 
@@ -249,7 +249,7 @@ Use when: navigating definitions and call sites in local or `go.sum`-pinned code
 
 ---
 
-### `samber/cc-skills-golang@golang-how-to` ⭐️
+### `eric642/cc-skills-golang@golang-how-to` ⭐️
 
 Golang skills orchestrator — routes tasks to primary and secondary skills, disambiguates overlapping skill clusters, and configures project agent-config files (`/golang-how-to configure`).
 
@@ -257,7 +257,7 @@ Use when: starting any Go task to select the right combination of skills, resolv
 
 ---
 
-### `samber/cc-skills-golang@golang-pkg-go-dev`
+### `eric642/cc-skills-golang@golang-pkg-go-dev`
 
 Golang package and module exploration via `godig`, a pkg.go.dev API client (CLI + MCP server) — docs, symbols, versions, importers, licenses, and known vulnerabilities.
 
@@ -265,7 +265,7 @@ Use when: looking up a module's available versions, CVEs, docs/symbols, or who i
 
 ---
 
-### `samber/cc-skills-golang@golang-popular-libraries`
+### `eric642/cc-skills-golang@golang-popular-libraries`
 
 Curated recommendations for production-ready Golang libraries — when the stdlib is enough vs when to reach for a package.
 
@@ -273,7 +273,7 @@ Use when: choosing a library for a new concern (HTTP, logging, testing, CLI, DI,
 
 ---
 
-### `samber/cc-skills-golang@golang-project-layout`
+### `eric642/cc-skills-golang@golang-project-layout`
 
 Golang project structure and workspace setup — cmd/internal/pkg conventions, monorepo layout, CLI project structure, and when to keep things flat.
 
@@ -281,7 +281,7 @@ Use when: starting a new project or restructuring an existing one. For architect
 
 ---
 
-### `samber/cc-skills-golang@golang-stay-updated`
+### `eric642/cc-skills-golang@golang-stay-updated`
 
 Resources to stay current with Golang — official channels, community hubs, key people to follow, learning resources.
 

@@ -1,15 +1,15 @@
 ---
 name: golang-lint
-description: "Linting best practices and golangci-lint configuration for Golang projects — running linters, configuring .golangci.yml, suppressing warnings with nolint directives, interpreting lint output, and selecting linters. Use when configuring golangci-lint, asking about lint warnings or nolint suppressions, setting up code quality tooling, or choosing linters. Also use when the user mentions golangci-lint, go vet, staticcheck, or revive. Not for wiring a lint step into a GitHub Actions pipeline (→ See `samber/cc-skills-golang@golang-continuous-integration` skill)."
+description: "Linting best practices and golangci-lint configuration for Golang projects — running linters, configuring .golangci.yml, suppressing warnings with nolint directives, interpreting lint output, and selecting linters. Use when configuring golangci-lint, asking about lint warnings or nolint suppressions, setting up code quality tooling, or choosing linters. Also use when the user mentions golangci-lint, go vet, staticcheck, or revive. Not for wiring a lint step into a GitHub Actions pipeline (→ See `eric642/cc-skills-golang@golang-continuous-integration` skill)."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
 metadata:
-  author: samber
-  version: "1.4.1"
+  author: eric642
+  version: "1.0.0"
   openclaw:
     emoji: "🧹"
-    homepage: https://github.com/samber/cc-skills-golang
+    homepage: https://github.com/eric642/cc-skills-golang
     requires:
       bins:
         - go
@@ -115,7 +115,7 @@ fmt:
 	golangci-lint fmt ./...
 ```
 
-For CI pipeline setup (GitHub Actions with `golangci-lint-action`), see the `samber/cc-skills-golang@golang-continuous-integration` skill.
+For CI pipeline setup (GitHub Actions with `golangci-lint-action`), see the `eric642/cc-skills-golang@golang-continuous-integration` skill.
 
 ## Interpreting Output
 
@@ -154,7 +154,7 @@ When adopting linting on a legacy codebase, use up to 5 parallel sub-agents to f
 
 ## Cross-References
 
-- → See `samber/cc-skills-golang@golang-continuous-integration` skill for CI pipeline with golangci-lint-action
-- → See `samber/cc-skills-golang@golang-code-style` skill for style rules that linters enforce
-- → See `samber/cc-skills-golang@golang-security` skill for SAST tools beyond linting (gosec, govulncheck)
-- → See `samber/cc-skills-golang@golang-continuous-integration` skill for automated AI-driven code review in CI using these guidelines
+- → See `eric642/cc-skills-golang@golang-continuous-integration` skill for CI pipeline with golangci-lint-action
+- → See `eric642/cc-skills-golang@golang-code-style` skill for style rules that linters enforce
+- → See `eric642/cc-skills-golang@golang-security` skill for SAST tools beyond linting (gosec, govulncheck)
+- → See `eric642/cc-skills-golang@golang-continuous-integration` skill for automated AI-driven code review in CI using these guidelines

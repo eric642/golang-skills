@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   snyk-agent-scan:
-    if: github.event_name != 'schedule' || github.repository_owner == 'samber'
+    if: github.event_name != 'schedule' || github.repository_owner == 'eric642'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

@@ -48,7 +48,7 @@ For each Go task, load the **primary skill** and all applicable **secondary skil
 | Adopt new Go language features | `golang-modernize` | `golang-lint` |
 | Track Go ecosystem news, blogs, and releases | `golang-stay-updated` | `golang-pkg-go-dev` |
 
-All skill identifiers above are short forms of `samber/cc-skills-golang@<name>`.
+All skill identifiers above are short forms of `eric642/cc-skills-golang@<name>`.
 
 ## Competing Clusters — Boundary Lines
 
@@ -69,7 +69,7 @@ Key clusters and their owners:
 
 ## Code Navigation with gopls
 
-`gopls` gives semantic code intelligence for Go — go-to-definition, find references, diagnostics, package API, symbol search, refactoring. See `samber/cc-skills-golang@golang-gopls` skill for the three ways to reach it (MCP server, native LSP tool, CLI), capability matrix, and efficient workflows.
+`gopls` gives semantic code intelligence for Go — go-to-definition, find references, diagnostics, package API, symbol search, refactoring. See `eric642/cc-skills-golang@golang-gopls` skill for the three ways to reach it (MCP server, native LSP tool, CLI), capability matrix, and efficient workflows.
 
 `gopls` only reasons about code present and resolvable in your local build: workspace plus every dependency exactly as pinned in `go.sum` (including `replace` directives). For facts not tied to your local build — version history, licenses, ecosystem-wide importers, a package you haven't added yet — use `golang-pkg-go-dev` (`godig`).
 

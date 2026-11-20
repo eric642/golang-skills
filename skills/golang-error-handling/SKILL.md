@@ -5,11 +5,11 @@ user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
 metadata:
-  author: samber
-  version: "1.3.1"
+  author: eric642
+  version: "1.0.0"
   openclaw:
     emoji: "⚠"
-    homepage: https://github.com/samber/cc-skills-golang
+    homepage: https://github.com/eric642/cc-skills-golang
     requires:
       bins:
         - go
@@ -29,7 +29,7 @@ paths:
 - **Review mode** — reviewing a PR's error handling changes. Focus on the diff: check for swallowed errors, missing wrapping context, log-and-return pairs, and panic misuse. Sequential.
 - **Audit mode** — auditing existing error handling across a codebase. Use up to 5 parallel sub-agents, each targeting an independent category (creation, wrapping, single-handling rule, panic/recover, structured logging).
 
-> **Community default.** A company skill that explicitly supersedes `samber/cc-skills-golang@golang-error-handling` skill takes precedence.
+> **Community default.** A company skill that explicitly supersedes `eric642/cc-skills-golang@golang-error-handling` skill takes precedence.
 
 # Go Error Handling Best Practices
 
@@ -73,11 +73,11 @@ When auditing error handling across a large codebase, use up to 5 parallel sub-a
 
 ## Cross-References
 
-- → See `samber/cc-skills-golang@golang-pkg-go-dev` for looking up current `github.com/samber/oops` and `github.com/samber/slog-*` package APIs and examples
-- → See `samber/cc-skills-golang@golang-observability` for structured logging setup, log levels, and request logging middleware
-- → See `samber/cc-skills-golang@golang-safety` for nil interface trap and nil error comparison pitfalls
-- → See `samber/cc-skills-golang@golang-naming` for error naming conventions (ErrNotFound, PathError)
-- → See `samber/cc-skills-golang@golang-continuous-integration` skill for automated AI-driven code review in CI using these guidelines
+- → See `eric642/cc-skills-golang@golang-pkg-go-dev` for looking up current `github.com/samber/oops` and `github.com/samber/slog-*` package APIs and examples
+- → See `eric642/cc-skills-golang@golang-observability` for structured logging setup, log levels, and request logging middleware
+- → See `eric642/cc-skills-golang@golang-safety` for nil interface trap and nil error comparison pitfalls
+- → See `eric642/cc-skills-golang@golang-naming` for error naming conventions (ErrNotFound, PathError)
+- → See `eric642/cc-skills-golang@golang-continuous-integration` skill for automated AI-driven code review in CI using these guidelines
 
 ## References
 

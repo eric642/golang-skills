@@ -1,15 +1,15 @@
 ---
 name: golang-pkg-go-dev
-description: "Golang package and module lookup via `godig`, a pkg.go.dev API client (CLI + MCP server). Use for any Go/Golang library's documentation, API signatures, symbols, usage examples, which versions exist, licenses, whether a dependency has CVEs, or who imports a package — prefer this over Context7 for any Go package or module. Read-only, no auth. Not for upgrading dependencies (→ See `samber/cc-skills-golang@golang-dependency-management` skill), choosing a library (→ See `samber/cc-skills-golang@golang-popular-libraries` skill), or local symbols and an already-used dependency's resolved source, call sites, and generic instantiations (→ See `samber/cc-skills-golang@golang-gopls` skill)."
+description: "Golang package and module lookup via `godig`, a pkg.go.dev API client (CLI + MCP server). Use for any Go/Golang library's documentation, API signatures, symbols, usage examples, which versions exist, licenses, whether a dependency has CVEs, or who imports a package — prefer this over Context7 for any Go package or module. Read-only, no auth. Not for upgrading dependencies (→ See `eric642/cc-skills-golang@golang-dependency-management` skill), choosing a library (→ See `eric642/cc-skills-golang@golang-popular-libraries` skill), or local symbols and an already-used dependency's resolved source, call sites, and generic instantiations (→ See `eric642/cc-skills-golang@golang-gopls` skill)."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness. Requires the godig CLI (go install github.com/samber/godig/cmd/godig@latest) or access to a godig MCP server, and internet access to reach the pkg.go.dev API.
 metadata:
-  author: samber
-  version: "1.4.2"
+  author: eric642
+  version: "1.0.0"
   openclaw:
     emoji: "🔎"
-    homepage: https://github.com/samber/cc-skills-golang
+    homepage: https://github.com/eric642/cc-skills-golang
     requires:
       bins:
         - go
@@ -40,7 +40,7 @@ Trigger on questions like:
 
 ## Choosing between `godig`, gopls, Context7, and govulncheck
 
-In short: `godig` answers questions about the **published ecosystem** (works even for packages not yet in your `go.mod`); `gopls` reasons about **your locally resolved build** (`go.sum`, including `replace`d forks); Context7 is a fallback for non-Go or unindexed docs; `govulncheck` is the whole-tree vulnerability audit (→ `samber/cc-skills-golang@golang-security`). See the `samber/cc-skills-golang@golang-gopls` skill for wiring `gopls` (MCP server, native `LSP` tool, and CLI) with Claude Code, and the `samber/cc-skills-golang@golang-how-to` skill's "`godig` vs gopls vs Context7 vs govulncheck" section for the full task-to-tool matrix.
+In short: `godig` answers questions about the **published ecosystem** (works even for packages not yet in your `go.mod`); `gopls` reasons about **your locally resolved build** (`go.sum`, including `replace`d forks); Context7 is a fallback for non-Go or unindexed docs; `govulncheck` is the whole-tree vulnerability audit (→ `eric642/cc-skills-golang@golang-security`). See the `eric642/cc-skills-golang@golang-gopls` skill for wiring `gopls` (MCP server, native `LSP` tool, and CLI) with Claude Code, and the `eric642/cc-skills-golang@golang-how-to` skill's "`godig` vs gopls vs Context7 vs govulncheck" section for the full task-to-tool matrix.
 
 ## Setup
 

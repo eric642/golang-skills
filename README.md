@@ -24,7 +24,7 @@ For non-Golang skills, please visit [cc-skills](https://github.com/samber/cc-ski
 
 <!-- prettier-ignore-end -->
 
-<img width="1414" height="491" alt="image" src="https://github.com/user-attachments/assets/620b5835-c1ba-4ea9-bf47-2293b58b879e" />
+<img width="1414" height="491" alt="Agent Skills for production-ready Golang projects" src="./assets/cc-skills-golang-banner.png" />
 
 ## 🚀 How to use
 
@@ -370,7 +370,7 @@ Claude reports very little overlap between skills in this repo, thanks to cross-
 
 - I estimate that 50% of `golang-naming` and `golang-code-style` overlap with linters (golangci-lint).
 - A large part of the security rules in `golang-security` have been distilled from the Bearer (SAST) checklist. The skill is still useful for methodology.
-- If your team has its own conventions, create a company skill and declare the override explicitly near the top of its body: `This skill supersedes samber/cc-skills-golang@golang-naming skill for [company] projects.` Skills marked ⚙️ in the table above support this mechanism.
+- If your team has its own conventions, create a company skill and declare the override explicitly near the top of its body: `This skill supersedes eric642/cc-skills-golang@golang-naming skill for [company] projects.` Skills marked ⚙️ in the table above support this mechanism.
 
 ## ✍️ Contribute
 
@@ -382,13 +382,6 @@ Claude reports very little overlap between skills in this repo, thanks to cross-
 - **Stay below ~10k tokens of total loaded SKILL.md** anytime to avoid degrading response quality
 
 For more guidelines, please check `CLAUDE.md`.
-
-## 💫 Fuel the Revolution
-
-- ⭐️ **Star this repo** - Your star powers the caffeine engine!
-- ☕️ **Buy me a coffee** - I'll literally use it to build more skills while drinking actual coffee
-
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/samber?style=for-the-badge)](https://github.com/sponsors/samber)
 
 ## 🙏 Acknowledgments
 

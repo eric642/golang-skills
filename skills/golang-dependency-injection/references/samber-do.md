@@ -33,4 +33,4 @@ injector.ShutdownOnSignalsWithContext(ctx, os.Interrupt)
 - **Simple API** — `Provide`, `Invoke`, `Shutdown` — that's most of what you need
 - **Package system** — organize services by domain without manual wiring order
 
-For full application setup, package organization (`do.Package`), lifecycle management (`Healthchecker`/`Shutdowner`), debugging (`ExplainInjector`), and testing with `Clone` + `Override`, see the official [`samber/do` documentation](https://do.samber.dev) or query `github.com/samber/do/v2` via the `samber/cc-skills-golang@golang-pkg-go-dev` skill.
+For full application setup, package organization (`do.Package`), lifecycle management (`Healthchecker`/`Shutdowner`), debugging (`ExplainInjector`), and testing with `Clone` + `Override`, see the official [`samber/do` documentation](https://do.samber.dev) or query `github.com/samber/do/v2` via the `eric642/cc-skills-golang@golang-pkg-go-dev` skill.

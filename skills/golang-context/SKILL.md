@@ -5,11 +5,11 @@ user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
 metadata:
-  author: samber
-  version: "1.3.1"
+  author: eric642
+  version: "1.0.0"
   openclaw:
     emoji: "🔗"
-    homepage: https://github.com/samber/cc-skills-golang
+    homepage: https://github.com/eric642/cc-skills-golang
     requires:
       bins:
         - go
@@ -19,7 +19,7 @@ paths:
   - "**/*.go"
 ---
 
-> **Community default.** A company skill that explicitly supersedes `samber/cc-skills-golang@golang-context` skill takes precedence.
+> **Community default.** A company skill that explicitly supersedes `eric642/cc-skills-golang@golang-context` skill takes precedence.
 
 # Go context.Context Best Practices
 
@@ -74,11 +74,11 @@ func (s *OrderService) Create(ctx context.Context, order Order) error {
 
 ## Cross-References
 
-- → See the `samber/cc-skills-golang@golang-concurrency` skill for goroutine cancellation patterns using context
-- → See the `samber/cc-skills-golang@golang-database` skill for context-aware database operations (QueryContext, ExecContext)
-- → See the `samber/cc-skills-golang@golang-observability` skill for trace context propagation with OpenTelemetry
-- → See the `samber/cc-skills-golang@golang-design-patterns` skill for timeout and resilience patterns
+- → See the `eric642/cc-skills-golang@golang-concurrency` skill for goroutine cancellation patterns using context
+- → See the `eric642/cc-skills-golang@golang-database` skill for context-aware database operations (QueryContext, ExecContext)
+- → See the `eric642/cc-skills-golang@golang-observability` skill for trace context propagation with OpenTelemetry
+- → See the `eric642/cc-skills-golang@golang-design-patterns` skill for timeout and resilience patterns
 
 ## Enforce with Linters
 
-Many context pitfalls are caught automatically by linters: `govet`, `staticcheck`. → See the `samber/cc-skills-golang@golang-lint` skill for configuration and usage.
+Many context pitfalls are caught automatically by linters: `govet`, `staticcheck`. → See the `eric642/cc-skills-golang@golang-lint` skill for configuration and usage.

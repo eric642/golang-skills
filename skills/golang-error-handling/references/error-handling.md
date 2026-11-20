@@ -135,4 +135,4 @@ When this error is logged, you get the stack trace, user ID, order ID, domain, e
 
 ## Logging Errors with `slog`
 
-→ See `samber/cc-skills-golang@golang-observability` skill for comprehensive structured logging guidance, including `slog` setup, log levels, log handlers, HTTP middleware, and cost considerations.
+→ See `eric642/cc-skills-golang@golang-observability` skill for comprehensive structured logging guidance, including `slog` setup, log levels, log handlers, HTTP middleware, and cost considerations.
