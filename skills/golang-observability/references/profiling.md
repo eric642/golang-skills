@@ -1,7 +1,5 @@
 # Profiling and Continuous Profiling
 
-→ See `eric642/cc-skills-golang@golang-troubleshooting` skill (pprof.md) for on-demand debugging.
-
 ## What Profiling Is
 
 Profiling analyzes the runtime behavior of your program — where CPU time is spent, how memory is allocated, which goroutines are blocked, and where lock contention occurs. While metrics tell you "the service is slow," profiling tells you "this specific function on line 42 is the bottleneck."
@@ -10,7 +8,7 @@ Profiling analyzes the runtime behavior of your program — where CPU time is sp
 
 pprof endpoints MUST be protected with basic auth — NEVER expose them publicly. They leak sensitive runtime information and can be abused for DoS.
 
-→ See `eric642/cc-skills-golang@golang-troubleshooting` pprof.md for the full pprof CLI reference (profile types, capturing, analyzing, commands).
+Capture profiles on demand with `go tool pprof` against `/debug/pprof/{profile,heap,goroutine,mutex,block}` over an authenticated internal endpoint.
 
 The `goroutineleak` profile (`/debug/pprof/goroutineleak`, generally available since Go 1.27) is worth exposing alongside the standard profiles — it reports goroutines blocked on unreachable concurrency primitives, a signal the standard `goroutine` profile doesn't surface directly. Since Go 1.27, tracebacks for `go 1.27+` modules also carry `runtime/pprof` goroutine labels by default; if labels could leak sensitive request data into crash logs, disable with `GODEBUG=tracebacklabels=0`.
 

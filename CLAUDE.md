@@ -4,7 +4,7 @@
 
 This is a Claude Code plugin containing AI agent skills for production-ready Go projects. The repository provides reusable skill definitions that Claude Code can invoke when working on Go codebases.
 
-**Facts in CLAUDE.md, procedures in skills.** Repository-wide facts, conventions and constraints live here; step-by-step instructions for a technique or library live in a skill body. Duplicating one in the other produces two sources of truth that drift and eventually contradict each other — the same failure [Atomic skills and deduplication](#atomic-skills-and-deduplication) prevents between skills, one level up.
+**Facts in CLAUDE.md, procedures in skills.** Repository-wide facts, conventions and constraints live here; step-by-step instructions for a technique or library live in a skill body. Duplicating one in the other produces two sources of truth that drift and eventually contradict each other — the same failure [Self-contained core skills and deduplication](#self-contained-core-skills-and-deduplication) prevents between skills, one level up.
 
 ## Project Structure
 
@@ -31,18 +31,17 @@ New skills go in `skills/<skill-name>/SKILL.md`. Each SKILL.md has YAML frontmat
 | Field | Required | Constraints |
 | --- | --- | --- |
 | `name` | Spec-required | 1-64 chars. Lowercase `a-z`, digits, hyphens. No leading/trailing/consecutive hyphens. **Must match parent directory name.** |
-| `description` | Spec-required | 1-1024 chars. Describes what the skill does **and when to use it** — this is the primary triggering mechanism. Be specific and slightly "pushy" to avoid under-triggering. |
+| `description` | Spec-required | 1-1024 chars (project target: 150-250 chars, ≤ 300 hard ceiling). Describes what the skill does **and when to use it** — this is the primary triggering mechanism. Keep it concise, third-person, and free of cross-skill `@` references. |
 | `license` | Project-required | License name or reference to a bundled license file. Use `MIT` for this project. |
 | `compatibility` | Project-required | 1-500 chars. Describe actual requirements as **capabilities, never tool names** — `Requires internet access`, not `Requires WebSearch`; the capability holds on every harness, the tool name only on Claude Code. Base: `Designed for Claude Code, Codex or similar harness.` Extend when needed: add `Requires git`, `Requires internet access`, `Requires Python 3.14+ and uv`, etc. Skills with no special requirements use the base string only. |
 | `metadata` | Project-required | Must include `author` (string), `version` (semver `a.b.c` string, e.g. `"1.0.0"`), and `openclaw` (object — see below). Caution: some harnesses (e.g. OpenCode) parse `metadata` as a flat string→string map and may not preserve the nested `openclaw` object — don't assume every field survives outside Claude Code. |
 | `user-invocable` | Project-required | Boolean. `true` for skills invocable as slash commands (e.g. `/golang-security`), `false` (default) for contextual skills that auto-trigger. |
 | `allowed-tools` | Project-required | Space-delimited list of pre-approved tools. See "Allowed tools" below. |
 | `paths` | Optional | Glob(s) scoping the skill to specific files/directories (e.g. `**/*.go`). Recognized by Cursor only — a no-op elsewhere. Add it for skills tied to Go source files to sharpen triggering there; skip it for skills with no natural file-type scope (setup, CI, ecosystem-lookup skills). |
-| `dependencies` | Optional, experimental | List of `owner/repo@skill` identifiers this skill should always load alongside. Formalizes an existing `→ See` cross-reference as a machine-enforced co-load instead of prose the model might skip. Currently recognized by Antigravity only (third-party-documented, not yet confirmed in Google's official docs) — verify before relying on it, and keep the prose `→ See` reference regardless since it's what every other harness actually reads. |
 
 **Frontmatter mechanics** — three ways a well-formed skill silently fails to load:
 
-- **Stay within the spec's field set.** The Agent Skills spec defines exactly six fields: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`. Everything else in the table above (`user-invocable`, `paths`, `dependencies`) is a harness-specific extension, and validators that check strictly against the spec reject them — that is why `skills-ref` is disabled here (→ See [Validation](#validation)). Verify support before adding any field beyond the table above.
+- **Stay within the spec's field set.** The Agent Skills spec defines exactly six fields: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`. Everything else in the table above (`user-invocable`, `paths`) is a harness-specific extension, and validators that check strictly against the spec reject them — that is why `skills-ref` is disabled here (→ See [Validation](#validation)). Verify support before adding any field beyond the table above.
 - **Nest `version` under `metadata`.** A top-level `version:` key is not a spec field and fails packaging on strict validators.
 - **Quote the description.** A value containing a colon followed by a space (`:` + space) or starting with `[`, `]`, `<`, `>` breaks YAML parsing, and the skill drops out of the listing without an error. This is why the examples below wrap it in `"..."`; use a `>-` block scalar for long ones.
 
@@ -113,55 +112,55 @@ metadata:
 
 The description is the only thing the model reads before deciding to load a skill. Nothing else in the file matters if selection fails.
 
-1. State what the skill does, then when to use it — in that order.
+1. Write **2–3 concise third-person sentences** targeting **150–250 characters (~30–55 tokens)**, with a hard ceiling of **300 characters**: state _what_ the skill does (front-loading concrete Go domain nouns in the first 50 characters, containing `Golang`), then _when_ to use it (`Use when ...`), plus an optional brief `Do not use for ...` domain boundary **only** for high-collision pairs.
 2. Write third person. ❌ "I can help you…", ❌ "You can use this to…" — mixed point of view degrades discovery.
 3. Name the concrete nouns a user would actually type: file extensions, tool names, import paths, directory paths, domain terms.
-4. Be pushy inside the skill's own concern — under-triggering is the documented default failure: "Use whenever the user mentions X, Y, or Z, even if they don't say 'X' explicitly."
-5. Scope against siblings — when two skills overlap, say what each is _not_ for.
-6. Front-load the key use case: Claude Code truncates the description and its trigger clauses at 1,536 combined characters, and drops descriptions entirely for least-used skills once the listing exceeds ~1% of the context window.
+4. Match concrete user-intent triggers inside the skill's own concern — under-triggering happens when descriptions are vague, while bloated trigger lists burn shared startup budget on every turn.
+5. Scope high-collision pairs with a brief pure-domain exclusion (`Do not use for <domain>.`), without naming other skills.
+6. Front-load the key domain in the first 50 characters: harnesses inject all installed skill descriptions side-by-side at startup under a shared context budget (~1–2% of the context window, with compact listings truncating long entries), and drop descriptions for least-used skills once the listing overflows.
 7. Never summarise the workflow. A description that lists ordered steps makes the agent act on the description and skip the body — describe _what_ and _when_, never _how_.
-8. Add a negative clause naming the near-miss sibling: `Do NOT use for X — use <sibling> instead.` (→ See Overlap below.)
+8. **Never include cross-skill `@` references (`owner/repo@skill` or `→ See`) in `description`, `SKILL.md`, or `references/`.** The plugin provides 12 orthogonal, self-contained Golang skills. Progressive disclosure operates strictly within each skill (`description` → `SKILL.md` → local `references/` and `assets/`), and the harness already injects every installed skill's `name` and `description` side-by-side at startup — cross-references waste tokens, cross-contaminate sibling keywords, and break standalone installs (→ See [Self-contained core skills and deduplication](#self-contained-core-skills-and-deduplication)).
 
-**Length calibration** — reserve long descriptions (≈900–1,050 chars) for _moment-triggered_ skills, which fire on a conversational state rather than a topic and open with the interrupt condition: "Before finishing any reply that …". Every skill in this plugin is topic- or tool-triggered today; one creeping past ~900 chars is a signal to prune scenario lists and cross-references, not licence to keep growing. The hard character cap lives in [Token budgets](#token-budgets).
+**Length calibration** — target **150–250 characters (~30–55 tokens)** per `description`, with a **300-character hard ceiling** (→ See [Token budgets](#token-budgets)). Anything creeping past 250 characters is a signal to tighten wording and prune redundant synonyms rather than expand trigger lists.
 
 **Too vague** (under-triggering) — one-liner descriptions without "Use when..." clauses. The model cannot match user intent to the skill. Fix by adding specific trigger scenarios, domain terms, and tool or package names.
 
 ```yaml
 # Bad — no trigger context, will be ignored
-description: Golang concurrency patterns and goroutines
+description: "Golang concurrency patterns and goroutines"
 
-# Good — specific triggers, matches real user activity
-description: Golang concurrency patterns — goroutines, channels, sync primitives, worker pools, and context cancellation. Use when designing concurrent Go code, bounding goroutine lifecycles, or preventing data races.
+# Good — specific triggers, matches real user activity (204 chars)
+description: "Golang concurrency patterns — goroutines, channels, sync primitives, worker pools, and context cancellation. Use when designing concurrent Go code, bounding goroutine lifecycles, or preventing data races."
 ```
 
-**Too broad** (over-triggering) — phrases like "whenever writing Go code", "when naming any identifier", "essential for ANY conversation". These match virtually all Go work and flood the context with irrelevant skills, so narrow to the specific concern the skill uniquely addresses. Rule 4 pushes on the _number of trigger scenarios_ listed inside that concern, never on the width of the concern itself.
+**Too broad** (over-triggering) — phrases like "whenever writing Go code", "when naming any identifier", "essential for ANY conversation". These match virtually all Go work and flood the context with irrelevant skills, so narrow to the specific concern the skill uniquely addresses.
 
 ```yaml
 # Bad — triggers on all Go work
-description: Use when writing code, reviewing style, or writing comments in Golang.
+description: "Use when writing code, reviewing style, or writing comments in Golang."
 
-# Good — triggers only when style is the actual concern
-description: Golang code style conventions. Use when the user explicitly asks about formatting, style review, or project coding standards.
+# Good — triggers only when code quality is the actual concern (182 chars)
+description: "Golang code quality — formatting, naming conventions, godoc documentation, and golangci-lint configuration. Use when reviewing Go style, identifier names, doc comments, or linter setup."
 ```
 
-**Overlap** (competing triggers) — when two skills claim the same trigger keywords, the model may load the wrong one. Fix by naming the sibling in a boundary clause, using the fully-qualified identifier (→ See [Cross-skill references](#cross-skill-references)). Both phrasings are equally acceptable.
+**Overlap** (competing triggers) — when two skills claim adjacent ground, add a brief pure-domain boundary clause (`Do not use for <domain>.`) **only** for high-collision pairs. Never embed `owner/repo@skill` or `→ See` references anywhere in `description`, `SKILL.md`, or `references/` — each skill is self-contained, and the harness already presents all installed skills side-by-side at startup.
 
 ```yaml
-# Good — arrow form
-description: "...Not for measurement methodology (→ See `eric642/cc-skills-golang@golang-benchmark` skill)."
+# Bad — wastes startup budget and cross-contaminates keywords with sibling skill IDs
+description: "...Not for continuous production telemetry (→ See `owner/repo@other-skill` skill)."
 
-# Good — negative-clause form
-description: "...Do NOT use for measurement methodology — use `eric642/cc-skills-golang@golang-benchmark` instead."
+# Good — concise pure-domain boundary clause (high-collision pairs only)
+description: "...Do not use for always-on production logging, metrics, or tracing."
 ```
 
 **Workflow leakage** — a description that narrates ordered steps gets executed as the procedure, and the body never loads. State the scope and the triggers; leave the steps to the body. The example below is illustrative, not a real skill description.
 
 ```yaml
 # Bad — ordered steps; the agent runs these and skips SKILL.md
-description: Golang benchmarking. Write the benchmark, run it with -benchmem, save the baseline, apply the change, re-run, then compare with benchstat.
+description: "Golang performance. Write the benchmark, run it with -benchmem, save the baseline, apply the change, re-run, then compare with benchstat."
 
-# Good — what and when only
-description: Golang benchmark measurement methodology — benchstat comparison, profiling interpretation, CI regression detection. Use when measuring Go performance, writing benchmarks, or interpreting benchmark output.
+# Good — what and when only (208 chars)
+description: "Golang performance optimization, benchmarking, profiling, and runtime debugging. Use when profiling CPU/memory, comparing benchstat runs, diagnosing runtime bottlenecks, or eliminating hot-path allocations."
 ```
 
 **Tool- and ecosystem-focused skills** follow a consistent pattern: describe what the tool or workflow does, list key capabilities, then state concrete trigger scenarios (e.g., "Use when navigating or refactoring Go code…", "Use when exploring external Go packages…").
@@ -183,17 +182,17 @@ Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Agent
 | Extra tool | When to add |
 | --- | --- |
 | `mcp__context7__resolve-library-id mcp__context7__query-docs` | Skills that reference external package documentation via context7 |
-| `Bash(gopls:*) LSP mcp__gopls__*` | Code navigation, semantic analysis, or refactoring skills |
-| `Bash(godig:*)` | Package and module exploration skills (`pkg.go.dev`) |
-| `Bash(benchstat:*)` | Benchmark or performance skills |
-| `Bash(dlv:*)` | Troubleshooting or debugging skills |
-| `Bash(gotests:*)` | Testing skills that generate test scaffolding |
-| `Bash(goreleaser:*)` | CI/CD or release skills |
+| `Bash(gopls:*) LSP mcp__gopls__*` | Code navigation, semantic analysis, or refactoring (`golang-refactoring`) |
+| `Bash(godig:*)` | Package and module exploration (`golang-dependencies`) |
+| `Bash(benchstat:*)` | Benchmarking and performance comparison (`golang-performance`) |
+| `Bash(dlv:*)` | Interactive debugging and runtime troubleshooting (`golang-performance`) |
+| `Bash(gotests:*)` | Testing skills that generate test scaffolding (`golang-testing`) |
+| `Bash(goreleaser:*)` | CI/CD or release skills (`golang-ci`) |
 | `Bash(gh:*)` | Git or GitHub-related skills |
-| `Bash(govulncheck:*)` | Security or dependency management skills |
-| `Bash(curl:*)` | HTTP endpoint, profiling, or benchmark skills |
+| `Bash(govulncheck:*)` | Security or dependency management skills (`golang-security`, `golang-dependencies`) |
+| `Bash(curl:*)` | HTTP endpoint, profiling, or performance skills |
 | `WebFetch` | Skills requiring deep research/analysis or fetching external docs and resources |
-| `WebSearch` | Skills requiring deep research or analysis (security, benchmarking, performance, troubleshooting, observability) and skills that discover resources or track updates |
+| `WebSearch` | Skills requiring deep research or analysis (security, performance, observability) and skills that discover resources |
 | `AskUserQuestion` | Skills that benefit from clarifying user intent, confirming assumptions, or gathering context before proceeding — useful for audit/review modes, architecture decisions, ambiguous requirements, or any skill where acting on wrong assumptions is costly |
 | `EnterWorktree ExitWorktree` | Skills whose workflow spawns **mutating** parallel sub-agents (doc generation, modernization sweeps), compares code variants (benchmarks/perf), or applies each fix on its own branch (large security audits). Not for read-only parallel audits — concurrent reads need no isolation. |
 
@@ -251,17 +250,17 @@ Polanyi's paradox: most operational knowledge is tacit and resists explicit desc
 
 ### Token budgets
 
-Budgets measure three different units — **one paragraph**, **one file**, and **everything loaded at once**. None supersedes another: a SKILL.md inside its per-file budget still blows the total when three other skills load beside it.
+Budgets measure three different units — **one paragraph**, **one file**, and **everything loaded at once**. Each budget applies independently: a SKILL.md inside its per-file budget still blows the total when three other skills load beside it.
 
 | Budget | Unit | Governs |
 | --- | --- | --- |
-| ~100 tokens | per description | Startup cost, paid for every installed skill |
-| ≤ 1,000 characters | per description | Hard limit — keep descriptions focused and scannable |
+| 150–250 characters (~30–55 tokens) | per description | Practical target — startup cost paid for every installed skill |
+| ≤ 300 characters | per description | Hard ceiling — keeps descriptions focused and prevents startup truncation |
 | ≤ 3 sentences | per prose paragraph | Standalone prose only; tables, bullets and checklists are exempt |
-| < 5,000 tokens | per SKILL.md | The Agent Skills spec's own recommended ceiling |
-| < 2,500 tokens | per SKILL.md | This project's tighter recommendation — the number to actually hit |
-| < 500 lines | per SKILL.md | Past it, move detail to `references/`; aim under 250 (official median: 147) |
-| ~10,000 tokens | total loaded | Steady-state sum of the 2-4 SKILL.md files in context; past it, response quality degrades |
+| < 5,000 tokens | per SKILL.md | Hard ceiling (Agent Skills spec recommendation) |
+| ≤ 4,000 tokens | per SKILL.md | Practical target for consolidated core skills (aim for ~160–290 lines; move deep detail to `references/`) |
+| < 300 lines (hard < 500) | per SKILL.md | Past ~290 lines, move examples and tool manuals to `references/` |
+| ~10,000–12,000 tokens | total loaded | Steady-state sum of 2–3 core `SKILL.md` files in context (~3.6k average); past it, response quality degrades |
 | ~25,000 tokens | total loaded | Shared by all loaded skills at auto-compaction, and only each skill's first ~5,000 tokens survive — put load-bearing rules before examples and edge cases |
 | ~20-50 skills | total installed | Discovery degrades past it: every description loads at startup, diluting triggering for all skills, not just the newest |
 
@@ -313,10 +312,10 @@ Place `**Persona:**` at the very top of the body, before any heading. Keep it to
 **Examples:**
 
 - `golang-security` (audit + coding, orchestrator): `You are a senior Go security engineer. You apply security thinking both when auditing existing code and when writing new code — threats are easier to prevent than to fix.`
-- `golang-performance` (analytical, orchestrator): `You are a Go performance engineer. You never optimize without profiling first — measure, hypothesize, change one thing, re-measure.`
+- `golang-performance` (analytical + debugging, orchestrator): `You are a Go performance and systems debugging engineer. You follow evidence, not intuition — measure, profile, reproduce, change one thing, and re-measure.`
 - `golang-testing` (generative + analytical): `You are a Go engineer who treats tests as executable specifications. You write tests to constrain behavior, not to hit coverage targets.`
-- `golang-troubleshooting` (orchestrator + analytical): `You are a Go systems debugger. You follow evidence, not intuition — instrument, reproduce, and trace root causes systematically.`
-- `golang-code-style` (procedural/short) → **skip persona**.
+- `golang-refactoring` (orchestrator + analytical): `You are a senior Go refactoring engineer. You protect behavior with a coverage-adaptive safety net and prefer semantic tools over manual edits.`
+- Purely procedural or short skills (e.g. `golang-ci`) → **skip persona** when there is no analytical frame to anchor.
 
 #### Skill modes and parallelization (optional)
 
@@ -385,7 +384,7 @@ Update the README.md Ultracode column (🤖 emoji) to keep track of skills requi
 
 When a skill mentions an important tool (e.g. `go test`, `pprof`, `dlv`, `benchstat`), create a `references/` markdown file with a comprehensive reference section listing many command examples. This helps users discover tool capabilities without leaving the skill content.
 
-**Example:** For the `eric642/cc-skills-golang@golang-testing` skill, create `references/go-test.md` with examples like:
+**Example:** For `golang-testing`, create `references/go-test.md` with examples like:
 
 ```bash
 go test ./...                          # all tests
@@ -439,60 +438,30 @@ skills-ref validate ./skills/<skill-name>
 
 ## Skill Architecture
 
-Each concept must live in exactly one skill. Skills cross-reference each other instead of duplicating content.
+The plugin provides **12 orthogonal, self-contained Golang skills**. Progressive disclosure operates strictly within each skill (`description` → `SKILL.md` → local `references/` & `assets/`). Never embed cross-skill `@` index pointers (`owner/repo@skill` or `→ See` links to another skill) in `description`, `SKILL.md`, or `references/`.
 
-### Performance skill cluster
+| Pillar | Skills |
+| --- | --- |
+| **Code & Types** | `golang-code-quality`, `golang-idioms`, `golang-concurrency` |
+| **Architecture & Refactoring** | `golang-architecture`, `golang-refactoring`, `golang-database` |
+| **QA, Performance & Ops** | `golang-testing`, `golang-performance`, `golang-observability`, `golang-security` |
+| **Dependencies & CI** | `golang-dependencies`, `golang-ci` |
 
-Four skills cover performance and observability with distinct ownership:
+### Performance vs. observability boundary
 
-- **`eric642/cc-skills-golang@golang-performance`** - optimization patterns and methodology ("if X bottleneck, then apply Y")
-- **`eric642/cc-skills-golang@golang-benchmark`** - measurement methodology, deep analysis, profiling interpretation, benchstat, CI regression detection
-- **`eric642/cc-skills-golang@golang-troubleshooting`** - debugging workflow, root cause finding, pprof setup/capture, Delve, GODEBUG
-- **`eric642/cc-skills-golang@golang-observability`** - everyday continuous monitoring (logs, metrics, tracing, alerts) - always-on signals
+Two skills cover runtime behavior with clean, non-overlapping ownership:
 
-The first three form a "deep analysis" cluster for temporary focused investigation. `eric642/cc-skills-golang@golang-observability` covers the always-on production signals. Each concept lives in exactly one skill.
+- **`golang-performance`** — temporary, focused investigation and optimization: benchmarking (`benchstat`), profiling (`pprof`, `trace`), runtime debugging (`dlv`, `GODEBUG`), and hot-path optimization ("if X bottleneck, then apply Y").
+- **`golang-observability`** — always-on production telemetry: structured logging (`slog`), metrics (Prometheus), distributed tracing (OpenTelemetry), alerting, and dashboards.
 
-### Atomic skills and deduplication
+### Self-contained core skills and deduplication
 
-Concept drift between skills creates confusion when the agent loads the wrong one — or two competing ones. Prefer small, focused skills over large monolithic ones.
+Concept drift between skills creates confusion when the agent loads the wrong one — or two competing ones. Keeping the catalog to 12 orthogonal, self-contained core skills minimizes startup token cost while letting users install all 12 together (`--all`) or any single skill standalone (`--skill <name>`).
 
-- Each concept MUST live in exactly one skill (the "owner")
-- All other skills cross-reference the owner with `→ See` using the fully-qualified `owner/repo@skill` identifier
-- When splitting or merging skills, update every cross-reference to the affected skills
-
-### Company override convention
-
-Some skills are community defaults, not mandates. They include a note at the top of their body that defers to a company skill that explicitly supersedes them.
-
-**To override a generic skill**, add this line near the top of your company skill's body (replace `<skill-name>` with the target):
-
-> This skill supersedes `eric642/cc-skills-golang@<skill-name>` skill for [company] projects.
-
-The override is skill-specific: your company skill must name each generic skill it supersedes. Plugin-wide override (`eric642/cc-skills-golang`) is not supported — be explicit. The README skills table marks overridable skills with the ⚙️ flag.
-
-### Cross-skill references
-
-Skills use the `owner/repo@skill:version` identifier format for cross-references. This convention aligns with the [skills CLI](https://github.com/vercel-labs/skills) `owner/repo@skill` install shorthand and extends it with an optional `:version` segment for pinning.
-
-| Segment | Required | Description | Example |
-| --- | --- | --- | --- |
-| `owner` | yes | GitHub owner or organization | `eric642` |
-| `repo` | yes | Repository name | `cc-skills-golang` |
-| `skill` | yes | Skill name (from frontmatter `name` field) | `golang-security` |
-| `version` | no | Semver version — omit unless pinning matters | `1.2.0` |
-
-**Full form:** `eric642/cc-skills-golang@golang-security:1.2.0` **Common form (no version):** `eric642/cc-skills-golang@golang-security`
-
-Always use the fully-qualified `owner/repo@skill` form in backticks, even for references within the same plugin. This makes every reference portable, searchable, and unambiguous regardless of where the skill is consumed.
-
-The identifier is a citation, never a live mention. Written bare as `@golang-security`, harnesses that support `@` references read it as a force-load directive and pull the whole referenced skill into context, bypassing triggering and burning the budget.
-
-**Inline:** see the `eric642/cc-skills-golang@golang-database` skill. **Arrow-prefixed lists:** "→ See `eric642/cc-skills-golang@golang-database` skill for …"
-
-**Install mapping:** the identifier maps to skills CLI commands:
-
-- `eric642/cc-skills-golang@golang-security` → `npx skills add eric642/cc-skills-golang --skill golang-security`
-- `eric642/cc-skills-golang` → `npx skills add eric642/cc-skills-golang`
+- Each concept MUST live in exactly one of the 12 core skills (its owner).
+- Never duplicate guidance across skills, and never embed cross-skill `@` pointers (`owner/repo@skill` or `→ See <other-skill>`) in `description`, `SKILL.md`, or `references/`.
+- Keep progressive disclosure strictly local to each skill directory (`description` → `SKILL.md` → local `references/` and `assets/`).
+- When two adjacent skills could collide on triggers, add a brief pure-domain boundary in `description` (`Do not use for <domain>.`) without naming the sibling skill.
 
 ### Large repository research
 
@@ -516,7 +485,7 @@ Skills MUST teach Claude how to think about problems, not just list prescriptive
 
 Treat ALWAYS/NEVER in caps as a smell. Reserve them for genuinely order-dependent or destructive steps, where a wrong sequence loses data or breaks the build. Reframe every other bare imperative as reasoning, so the model can apply it to cases the rule never anticipated.
 
-When a recommendation addresses a problem that can be confirmed with a diagnostic tool, add a **`Diagnose:`** line indicating which tool(s) to use to validate the hypothesis before applying the fix. This is essential in performance-oriented skills (`eric642/cc-skills-golang@golang-performance`) but also useful in any skill where a tool can confirm the root cause (e.g. race detector for concurrency, `go vet` for safety, `govulncheck` for security). The diagnostic tool must NOT apply the fix automatically (e.g. never use `--fix` flags) — let the LLM interpret the diagnostic output and perform the improvement itself, so changes are tracked and can include explanatory comments.
+When a recommendation addresses a problem that can be confirmed with a diagnostic tool, add a **`Diagnose:`** line indicating which tool(s) to use to validate the hypothesis before applying the fix. This is essential in performance-oriented skills (`golang-performance`) but also useful in any skill where a tool can confirm the root cause (e.g. race detector for concurrency, `go vet` for idioms/safety, `govulncheck` for security). The diagnostic tool must NOT apply the fix automatically (e.g. never use `--fix` flags) — let the LLM interpret the diagnostic output and perform the improvement itself, so changes are tracked and can include explanatory comments.
 
 Format Diagnose lines with a carriage return before each tool, numbered by importance and potential impact (`1-`, `2-`, `3-`, …):
 
@@ -535,9 +504,9 @@ Transformation patterns:
 
 ### External tool and library references
 
-When a skill discusses third-party libraries or external tools (e.g. `eric642/cc-skills-golang@golang-popular-libraries`, `eric642/cc-skills-golang@golang-dependency-injection`, `eric642/cc-skills-golang@golang-pkg-go-dev`), the skill instructions **must** recommend consulting the package's official documentation and code examples for up-to-date API signatures and usage patterns. This ensures the agent always works with current API signatures and best practices, even if static markdown becomes outdated.
+When a skill discusses third-party libraries or external tools (e.g. `golang-dependencies`, `golang-architecture`, `golang-database`), the skill instructions **must** recommend consulting the package's official documentation and code examples for up-to-date API signatures and usage patterns. This ensures the agent always works with current API signatures and best practices, even if static markdown becomes outdated.
 
-Skills dedicated to a single open-source tool (e.g. `eric642/cc-skills-golang@golang-gopls`, `eric642/cc-skills-golang@golang-pkg-go-dev`) **must** also include a line at the end of the skill body pointing to the issue tracker for bugs or unexpected behavior:
+Skills that rely heavily on a specific open-source CLI or language server (e.g. `gopls` in `golang-refactoring`, `godig` in `golang-dependencies`) **must** also include a line pointing to the issue tracker for bugs or unexpected behavior:
 
 ```
 If you encounter a bug or unexpected behavior in <tool>, open an issue at <repo>/issues.
@@ -612,7 +581,8 @@ Index of failure modes. Each row points at the section that owns the rule.
 
 | Anti-pattern | Symptom | Fix |
 | --- | --- | --- |
-| Vague description | Never triggers | Concrete nouns + pushy "use when" (→ [Description quality](#description-quality)) |
+| Vague description | Never triggers | Concrete Go nouns + "Use when" triggers (→ [Description quality](#description-quality)) |
+| Cross-skill `@` / `→ See` pointers | Wastes startup budget, leaks sibling keywords, or breaks standalone installs | Keep skills self-contained; use pure-domain boundaries in `description` only for high-collision pairs (→ [Self-contained core skills and deduplication](#self-contained-core-skills-and-deduplication)) |
 | First-person description | Erratic triggering | Rewrite in third person (→ [Description quality](#description-quality)) |
 | Workflow steps in the description | Agent acts on the description, skips the body | Describe what + when only (→ [Description quality](#description-quality)) |
 | Unquoted colon-space or `[ ] < >` in description | Skill silently dropped from the listing | Quote it, or use a `>-` block scalar (→ [Frontmatter](#frontmatter)) |
@@ -629,7 +599,6 @@ Index of failure modes. Each row points at the section that owns the rule.
 | Script defers errors to the model | Flaky runs | Handle in the script (→ [Bundling scripts](#bundling-scripts)) |
 | Unqualified MCP tool name | "tool not found" | Server-qualified name (→ [Allowed Tools](#allowed-tools)) |
 | Trusting `allowed-tools` to restrict | False sense of containment | `disallowed-tools` or permission rules (→ [Security](#security)) |
-| `@`-referencing another skill | Force-loads it, blowing the budget | Cite the identifier in backticks (→ [Cross-skill references](#cross-skill-references)) |
 | Duplicating CLAUDE.md | Conflicting instructions | Facts in CLAUDE.md, procedures in skills (→ [Project Overview](#project-overview)) |
 | Too many installed skills | Discovery degrades for all of them | Prune past ~20-50 (→ [Token budgets](#token-budgets)) |
 | No evals | Cannot prove value | Adversarial cases + baseline run (→ [Evaluation](#evaluation)) |
@@ -645,14 +614,14 @@ Evals MUST be adversarial — they test the skill's **unique value**, not common
 
 Size evaluations to the skill's **Directory (tok)** column in README.md: expect **~10 assertions per 1,000 tokens** of skill content (full directory excluding evals), with a **minimum of 50 assertions**. Examples from the current table:
 
-| Skill           | Directory (tok) | Min assertions |
-| --------------- | --------------- | -------------- |
-| Code style      | 2,613           | 50             |
-| Error handling  | 4,145           | 62             |
-| Testing         | 5,913           | 89             |
-| Design patterns | 9,122           | 137            |
-| Security        | 21,470          | 322            |
-| Benchmark       | 29,081          | 436            |
+| Skill | Directory (tok) | Min assertions |
+| --- | --- | --- |
+| `golang-database` | 7,572 | 76 |
+| `golang-testing` | 7,994 | 80 |
+| `golang-concurrency` | 11,217 | 112 |
+| `golang-idioms` | 17,334 | 173 |
+| `golang-security` | 24,367 | 244 |
+| `golang-performance` | 65,339 | 653 |
 
 Store your evaluation scenarios in `skills/{name}/evals/evals.json`.
 
@@ -670,7 +639,7 @@ Store your evaluation scenarios in `skills/{name}/evals/evals.json`.
 - **Don't let prompt context substitute for skill knowledge.** If the eval describes the problem with enough specificity that the model can reason to the correct answer, the skill becomes redundant. Present the problem as an opaque or misleading scenario where the skill's rule resolves an ambiguity the model would otherwise get wrong.
 - **Keep assertions within a group homogeneous.** Mixing common-knowledge assertions with skill-specific ones in the same eval group produces a partial score that masks both problems — some assertions pass in both conditions (common knowledge), others fail in both (coverage gap). Each eval group should test a single, skill-specific behavior.
 - **Uplift is model-specific.** A measured delta belongs to the model that produced it — the same skill can be neutral, or actively harmful, on a model with different training data and defaults. Re-run, or at least spot-check, on every model the skill is expected to serve before claiming it works.
-- **Isolate the evaluated skill.** When running "without" evals, do NOT load any skill that covers overlapping content — a colliding skill would give the model guidance it shouldn't have, inflating the "without" score and masking the evaluated skill's true uplift. When running "with" evals, load only the skill under test (and its explicit cross-references if needed). For example, when evaluating `golang-error-handling`, do not load `golang-code-style` or `golang-safety` — they contain overlapping error-handling advice that would contaminate the baseline.
+- **Isolate the evaluated skill.** When running "without" evals, do NOT load any skill that covers overlapping content — a colliding skill would give the model guidance it shouldn't have, inflating the "without" score and masking the evaluated skill's true uplift. When running "with" evals, load only the skill under test. For example, when evaluating `golang-idioms`, do not load `golang-code-quality` or `golang-concurrency` during baseline runs so adjacent Go guidance does not contaminate the baseline.
 
 **Anti-patterns to avoid:**
 
@@ -735,8 +704,6 @@ Before starting any task, propose a branch name and ask the developer to confirm
 
 After making changes, suggest the following as next steps for the developer to run. Do NOT execute these automatically.
 
-> **If the skill's scope changed** (new topic added, topic moved to another skill) **or if a skill was added/removed**: update `skills/golang-how-to/SKILL.md` — the skill loading table and the competing clusters section must reflect the current state of the plugin.
-
 1. ~~Validate against the spec: `skills-ref validate ./skills/{name}`~~ (disabled — [skills-ref doesn't support `user-invocable` yet](https://github.com/agentskills/agentskills/issues/105))
 2. Run the portability grep from "Tool names belong in frontmatter, not in the body" (under Allowed Tools) against the changed skill(s). Fix any hit that isn't an `allowed-tools:` line or a labeled generated-artifact block.
 3. Reformat markdowns with `npx prettier --write *.md "**/*.md"` then lint with `markdownlint-cli2 --config .markdownlint-cli2.jsonc ./` — run before measuring tokens, as formatting changes token counts
@@ -754,10 +721,10 @@ For initial evaluation of skills, use Human-as-Judge.
 
 ### After creating a new skill
 
-After writing a new skill body, run the description optimization loop before marking it ready:
+Prefer expanding one of the 12 core skills (via its local `references/` and `assets/`) over adding a new top-level skill. If a genuinely new orthogonal skill is justified, run the description optimization loop before marking it ready:
 
-1. Check whether any existing skill should reference the new skill: dispatch parallel sub-agents (split by scope — e.g. one per group of `skills/*/SKILL.md`) to read the other skills in full and judge whether the new skill's topic, adjacent concepts, or libraries overlap with what they already cover. Where an existing skill touches the same ground, add a `→ See eric642/cc-skills-golang@<new-skill>` cross-reference (in its description and/or body) instead of leaving the two skills to drift apart — see [Atomic skills and deduplication](#atomic-skills-and-deduplication). Bump the `metadata.version` of every skill file edited this way.
-2. Verify the description against quality criteria: contains "Golang", has "Use when"/"Apply when" trigger clause with specific scenarios, no broad anti-patterns (`whenever writing Go code`, `Essential for ANY`, `proactively`), and FQN cross-refs for competing skills (`eric642/cc-skills-golang@<skill>`). Description must stay ≤ 1,000 characters.
+1. Check domain orthogonality against the existing 12 core skills: dispatch parallel sub-agents (split by scope — e.g. one per group of `skills/*/SKILL.md`) to read the other skills in full and verify that no concept is duplicated across two skills. Never add cross-skill `@` or `→ See` pointers between skills — keep every skill self-contained (→ See [Self-contained core skills and deduplication](#self-contained-core-skills-and-deduplication)).
+2. Verify the description against quality criteria: 150–250 characters (~30–55 tokens, hard ceiling ≤ 300 characters), 2–3 concise third-person sentences, front-loads concrete Go domain nouns in the first 50 characters, contains "Golang", has a concrete "Use when ..." trigger clause, avoids broad anti-patterns (`whenever writing Go code`, `Essential for ANY`, `proactively`), contains no cross-skill `@` or `→ See` references, and uses a brief pure-domain exclusion (`Do not use for ...`) only for high-collision pairs.
 3. Follow the [After updating a skill](#after-updating-a-skill) checklist.
 
 ### Checking for outdated skills

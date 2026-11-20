@@ -43,7 +43,7 @@ concurrency:
 
 jobs:
   # ── Job 1: Code quality (suggestion-first) ──────────────────────────────────
-  # Covers: style, naming, documentation
+  # Covers: style, naming, documentation, lint
   quality:
     name: Review — Quality
     runs-on: ubuntu-latest
@@ -94,9 +94,7 @@ jobs:
 
             ## Scope — apply these skill guidelines
 
-            - **Code style** — formatting, comment quality, idiomatic Go patterns (Skill("golang-code-style")).
-            - **Naming** — packages, types, variables, functions, constants (Skill("golang-naming")).
-            - **Documentation** — exported symbols, package-level docs, README impact (Skill("golang-documentation")).
+            - **Code quality** — formatting, idiomatic style, identifier naming (packages, types, variables, functions, constants), documentation (exported symbols, package-level docs, README impact), and linting discipline (Skill("golang-code-quality")).
 
             ## Priority — suggestion-first
 
@@ -123,7 +121,7 @@ jobs:
             Label each comment: 🟡 **SUGGESTION**
 
   # ── Job 2: Correctness (blocking-first) ─────────────────────────────────────
-  # Covers: error handling, code safety, concurrency
+  # Covers: idioms (error handling, safety, structs/interfaces, data structures), concurrency
   correctness:
     name: Review — Correctness
     runs-on: ubuntu-latest
@@ -172,8 +170,7 @@ jobs:
 
             ## Scope — apply these skill guidelines
 
-            - **Error handling** — wrapping, sentinel errors, log-and-return, swallowed errors (Skill("golang-error-handling")).
-            - **Code safety** — nil dereference, map/slice aliasing, integer overflows, uninitialized state (Skill("golang-safety")).
+            - **Go idioms & safety** — error handling (wrapping, sentinel errors, log-and-return, swallowed errors), defensive safety (nil dereference, map/slice aliasing, integer overflows, uninitialized state), struct/interface design, and data structures (Skill("golang-idioms")).
             - **Concurrency** — goroutine lifecycle, mutex usage, channel patterns, context propagation, data races (Skill("golang-concurrency")).
 
             ## Priority — blocking-first
@@ -252,7 +249,7 @@ jobs:
             ## Scope — apply these skill guidelines
 
             - **Security** — injection, auth, crypto misuse, sensitive data exposure, input validation (Skill("golang-security")).
-            - **Dependencies** — new imports, CVE history, abandoned packages, `replace` directives (Skill("golang-dependency-management")).
+            - **Dependencies** — new imports, CVE history, abandoned packages, `replace` directives, library choices (Skill("golang-dependencies")).
 
             ## Priority — blocking-first
 
@@ -279,8 +276,8 @@ jobs:
             - 🟠 **IMPORTANT** — significant risk that requires specific conditions.
             - 🟡 **SUGGESTION** — defense-in-depth improvement; optional but worthwhile.
 
-  # ── Job 4: Tests, performance, observability & modernization ─────────────────
-  # Covers: tests, performance, observability, modernize
+  # ── Job 4: Tests, performance, observability & refactoring ───────────────────
+  # Covers: tests, performance, observability, refactoring & modernization
   quality-depth:
     name: Review — Tests, Performance & Observability
     runs-on: ubuntu-latest
@@ -331,9 +328,9 @@ jobs:
             ## Scope — apply these skill guidelines
 
             - **Tests** — coverage of new code, test quality, table-driven tests, use of t.Helper() (Skill("golang-testing")).
-            - **Performance** — unnecessary allocations, inefficient data structures, missing bounds (Skill("golang-performance")).
+            - **Performance** — unnecessary allocations, inefficient data structures, missing bounds, benchmark and profiling soundness (Skill("golang-performance")).
             - **Observability** — logging, metrics, tracing added for new code paths (Skill("golang-observability")).
-            - **Modernize code** — outdated patterns replaced with Go 1.21+ idioms (Skill("golang-modernize")).
+            - **Refactoring & modernization** — outdated patterns replaced with modern Go idioms and safe structural refactors (Skill("golang-refactoring")).
 
             ## Priority
 
@@ -483,24 +480,24 @@ Pick skills that look relevant. Even if they have a 0.001% chance of applying. R
 
 ## Review Areas
 
-- **Code style** — formatting, comment quality, idiomatic Go patterns (`.copilot/skills/golang-code-style/SKILL.md`)
-- **Naming** — packages, types, variables, functions, constants (`.copilot/skills/golang-naming/SKILL.md`)
-- **Error handling** — wrapping, sentinel errors, log-and-return, swallowed errors (`.copilot/skills/golang-error-handling/SKILL.md`)
+- **Code quality** — formatting, idiomatic style, identifier naming, documentation, and linting (`.copilot/skills/golang-code-quality/SKILL.md`)
+- **Go idioms & safety** — error handling, defensive safety (nil/aliasing/overflow), struct/interface design, and data structures (`.copilot/skills/golang-idioms/SKILL.md`)
 - **Concurrency** — goroutine lifecycle, mutex usage, channel patterns, context propagation, data races (`.copilot/skills/golang-concurrency/SKILL.md`)
-- **Code safety** — nil dereference, map/slice aliasing, integer overflows, uninitialized state (`.copilot/skills/golang-safety/SKILL.md`)
-- **Tests** — coverage of new code, test quality, table-driven tests, use of t.Helper() (`.copilot/skills/golang-testing/SKILL.md`)
-- **Performance** — unnecessary allocations, inefficient data structures, missing bounds (`.copilot/skills/golang-performance/SKILL.md`)
+- **Architecture** — package layout, design patterns, dependency injection, CLI structure (`.copilot/skills/golang-architecture/SKILL.md`)
+- **Database** — parameter binding, connection pooling, transactions, migrations (`.copilot/skills/golang-database/SKILL.md`)
+- **Tests** — coverage of new code, test quality, table-driven tests, use of `t.Helper()` (`.copilot/skills/golang-testing/SKILL.md`)
+- **Performance** — unnecessary allocations, inefficient data structures, profiling, benchmarking, runtime debugging (`.copilot/skills/golang-performance/SKILL.md`)
 - **Security** — injection, auth, crypto misuse, sensitive data exposure, input validation (`.copilot/skills/golang-security/SKILL.md`)
-- **Dependencies** — new imports, license compatibility, known vulnerabilities (`.copilot/skills/golang-dependency-management/SKILL.md`)
-- **Documentation** — exported symbols, package docs, README impact (`.copilot/skills/golang-documentation/SKILL.md`)
+- **Dependencies** — `go.mod` hygiene, new imports, library choices, license compatibility, known vulnerabilities (`.copilot/skills/golang-dependencies/SKILL.md`)
 - **Observability** — logging, metrics, tracing added for new code paths (`.copilot/skills/golang-observability/SKILL.md`)
-- **Modernize code** — outdated patterns replaced with Go 1.21+ idioms (`.copilot/skills/golang-modernize/SKILL.md`)
+- **Refactoring & modernization** — outdated patterns replaced with modern Go idioms and safe structural refactors (`.copilot/skills/golang-refactoring/SKILL.md`)
+- **CI/CD** — GitHub Actions workflows, test/lint pipelines, release automation (`.copilot/skills/golang-ci/SKILL.md`)
 
 ## Priority
 
-- **Blocking-first**: Security, Code safety, Error handling, Concurrency
-- **Important**: Tests, Performance, Dependencies
-- **Suggestion-first**: Code style, Naming, Documentation, Observability, Modernize code
+- **Blocking-first**: Security, Go idioms & safety, Concurrency, Database
+- **Important**: Tests, Performance, Architecture, Dependencies, CI/CD
+- **Suggestion-first**: Code quality, Observability, Refactoring & modernization
 
 ## Severity Labels
 

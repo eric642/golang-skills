@@ -1,6 +1,6 @@
 ---
 name: golang-security
-description: "Security best practices and vulnerability prevention for Golang — injection (SQL, command, XSS), cryptography, path traversal, SSRF and HTTP security headers, cookies, secrets management, memory safety, PII in logs, STRIDE/DREAD threat modeling, plus `gosec` SAST, race detection, and fuzz testing. Apply when writing, reviewing, or auditing Go code for security, or when touching crypto, file or network I/O, secrets, user input, or authentication. Not for non-exploitable defensive bugs such as nil panics or slice aliasing (→ See `eric642/cc-skills-golang@golang-safety` skill), dependency vulnerability scanning with govulncheck (→ See `eric642/cc-skills-golang@golang-dependency-management` skill), or wiring security scanners into CI pipelines (→ See `eric642/cc-skills-golang@golang-continuous-integration` skill)."
+description: "Golang application security covering SQL and command injection, cryptography, SSRF, path traversal, secrets, and gosec SAST audits. Use when hardening or auditing Go code for vulnerabilities. Do not use for accidental nil bugs."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -122,7 +122,7 @@ For the full security review checklist organized by domain (input handling, data
 
 ### Static Analysis & Linting
 
-Security-relevant linters: `bodyclose`, `sqlclosecheck`, `nilerr`, `errcheck`, `govet`, `staticcheck`. See the `eric642/cc-skills-golang@golang-lint` skill for configuration and usage.
+Security-relevant linters: `bodyclose`, `sqlclosecheck`, `nilerr`, `errcheck`, `govet`, `staticcheck`.
 
 For deeper security-specific analysis:
 
@@ -131,12 +131,12 @@ For deeper security-specific analysis:
 go get -tool github.com/securego/gosec/v2/cmd/gosec@latest
 go tool gosec ./...
 
-# Vulnerability scanner — see golang-dependency-management for full govulncheck usage
+# Vulnerability scanner (call-path-aware CVE check)
 go get -tool golang.org/x/vuln/cmd/govulncheck@latest
 go tool govulncheck ./...
 ```
 
-To check the known CVEs of a specific module or version without scanning the whole tree (e.g. when vetting a dependency on pkg.go.dev), → See `eric642/cc-skills-golang@golang-pkg-go-dev` skill.
+Run `govulncheck` in CI and when vetting newly added dependencies to catch reachable CVEs before merging.
 
 ### Security Testing
 
@@ -176,12 +176,6 @@ go test -fuzz=Fuzz
 | Critical | Rolling your own crypto | Custom encryption hasn't been analyzed by cryptographers | Use `crypto/aes` GCM, `golang.org/x/crypto/argon2` |
 
 See **[Security Architecture](./references/architecture.md)** for detailed anti-patterns with Go code examples.
-
-## Cross-References
-
-See `eric642/cc-skills-golang@golang-database`, `eric642/cc-skills-golang@golang-safety`, `eric642/cc-skills-golang@golang-observability`, `eric642/cc-skills-golang@golang-continuous-integration` skills.
-
-- → See `eric642/cc-skills-golang@golang-continuous-integration` skill for automated AI-driven code review in CI using these guidelines
 
 ## Additional Resources
 

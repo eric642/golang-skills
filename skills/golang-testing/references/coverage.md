@@ -44,5 +44,3 @@ go test -cover ./internal/store
 - **Integration tests are invisible** unless the build tag is passed: `go test -tags=integration -coverprofile=...`.
 - **Generated code inflates the number.** Exclude it before setting any threshold, otherwise the metric measures the generator.
 - **A covered line is not an asserted line.** A test that calls a function and ignores its result reports 100% coverage and verifies nothing.
-
-→ See `eric642/cc-skills-golang@golang-continuous-integration` skill for wiring coverage reporting into CI.

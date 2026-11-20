@@ -83,8 +83,6 @@ Editor-integrated as "Rename Symbol" (F2 in most gopls-backed editors).
 
 - **Risk:** Low — but treat any refusal as a real semantic hazard to investigate, not friction to route around by hand-editing instead.
 
-→ See `eric642/cc-skills-golang@golang-naming` skill for what to rename identifiers _to_. This entry covers only _how_ to apply the rename safely at scale.
-
 ## Change Function Declaration (Signature)
 
 - **Motivation:** A parameter list that has grown past what the function actually needs, or that no longer matches how the function is used, makes every call site harder to read and easier to call wrong.
@@ -102,9 +100,7 @@ gopls codeaction -exec -kind=refactor.rewrite.moveParamRight     file.go:#offset
 eg -t template.go -w ./...   # staged migration for adding/generalizing a parameter
 ```
 
-- **Risk:** Medium for a single-parameter add/remove with a handful of call sites; High when the signature changes across many callers with no mechanical one-shot action available.
-
-→ See `eric642/cc-skills-golang@golang-design-patterns` skill for converting a long parameter list into an options struct rather than just reordering or trimming it.
+- **Risk:** Medium for a single-parameter add/remove with a handful of call sites; High when the signature changes across many callers with no mechanical one-shot action available. (For long parameter lists, consider introducing an options struct rather than just reordering.)
 
 ## Move Function / Move Field / Move Type
 
@@ -122,9 +118,7 @@ gopls codeaction -exec -kind=refactor.extract.toNewFile file.go:#start,#end   # 
 
 Cross-package moves are the manual type-alias/wrapper sequence above — there is no equivalent one-shot command.
 
-- **Risk:** High.
-
-→ See `eric642/cc-skills-golang@golang-project-layout` skill for target package layout. See [structural.md](structural.md) for the full type-alias gradual-repair recipe.
+- **Risk:** High. See [structural.md](structural.md) for the full type-alias gradual-repair recipe.
 
 ## Split Package / Merge Package
 
@@ -141,8 +135,6 @@ gopls codeaction -exec -kind=source.splitPackage file.go   # experimental; split
 
 - **Risk:** High.
 
-→ See `eric642/cc-skills-golang@golang-project-layout` skill for target package layout.
-
 ## Replace Nested Conditional with Guard Clauses
 
 - **Motivation:** Deep `if`/`else` nesting forces a reader to hold every outer condition in mind to understand an inner branch; guard clauses let each precondition exit on its own line and leave only the main path in the body.
@@ -156,17 +148,13 @@ gopls codeaction -exec -kind=refactor.rewrite.invertIf file.go:#offset
 
 - **Risk:** Low.
 
-→ See `eric642/cc-skills-golang@golang-code-style` skill for the full early-return style rule this refactor works toward.
-
 ## Introduce Parameter Object
 
 - **Motivation:** When the same group of parameters keeps showing up together across several functions, the group itself is a concept that deserves a name and a single place to add validation or a new field.
 - **Smell trigger:** Data Clumps — the same cluster of parameters (or fields) recurring together — or a Long Parameter List where several parameters are conceptually one unit.
 - **Go mechanics:** Define a struct that holds the recurring parameter group, then change each affected function's signature to take the struct instead of the individual values. gopls has a planned "Extract parameter struct" action tracked as golang/go#65552; as of this writing it is not yet generally available. Until it lands, treat this as an Extract-Variable-style manual step (define the struct, construct it at each call site) followed by a signature change at each call site — the same staged approach as Change Function Declaration above.
 - **Tool:** No dedicated gopls action yet (golang/go#65552 tracks it). Combine manual struct extraction with the signature-change tooling above.
-- **Risk:** Medium.
-
-→ See `eric642/cc-skills-golang@golang-design-patterns` skill for functional options as the alternative when the struct exists to configure construction rather than to group a plain data clump.
+- **Risk:** Medium. (Consider functional options when the struct configures construction rather than grouping a plain data clump.)
 
 ## Replace Conditional with Polymorphism
 
@@ -175,8 +163,6 @@ gopls codeaction -exec -kind=refactor.rewrite.invertIf file.go:#offset
 - **Go mechanics:** Define an interface with one method per behavior that currently varies by case, then give each case its own implementing type. Callers that used to switch on the tag now just call the interface method, and dispatch happens through Go's interface mechanism instead of a repeated `switch`.
 - **Tool:** Manual — no mechanical tool performs this transform; use Extract Function/Interface steps to carve out each case's behavior into its own type, then Rename/Inline to clean up the seams.
 - **Risk:** Medium.
-
-→ See `eric642/cc-skills-golang@golang-design-patterns` skill for the target interface-dispatch pattern.
 
 ## Hide Delegate / Remove Middle Man
 
@@ -226,10 +212,6 @@ Divergent Change and Shotgun Surgery point to opposite fixes even though both ar
 
 ## Cross-References
 
-- → See [structural.md](structural.md) for the full type-alias gradual-repair recipe used by Move Function/Field/Type, and for breaking import cycles ahead of a package split or merge.
-- → See [safety-net.md](safety-net.md) for the coverage-adaptive strategy that determines when Sprout/Wrap Method should replace an in-place edit.
-- → See [go-tooling.md](go-tooling.md) for the full gopls code-action reference, `gofmt -r`, `eg`, and `gopatch` invocation details.
-- → See `eric642/cc-skills-golang@golang-naming` skill for what to rename identifiers _to_.
-- → See `eric642/cc-skills-golang@golang-project-layout` skill for target package/directory layout.
-- → See `eric642/cc-skills-golang@golang-design-patterns` skill for options structs, consumer-side interfaces, and interface-dispatch patterns referenced throughout this catalog.
-- → See `eric642/cc-skills-golang@golang-code-style` skill for the guard-clause/early-return style rule.
+- [structural.md](structural.md) — the full type-alias gradual-repair recipe used by Move Function/Field/Type, and breaking import cycles ahead of a package split or merge.
+- [safety-net.md](safety-net.md) — the coverage-adaptive strategy that determines when Sprout/Wrap Method should replace an in-place edit.
+- [go-tooling.md](go-tooling.md) — the full gopls code-action reference, `gofmt -r`, `eg`, and `gopatch` invocation details.

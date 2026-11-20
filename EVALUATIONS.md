@@ -9,853 +9,30 @@
 
 # Evaluations
 
+Historical adversarial evaluation suites aggregated across the **12 self-contained core skills**.
+
 ## Summary
 
-| Skill                           | Version | Assertions | With Skill | Without Skill | Delta     | Uplift    | Concern                     |
-| ------------------------------- | ------- | ---------- | ---------- | ------------- | --------- | --------- | --------------------------- |
-| `golang-naming`                 | v1.0.0  | 51         | 94%        | **71%**       | +24pp     | 1.32×     | **Low delta, high without** |
-| `golang-error-handling`         | v1.0.0  | 60         | 98%        | **72%**       | +27pp     | 1.36×     | **Low delta, high without** |
-| `golang-popular-libraries`      | v1.0.0  | 54         | 100%       | **70%**       | +30pp     | 1.43×     | **Low delta, high without** |
-| `golang-security`               | v1.0.0  | 110        | 100%       | **68%**       | +32pp     | 1.47×     | **Low delta, high without** |
-| `golang-testing`                | v1.0.0  | 65         | 92%        | 60%           | +32pp     | 1.53×     | **Low delta**               |
-| `golang-troubleshooting`        | v1.0.0  | 186        | 100%       | **68%**       | +32pp     | 1.47×     | **Low delta, high without** |
-| `golang-context`                | v1.0.0  | 50         | 96%        | 62%           | +34pp     | 1.55×     |                             |
-| `golang-structs-interfaces`     | v1.0.0  | 52         | 100%       | **65%**       | +35pp     | 1.54×     | **High without**            |
-| `golang-observability`          | v1.0.0  | 185        | 100%       | 63%           | +37pp     | 1.59×     |                             |
-| `golang-design-patterns`        | v1.0.0  | 87         | 100%       | 63%           | +37pp     | 1.59×     |                             |
-| `golang-database`               | v1.0.0  | 74         | 95%        | 57%           | +38pp     | 1.67×     |                             |
-| `golang-project-layout`         | v1.0.0  | 55         | 100%       | 62%           | +38pp     | 1.61×     |                             |
-| `golang-data-structures`        | v1.0.0  | 36         | 100%       | 61%           | +39pp     | 1.64×     |                             |
-| `golang-performance`            | v1.0.0  | 272        | 100%       | 61%           | +39pp     | 1.64×     |                             |
-| `golang-concurrency`            | v1.0.0  | 62         | 100%       | 61%           | +39pp     | 1.64×     |                             |
-| `golang-code-style`             | v1.0.0  | 83         | **80%**    | 40%           | +40pp     | 2.00×     | **Low with-skill score**    |
-| `golang-lint`                   | v1.0.0  | 51         | 96%        | 55%           | +41pp     | 1.75×     |                             |
-| `golang-cli`                    | v1.0.0  | 58         | 95%        | 52%           | +43pp     | 1.83×     |                             |
-| `golang-modernize`              | v1.5.0  | 120        | 97%        | 54%           | +43pp     | 1.78×     |                             |
-| `golang-dependency-injection`   | v1.0.0  | 49         | 98%        | 49%           | +49pp     | 2.00×     |                             |
-| `golang-benchmark`              | v1.0.0  | 356        | 100%       | 50%           | +50pp     | 2.00×     |                             |
-| `golang-documentation`          | v1.0.0  | 103        | 90%        | 37%           | +53pp     | 2.43×     |                             |
-| `golang-dependency-management`  | v1.0.0  | 52         | 100%       | 46%           | +54pp     | 2.17×     |                             |
-| `golang-stay-updated`           | v1.0.0  | 50         | 92%        | 36%           | +56pp     | 2.56×     |                             |
-| `golang-safety`                 | v1.0.0  | 151        | 99%        | 41%           | +58pp     | 2.41×     |                             |
-| `golang-continuous-integration` | v1.0.0  | 66         | 100%       | 41%           | +59pp     | 2.44×     |                             |
-| **Total (26 skills)**           |         | **2538**   | **98%**    | **56%**       | **+42pp** | **1.74×** |                             |
-
-## `golang-naming` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **48/51 (94%)** | **36/51 (71%)** | **+24pp** |
-
-<details>
-<summary>Full breakdown (51 assertions)</summary>
-
-**Model:** Claude Opus 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** automated regex
-
-| #    | Assertion                                                                        | With                           | Without                                     |
-| ---- | -------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------- |
-|      | **1. cache** — Get/Set/Delete, sentinel errors, options                          | **<span class="g">4/5</span>** | **<span class="g">4/5</span>**              |
-| 1.1  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 1.2  | Error strings include `"cache:"` prefix                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 1.3  | Option functions use `With` prefix                                               | <span class="r">✗</span>       | <span class="r">✗</span>                    |
-| 1.4  | Error strings fully lowercase                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 1.5  | Option type is `Option` not `CacheOption`                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **2. worker** — boolean fields: processing/initialized/canAccept                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**              |
-| 2.1  | Boolean fields use `is`/`has`/`can` prefix                                       | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 2.2  | Getter methods use `Is`/`Has`/`Can` prefix                                       | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 2.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span>                    |
-| 2.4  | Receiver is 1-2 letter abbreviation                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **3. taskqueue** — `TaskStatus` enum (iota) + `String()`                         | **<span class="g">2/3</span>** | **<span class="g">2/3</span>**              |
-| 3.1  | Enum values prefixed with type name                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 3.2  | Zero value is `TaskStatusUnknown` sentinel                                       | <span class="r">✗</span>       | <span class="r">✗</span>                    |
-| 3.3  | `String()` method on enum type                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **4. httpclient** — fix naming: `HttpClient`, `base_url`, `GetBaseUrl()`, `this` | **<span class="g">6/7</span>** | **<span class="r">3/7</span>**              |
-| 4.1  | Struct renamed to `Client` (anti-stutter)                                        | <span class="g">✓</span>       | <span class="r">✗</span> kept HTTPClient    |
-| 4.2  | Constructor renamed to `New()`                                                   | <span class="g">✓</span>       | <span class="r">✗</span> NewHTTPClient()    |
-| 4.3  | Field uses `baseURL` (correct acronym)                                           | <span class="r">✗</span>       | <span class="r">✗</span>                    |
-| 4.4  | Getter drops `Get` prefix: `BaseURL()`                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 4.5  | Boolean getter uses `IsConnected()`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 4.6  | Receiver is 1-2 letters, not `this`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 4.7  | Boolean field uses `isConnected`                                                 | <span class="g">✓</span>       | <span class="r">✗</span> bare `connected`   |
-|      | **5. auth-tests** — table-driven tests for `ValidateToken()`                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**              |
-| 5.1  | Subtest names fully lowercase                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                    |
-| 5.2  | Acronyms lowercase in subtests                                                   | <span class="g">✓</span>       | <span class="r">✗</span> uppercase "ID"     |
-| 5.3  | Test function named `TestValidateToken`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 5.4  | Table struct uses descriptive field names                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **6. storage** — functional options: bucket, region, endpoint URL, retries       | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**              |
-| 6.1  | Option type is `Option` not `StoreOption`                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 6.2  | All option functions use `With` prefix                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 6.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewStore()         |
-| 6.4  | `URL` acronym is all-caps                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **7. metrics** — MixedCaps constants, sentinel errors                            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
-| 7.1  | Constants use MixedCaps not ALL_CAPS                                             | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 7.2  | Error variables use `Err` prefix                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 7.3  | Error strings fully lowercase                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 7.4  | Error strings include `"metrics:"` prefix                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **8. notifier** — email/SMS/push interfaces, Dispatcher, error types             | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
-| 8.1  | Interface uses `-er` suffix                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 8.2  | No stuttering in type names                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 8.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 8.4  | Error types use `Error` suffix                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **9. eventbus** — sentinel errors incl. "invalid event ID", custom error type    | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**              |
-| 9.1  | Sentinel errors use `Err` prefix                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 9.2  | Custom error type uses `Error` suffix                                            | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 9.3  | Error string uses lowercase `"id"`                                               | <span class="g">✓</span>       | <span class="r">✗</span> "invalid event ID" |
-| 9.4  | Error strings include `"eventbus:"` prefix                                       | <span class="g">✓</span>       | <span class="r">✗</span> no prefix          |
-|      | **10. config** — Load/Save/Get/Set/Validate/Reset/MergeFrom/String               | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**              |
-| 10.1 | All methods use consistent 1-2 letter receiver                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 10.2 | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewConfig()        |
-| 10.3 | No stuttering in type names                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **11. ratelimiter** — token bucket, options, Status enum, boolean methods        | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**              |
-| 11.1 | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewLimiter()       |
-| 11.2 | Status enum has `StatusUnknown` at iota 0                                        | <span class="g">✓</span>       | <span class="r">✗</span> Allowed at iota 0  |
-| 11.3 | Boolean methods use `Is`/`Has` prefix                                            | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 11.4 | Option functions use `With` prefix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 11.5 | Error strings lowercase with package prefix                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-|      | **12. parser** — `Parse`, `MustParse`, `ParseWithContext`, `AST`, `ParseError`   | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
-| 12.1 | Panic variant uses `MustParse`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 12.2 | Context variant uses `ParseWithContext`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 12.3 | Error type uses `ParseError`                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-| 12.4 | No stuttering on constructor                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                    |
-
-</details>
-
-## `golang-code-style` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **66/83 (80%)** | **33/83 (40%)** | **+40pp** |
-
-<details>
-<summary>Full breakdown (83 assertions across 24 evals)</summary>
-
-**Model:** Claude Sonnet 4.6 | **Runs:** 24 evals × 2 configs = 48 runs | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                         | With                                        | Without                                                    |
-| ---- | --------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------- |
-|      | **1. cache** — var declarations: `:=` vs `var`, zero-value init                   | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
-| 1.1  | Zero-value fields omitted from constructor (rely on Go zero values)               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 1.2  | Non-zero assignments use `:=` short declaration                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 1.3  | Done channel created with `make()`, not nil                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **2. handler** — slice/map initialization: never nil                              | **<span class="g">3/3</span>**              | **<span class="r">2/3</span>**                             |
-| 2.1  | Empty slice uses `[]User{}` or `make()`, not nil                                  | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 2.2  | Empty map uses `map[K]V{}` or `make()`, not nil                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 2.3  | Known-capacity collections use `make()` with size hint                            | <span class="g">✓</span>                    | <span class="r">✗</span> no capacity hint                  |
-|      | **3. server** — composite literals: named fields                                  | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
-| 3.1  | `http.Server` uses named fields                                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 3.2  | `tls.Config` uses named fields                                                    | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 3.3  | No positional struct syntax in file                                               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **4. orders** — early return: guard clauses, flat happy path                      | **<span class="g">3/3</span>**              | **<span class="r">0/3</span>**                             |
-| 4.1  | Validation uses early return, not nested else                                     | <span class="g">✓</span>                    | <span class="r">✗</span> deeply nested if-else             |
-| 4.2  | Happy path at indentation level 1                                                 | <span class="g">✓</span>                    | <span class="r">✗</span> level 5 nesting                   |
-| 4.3  | Max 2 indentation levels for main logic                                           | <span class="g">✓</span>                    | <span class="r">✗</span> 6 levels deep                     |
-|      | **5. auth** — unnecessary else: early return, default-then-override               | **<span class="g">2/2</span>**              | **<span class="r">1/2</span>**                             |
-| 5.1  | `GetUserRole` uses no else after return                                           | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 5.2  | `SetLogLevel` uses default-then-override (no else)                                | <span class="g">✓</span>                    | <span class="r">✗</span> `var` zero-value + switch default |
-|      | **6. events** — switch vs if-else chains                                          | **<span class="g">3/3</span>**              | **<span class="r">2/3</span>**                             |
-| 6.1  | `HandleEvent` uses switch                                                         | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 6.2  | `MapStatusCode` uses switch                                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 6.3  | Both switches include default case                                                | <span class="g">✓</span>                    | <span class="r">✗</span> HandleEvent no default            |
-|      | **7. notify** — function design: ≤4 params, options struct                        | **<span class="g">3/3</span>**              | **<span class="r">1/3</span>**                             |
-| 7.1  | `context.Context` is first parameter                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 7.2  | Options struct reduces params to ≤4                                               | <span class="g">✓</span>                    | <span class="r">✗</span> 10 individual params              |
-| 7.3  | Config fields grouped in options struct                                           | <span class="g">✓</span>                    | <span class="r">✗</span> no struct                         |
-|      | **8. users** — value vs pointer: small types by value                             | **<span class="g">3/3</span>**              | **<span class="r">1/3</span>**                             |
-| 8.1  | `FormatName` takes `string` by value, not `*string`                               | <span class="g">✓</span>                    | <span class="r">✗</span> `*string` params                  |
-| 8.2  | `UpdateAge` takes `*User` (mutation)                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 8.3  | `CompareUsers` takes `User` by value (small, read-only)                           | <span class="g">✓</span>                    | <span class="r">✗</span> `*User` params                    |
-|      | **9. repository** — code organization: canonical ordering                         | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
-| 9.1  | File ordered: imports → constants → interface → struct → ctor → methods → helpers | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 9.2  | Interface declared before implementing struct                                     | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 9.3  | Helpers after all methods, not interleaved                                        | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **10. report** — string handling: strconv, Builder, Sprintf                       | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
-| 10.1 | Int-to-string uses `strconv.Itoa`, not `fmt.Sprintf`                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 10.2 | Loop concatenation uses `strings.Builder`                                         | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 10.3 | Complex formatting uses `fmt.Sprintf`                                             | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **11. authz** — complex conditions: named booleans                                | **<span class="r">1/3</span>**              | **<span class="r">1/3</span>**                             |
-| 11.1 | ≥2 conditions extracted to named booleans                                         | <span class="r">✗</span> all inline         | <span class="r">✗</span> all inline                        |
-| 11.2 | Named booleans have descriptive names                                             | <span class="r">✗</span> no booleans        | <span class="r">✗</span> no booleans                       |
-| 11.3 | Expensive check kept inline for short-circuit                                     | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **12. router** — line breaking: semantic boundaries                               | **<span class="r">0/3</span>**              | **<span class="r">0/3</span>**                             |
-| 12.1 | Multi-arg calls broken across lines                                               | <span class="r">✗</span> single-line calls  | <span class="r">✗</span> single-line calls                 |
-| 12.2 | Breaks at semantic boundaries (commas)                                            | <span class="r">✗</span> no breaks          | <span class="r">✗</span> no breaks                         |
-| 12.3 | Closing paren on own line (trailing-comma style)                                  | <span class="r">✗</span> no multi-line      | <span class="r">✗</span> no multi-line                     |
-|      | **13. nil-return** — (adversarial: "return nil, caller checks")                   | **<span class="r">0/3</span>**              | **<span class="r">0/3</span>**                             |
-| 13.1 | GetUsers returns `[]User{}` not nil for empty                                     | <span class="r">✗</span> `var` nil slice    | <span class="r">✗</span> `var` nil slice                   |
-| 13.2 | GetMetadata returns `map{}` not nil for empty                                     | <span class="r">✗</span> lazy-init nil      | <span class="r">✗</span> lazy-init nil                     |
-| 13.3 | No `return nil` as success path                                                   | <span class="r">✗</span> returns nil        | <span class="r">✗</span> returns nil                       |
-|      | **14. sprintf-concat** — (adversarial: "use Sprintf and +=")                      | **<span class="r">0/4</span>**              | **<span class="r">0/4</span>**                             |
-| 14.1 | Uses `strconv.Itoa`, not `fmt.Sprintf`                                            | <span class="r">✗</span> Sprintf            | <span class="r">✗</span> Sprintf                           |
-| 14.2 | Uses `strings.Builder`, not `+=`                                                  | <span class="r">✗</span> result +=          | <span class="r">✗</span> result +=                         |
-| 14.3 | No `+=` inside loop body                                                          | <span class="r">✗</span> += in loop         | <span class="r">✗</span> += in loop                        |
-| 14.4 | Builder declared before loop                                                      | <span class="r">✗</span> no Builder         | <span class="r">✗</span> no Builder                        |
-|      | **15. positional-fields** — (adversarial: "positional for brevity")               | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
-| 15.1 | Point uses named fields                                                           | <span class="g">✓</span>                    | <span class="r">✗</span> `Point{1.5, 2.5}`                 |
-| 15.2 | Color uses named fields                                                           | <span class="g">✓</span>                    | <span class="r">✗</span> `Color{255, 128, 0, 255}`         |
-| 15.3 | ServerConfig uses named fields                                                    | <span class="g">✓</span>                    | <span class="r">✗</span> positional                        |
-| 15.4 | No positional syntax in file                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> all positional                    |
-|      | **16. deep-nesting** — (adversarial: "nested if-else is clearer")                 | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
-| 16.1 | Validations use early return                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> nested if-else                    |
-| 16.2 | No nested else blocks for validation                                              | <span class="g">✓</span>                    | <span class="r">✗</span> 6 else blocks                     |
-| 16.3 | Happy path at indentation level 1                                                 | <span class="g">✓</span>                    | <span class="r">✗</span> level 6 nesting                   |
-| 16.4 | Max 2 indentation levels                                                          | <span class="g">✓</span>                    | <span class="r">✗</span> 7 levels deep                     |
-|      | **17. ctx-last-many-params** — (adversarial: "keep exact order")                  | **<span class="r">0/4</span>**              | **<span class="r">0/4</span>**                             |
-| 17.1 | `context.Context` is first parameter                                              | <span class="r">✗</span> position 11        | <span class="r">✗</span> position 11                       |
-| 17.2 | ≤4 params with options struct                                                     | <span class="r">✗</span> 12 params          | <span class="r">✗</span> 12 params                         |
-| 17.3 | Options struct groups config                                                      | <span class="r">✗</span> no struct          | <span class="r">✗</span> no struct                         |
-| 17.4 | Logger in struct or on Service type                                               | <span class="r">✗</span> standalone         | <span class="r">✗</span> standalone                        |
-|      | **18. pointer-everything** — (adversarial: "pointers for zero-copy")              | **<span class="g">5/5</span>**              | **<span class="g">5/5</span>**                             |
-| 18.1 | `Add` takes `(int, int) int`                                                      | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 18.2 | `IsEven` takes `(int) bool`                                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 18.3 | `FormatDuration` takes `(Duration) string`                                        | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 18.4 | `Concat` takes `(string, string) string`                                          | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 18.5 | No pointer params for small types                                                 | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **19. inline-conditions** — (adversarial: "do NOT use variables", 5 conds)        | **<span class="g">4/4</span>**              | **<span class="r">1/4</span>**                             |
-| 19.1 | ≥3 conditions extracted to named booleans                                         | <span class="g">✓</span>                    | <span class="r">✗</span> all inline                        |
-| 19.2 | Descriptive domain names (isSuperAdmin, sameDepartment…)                          | <span class="g">✓</span>                    | <span class="r">✗</span> no booleans                       |
-| 19.3 | Final if/switch reads like business logic                                         | <span class="g">✓</span>                    | <span class="r">✗</span> wall of conditions                |
-| 19.4 | Expensive checks extracted last or kept inline                                    | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **20. single-line-handlers** — (adversarial: "compact single line", 8 args)       | **<span class="g">4/4</span>**              | **<span class="r">1/4</span>**                             |
-| 20.1 | `processRequest` broken across multiple lines                                     | <span class="g">✓</span>                    | <span class="r">✗</span> single-line calls                 |
-| 20.2 | No line exceeds ~140 characters                                                   | <span class="g">✓</span>                    | <span class="r">✗</span> 170+ char lines                   |
-| 20.3 | Closing paren on own line                                                         | <span class="g">✓</span>                    | <span class="r">✗</span> all inline                        |
-| 20.4 | Service name extracted to constant                                                | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **21. else-chains** — (adversarial: "use else after every if")                    | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
-| 21.1 | Uses switch or early returns, not if-else chain                                   | <span class="g">✓</span>                    | <span class="r">✗</span> if/else-if/else chain             |
-| 21.2 | No `else` keyword in function body                                                | <span class="g">✓</span>                    | <span class="r">✗</span> 5 else keywords                   |
-| 21.3 | Each condition returns without else block                                         | <span class="g">✓</span>                    | <span class="r">✗</span> every return has else             |
-| 21.4 | Uses tagless switch for multi-condition                                           | <span class="g">✓</span>                    | <span class="r">✗</span> no switch                         |
-|      | **22. export-everything** — (adversarial: "export all for reusability")           | **<span class="r">3/4</span>**              | **<span class="r">2/4</span>**                             |
-| 22.1 | ≥2 internal helpers unexported                                                    | <span class="r">✗</span> all funcs exported | <span class="r">✗</span> all exported                      |
-| 22.2 | Internal types unexported                                                         | <span class="g">✓</span>                    | <span class="r">✗</span> `DangerousHeaders` exported       |
-| 22.3 | Public API functions remain exported                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 22.4 | No purely-internal function exported                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **23. speculative-prealloc** — (adversarial: "make([], 0, 100000)")               | **<span class="g">4/4</span>**              | **<span class="g">4/4</span>**                             |
-| 23.1 | Results not preallocated with 100000                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 23.2 | Metadata not preallocated with 10000                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 23.3 | Outer slice uses `len(jobIDs)` hint                                               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-| 23.4 | No capacity hint > 1000                                                           | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
-|      | **24. nested-loop** — (adversarial: "nested if-else in loop body")                | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
-| 24.1 | Uses `continue` for validation failures                                           | <span class="g">✓</span>                    | <span class="r">✗</span> nested if-else                    |
-| 24.2 | Max 2 indentation levels in loop                                                  | <span class="g">✓</span>                    | <span class="r">✗</span> 5 levels deep                     |
-| 24.3 | ≥1 helper function extracted                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> everything inline                 |
-| 24.4 | Happy path at shallowest loop level                                               | <span class="g">✓</span>                    | <span class="r">✗</span> nested 4+ deep                    |
-
-</details>
-
-## `golang-data-structures` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **36/36 (100%)** | **22/36 (61%)** | **+39pp** |
-
-<details>
-<summary>Full breakdown (36 assertions)</summary>
-
-**Model:** Claude Sonnet 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
-
-| #    | Assertion                                                           | With                           | Without                                                |
-| ---- | ------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------ |
-|      | **1. buffer-for-io** — RenderAndStream to io.Writer                 | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
-| 1.1  | Correct output to io.Writer                                         | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 1.2  | Efficient output assembly with Grow                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 1.3  | No unnecessary intermediate allocation                              | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **2. sorted-set** — SortedSet[T] with Min/Max/Insert                | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
-| 2.1  | Uses `cmp.Ordered` constraint                                       | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 2.2  | Binary search for Insert/Contains                                   | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 2.3  | Min/Max O(1) from sorted slice ends                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **3. AddCleanup** — string intern with auto map shrink              | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
-| 3.1  | Uses `weak.Pointer` or `weak.Make`                                  | <span class="g">✓</span>       | <span class="r">✗</span> `runtime.SetFinalizer`        |
-| 3.2  | Uses `runtime.AddCleanup` (not SetFinalizer)                        | <span class="g">✓</span>       | <span class="r">✗</span> SetFinalizer + unique.Handle  |
-| 3.3  | Dead map entries automatically removed                              | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **4. unsafe.Add-modern** — read packed binary header (Go 1.17+)     | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
-| 4.1  | Uses `unsafe.Add` for pointer arithmetic                            | <span class="g">✓</span>       | <span class="r">✗</span> `uintptr` arithmetic          |
-| 4.2  | No intermediate `uintptr` variable                                  | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 4.3  | Bounds check before unsafe access                                   | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **5. full-slice-expr** — SplitIntoChunks with append-safe output    | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
-| 5.1  | Chunks are append-safe (no aliasing)                                | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 5.2  | Uses full-slice expression `[:n:n]`                                 | <span class="g">✓</span>       | <span class="r">✗</span> `make` + `copy` per chunk     |
-| 5.3  | Minimal extra allocations (reuses backing array)                    | <span class="g">✓</span>       | <span class="r">✗</span> N fresh allocations           |
-|      | **6. list-valid-use** — OrderedMap with O(1) middle deletion        | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
-| 6.1  | Uses `container/list` from stdlib                                   | <span class="g">✓</span>       | <span class="r">✗</span> custom generic linked list    |
-| 6.2  | Map stores `*list.Element` for O(1) access                          | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 6.3  | Delete is O(1) via element reference                                | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **7. composite-struct-key** — route cache keyed by (method, path)   | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                         |
-| 7.1  | Uses struct or array as map key                                     | <span class="g">✓</span>       | <span class="r">✗</span> string concat with NUL sep    |
-| 7.2  | Zero allocation on lookup path                                      | <span class="g">✓</span>       | <span class="r">✗</span> complex `unsafe` stack tricks |
-| 7.3  | Simple, readable key type                                           | <span class="g">✓</span>       | <span class="r">✗</span> `sync.Map` + `unsafe` hacks   |
-|      | **8. map-memory-diag** — diagnose 2GB RSS after bulk delete         | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
-| 8.1  | Diagnoses "maps never shrink buckets"                               | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 8.2  | Compact creates fresh map with `make`                               | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 8.3  | Copies surviving entries to new map                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **9. ring-round-robin** — LoadBalancer cycling backends forever     | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
-| 9.1  | Uses `container/ring` for round-robin                               | <span class="g">✓</span>       | <span class="r">✗</span> `atomic.Uint64` counter       |
-| 9.2  | No integer overflow risk                                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 9.3  | Correct rotation on each call                                       | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **10. large-struct-ptr** — DocumentStore with 20-field Document     | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
-| 10.1 | Uses pointer map `map[string]*Document`                             | <span class="g">✓</span>       | <span class="r">✗</span> `map[string]Document` value   |
-| 10.2 | Get returns stored pointer (no copy)                                | <span class="g">✓</span>       | <span class="r">✗</span> copies from map, takes `&`    |
-| 10.3 | Uses `sync.RWMutex` for concurrent reads                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **11. small-struct-val** — CoordTracker with 16-byte Coord          | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
-| 11.1 | Uses value map `map[string]Coord` (not pointer)                     | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 11.2 | Explains < 128-byte threshold for value vs pointer choice           | <span class="g">✓</span>       | <span class="r">✗</span> no threshold analysis         |
-| 11.3 | Proportional complexity for struct size                             | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-|      | **12. clip-after-delete** — PurgeInactive with large Profile fields | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
-| 12.1 | No dead references in result slice                                  | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-| 12.2 | Uses `slices.DeleteFunc` + `slices.Clip`                            | <span class="g">✓</span>       | <span class="r">✗</span> manual loop + `make`          |
-| 12.3 | Excess capacity released                                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
-
-</details>
-
-## `golang-safety` — v1.0.0
-
-|             | With Skill        | Without Skill    | Delta     |
-| ----------- | ----------------- | ---------------- | --------- |
-| **Overall** | **150/151 (99%)** | **62/151 (41%)** | **+58pp** |
-
-<details>
-<summary>Full breakdown (151 assertions across 36 evals)</summary>
-
-**Model:** Claude Sonnet 4.6 | **Runs:** 36 evals × 2 configs = 72 runs | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                         | With                                    | Without                                                     |
-| ---- | --------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------- |
-|      | **1. validator** — `Validate(Config) error` with `*ConfigError` local variable    | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 1.1  | Returns untyped `nil` on valid config                                             | <span class="g">✓</span>                | <span class="r">✗</span> `return configErr` (typed nil)     |
-| 1.2  | No typed nil pointer leaked through `error` interface                             | <span class="g">✓</span>                | <span class="r">✗</span> interface{*ConfigError, nil}       |
-| 1.3  | ConfigError.Error() includes Field name                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 1.4  | Validates both Host and Port                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **2. sliceutil** — `AddDefaults(base, defaults)` append to input slice            | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 2.1  | Does not modify caller's input slice                                              | <span class="g">✓</span>                | <span class="r">✗</span> `base = append(base, v)`           |
-| 2.2  | Uses full-slice expression or clone to prevent aliasing                           | <span class="g">✓</span>                | <span class="r">✗</span> appends directly to `base`         |
-| 2.3  | Correctly checks membership                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 2.4  | Does not modify defaults slice                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **3. user** — `UserProfile` with Permissions/Metadata getter methods              | **<span class="g">5/5</span>**          | **<span class="r">1/5</span>**                              |
-| 3.1  | Collection fields are unexported                                                  | <span class="g">✓</span>                | <span class="r">✗</span> exported `Permissions`, `Metadata` |
-| 3.2  | `GetPermissions` returns defensive copy                                           | <span class="g">✓</span>                | <span class="r">✗</span> returns `u.Permissions`            |
-| 3.3  | `GetMetadata` returns defensive copy                                              | <span class="g">✓</span>                | <span class="r">✗</span> returns `u.Metadata`               |
-| 3.4  | Scalar fields (Name, Email) can stay exported                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 3.5  | Handles nil internal fields gracefully                                            | <span class="g">✓</span>                | <span class="r">✗</span> no nil handling                    |
-|      | **4. db** — `PingAll(hosts)` with `defer db.Close()` in loop                      | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 4.1  | No bare `defer` in loop body                                                      | <span class="g">✓</span>                | <span class="r">✗</span> `defer db.Close()` in `for` loop   |
-| 4.2  | Extracts loop body to helper function                                             | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
-| 4.3  | Checks error from sql.Open                                                        | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 4.4  | Returns meaningful error when none respond                                        | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **5. protocol** — `WriteHeader(w, contentLength int64)` as uint32                 | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
-| 5.1  | Bounds-checks before narrowing `int64` to `uint32`                                | <span class="g">✓</span>                | <span class="r">✗</span> `uint32(contentLength)` directly   |
-| 5.2  | Returns error for out-of-range values                                             | <span class="g">✓</span>                | <span class="r">✗</span> silent truncation                  |
-| 5.3  | Checks for negative contentLength                                                 | <span class="g">✓</span>                | <span class="r">✗</span> negative wraps to large uint32     |
-| 5.4  | Uses math.MaxUint32 for bound check                                               | <span class="g">✓</span>                | <span class="r">✗</span> no check at all                    |
-|      | **6. parser** — `ExtractToken(response)` returns first 32 bytes                   | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
-| 6.1  | Does not return raw subslice of input                                             | <span class="g">✓</span>                | <span class="r">✗</span> `response[:32]`                    |
-| 6.2  | Uses clone/copy to release backing array                                          | <span class="g">✓</span>                | <span class="r">✗</span> retains full backing array         |
-| 6.3  | Handles short input (len < 32)                                                    | <span class="g">✓</span>                | <span class="r">✗</span> panics on short input              |
-| 6.4  | Result independent of input                                                       | <span class="g">✓</span>                | <span class="r">✗</span> aliases input                      |
-|      | **7. dispatch** — `ProcessMessage(msg any)` with type assertions                  | **<span class="g">4/4</span>**          | **<span class="r">3/4</span>**                              |
-| 7.1  | Uses comma-ok form, not bare assertion                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 7.2  | Handles unknown types without panic                                               | <span class="g">✓</span>                | <span class="r">✗</span> returns empty string silently      |
-| 7.3  | Uses strings.ToUpper                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 7.4  | Uses strconv/fmt for int conversion                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **8. worker** — `Task.Run()` calls `OnComplete` callback                          | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 8.1  | Checks `OnComplete` for nil before calling                                        | <span class="g">✓</span>                | <span class="r">✗</span> `t.OnComplete(result)` directly    |
-| 8.2  | Usable without setting callback                                                   | <span class="g">✓</span>                | <span class="r">✗</span> panics on `Task{Name:"x"}.Run()`   |
-| 8.3  | Work completes regardless of callback                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 8.4  | Uses pointer receiver                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **9. router** — `NewRouter(prefix)` + `Handle()` with routes map                  | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 9.1  | Map initialized before write                                                      | <span class="g">✓</span>                | <span class="r">✗</span> nil map, Handle panics             |
-| 9.2  | Usable after NewRouter                                                            | <span class="g">✓</span>                | <span class="r">✗</span> first Handle panics                |
-| 9.3  | Stores handler correctly                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 9.4  | Returns pointer                                                                   | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **10. pricing** — `IsDiscountApplied` comparing float results                     | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 10.1 | Uses epsilon comparison, not `==`                                                 | <span class="g">✓</span>                | <span class="r">✗</span> `finalPrice == expected`           |
-| 10.2 | Reasonable epsilon value                                                          | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
-| 10.3 | Correct discount formula                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 10.4 | Handles edge cases (zero price, 100% discount)                                    | <span class="g">✓</span>                | <span class="r">✗</span> no edge case handling              |
-|      | **11. cache** — `Cache.All()` returns all entries                                 | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 11.1 | `All()` returns defensive copy                                                    | <span class="g">✓</span>                | <span class="r">✗</span> returns `c.data` directly          |
-| 11.2 | Constructor initializes map                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 11.3 | Get uses comma-ok idiom                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 11.4 | Callers cannot modify cache via All()                                             | <span class="g">✓</span>                | <span class="r">✗</span> shared reference                   |
-|      | **12. pipeline** — `FanIn(channels...)` merges variadic channels                  | **<span class="g">4/4</span>**          | **<span class="r">3/4</span>**                              |
-| 12.1 | Handles closed channels                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 12.2 | Output closed once                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 12.3 | No goroutine leaks                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 12.4 | Handles nil input channels                                                        | <span class="g">✓</span>                | <span class="r">✗</span> nil channel blocks goroutine       |
-|      | **13. parser** — `TryParse` wrapping `*ParseError` into `error` via named returns | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 13.1 | No typed nil leaked through named return                                          | <span class="g">✓</span>                | <span class="r">✗</span> `err = parseErr` unconditional     |
-| 13.2 | Named err only set when non-nil                                                   | <span class="g">✓</span>                | <span class="r">✗</span> always assigned                    |
-| 13.3 | ParseError.Error() includes Line                                                  | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 13.4 | Parse returns nil *ParseError on success                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **14. notify** — `NotifyAll(n *Notifier, msgs)` with nil Notifier                 | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 14.1 | Handles nil *Notifier without panic                                               | <span class="g">✓</span>                | <span class="r">✗</span> dereferences `n.webhook`           |
-| 14.2 | Returns meaningful error when nil                                                 | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
-| 14.3 | Iterates messages, returns first error                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 14.4 | Send uses webhook field                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **15. inventory** — `Inventory.Items()` returns items list                        | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 15.1 | Items() returns defensive copy                                                    | <span class="g">✓</span>                | <span class="r">✗</span> returns `inv.items`                |
-| 15.2 | Add uses append correctly                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 15.3 | Modifying returned slice doesn't affect Inventory                                 | <span class="g">✓</span>                | <span class="r">✗</span> shared backing array               |
-| 15.4 | Field is unexported                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **16. httputil** — `HeaderString(map)` formatting headers                         | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 16.1 | Sorts keys for deterministic output                                               | <span class="g">✓</span>                | <span class="r">✗</span> ranges over map directly           |
-| 16.2 | Uses sort or slices.Sorted                                                        | <span class="g">✓</span>                | <span class="r">✗</span> no sorting                         |
-| 16.3 | Uses strings.Builder                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 16.4 | Each line ends with \r\n                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **17. stats** — `SuccessRate(success, total)` as percentage                       | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
-| 17.1 | Guards zero total                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 17.2 | Returns 0.0 not NaN                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 17.3 | Converts to float64 before division                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 17.4 | Result in 0-100 range                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **18. fetcher** — `FetchAll(urls)` with `defer resp.Body.Close()` in loop         | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 18.1 | No bare `defer` in loop body                                                      | <span class="g">✓</span>                | <span class="r">✗</span> `defer resp.Body.Close()` in loop  |
-| 18.2 | Extracts to helper function                                                       | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
-| 18.3 | Checks resp error                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 18.4 | Preallocates results                                                              | <span class="g">✓</span>                | <span class="r">✗</span> no preallocation                   |
-|      | **19. dashboard** — `New(name)` constructor with `widgets map` field              | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
-| 19.1 | Constructor initializes widgets map                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 19.2 | AddWidget works on first call                                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 19.3 | Layout append safe (nil slice ok)                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 19.4 | Usable after New()                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **20. protocol** — `PackAge(age int) byte` for binary protocol                    | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
-| 20.1 | Validates 0-255 range                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `byte(age)` directly               |
-| 20.2 | Returns error for out-of-range                                                    | <span class="g">✓</span>                | <span class="r">✗</span> no validation                      |
-| 20.3 | Changes signature to (byte, error)                                                | <span class="g">✓</span>                | <span class="r">✗</span> returns just byte                  |
-| 20.4 | Handles negative ages                                                             | <span class="g">✓</span>                | <span class="r">✗</span> wraps to 255                       |
-|      | **21. search** — `ExtractBefore(buf, marker)` returns prefix                      | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 21.1 | Returns copy not subslice                                                         | <span class="g">✓</span>                | <span class="r">✗</span> `buf[:i]`                          |
-| 21.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
-| 21.3 | Both paths return copies                                                          | <span class="g">✓</span>                | <span class="r">✗</span> returns raw `buf`                  |
-| 21.4 | Uses bytes.IndexByte                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **22. http** — `Client.Fetch` with `OnRequest`/`OnResponse` callbacks             | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
-| 22.1 | Checks OnRequest for nil                                                          | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
-| 22.2 | Checks OnResponse for nil                                                         | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
-| 22.3 | Usable with zero-value callbacks                                                  | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
-| 22.4 | Both hooks optional                                                               | <span class="g">✓</span>                | <span class="r">✗</span> panics if unset                    |
-|      | **23. billing** — `ChargesMatch(computed, invoiced)` float comparison             | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 23.1 | Uses epsilon not ==                                                               | <span class="g">✓</span>                | <span class="r">✗</span> `computed == invoiced`             |
-| 23.2 | Reasonable epsilon                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
-| 23.3 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no edge handling                   |
-| 23.4 | No reflect.DeepEqual                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **24. filter** — `RemoveEmpty(items)` in-place slice deletion                     | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
-| 24.1 | Safe deletion pattern                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 24.2 | No element skipping                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 24.3 | Preserves capacity semantics                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 24.4 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **25. middleware** — `Handle(handler func() *AppError) error` one-liner           | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 25.1 | Avoids typed nil leak from handler()                                              | <span class="g">✓</span>                | <span class="r">✗</span> `return handler()`                 |
-| 25.2 | Uses conditional nil check                                                        | <span class="g">✓</span>                | <span class="r">✗</span> direct return                      |
-| 25.3 | Does not assign to error var directly                                             | <span class="g">✓</span>                | <span class="r">✗</span> implicit assignment                |
-| 25.4 | AppError.Error() includes Code and Msg                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **26. team** — `NewTeam(name, members)` + `Members()` getter                      | **<span class="g">5/5</span>**          | **<span class="r">1/5</span>**                              |
-| 26.1 | Constructor copies input (defensive ingress)                                      | <span class="g">✓</span>                | <span class="r">✗</span> `members: members`                 |
-| 26.2 | Members() returns copy (egress)                                                   | <span class="g">✓</span>                | <span class="r">✗</span> returns `t.members`                |
-| 26.3 | Uses slices.Clone or copy                                                         | <span class="g">✓</span>                | <span class="r">✗</span> no copies at all                   |
-| 26.4 | Fields unexported                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 26.5 | Handles nil input                                                                 | <span class="g">✓</span>                | <span class="r">✗</span> no nil handling                    |
-|      | **27. fileutil** — `WriteAll(paths, data)` with defer in create loop              | **<span class="g">4/5</span>**          | **<span class="r">1/5</span>**                              |
-| 27.1 | No bare defer in loop                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `defer f.Close()` in loop          |
-| 27.2 | Extracts to helper                                                                | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
-| 27.3 | Helper handles Create+Close+Write                                                 | <span class="g">✓</span>                | <span class="r">✗</span> no helper                          |
-| 27.4 | Errors from Create and Write checked                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 27.5 | Does not ignore Close error                                                       | <span class="r">✗</span> defer discards | <span class="r">✗</span> defer discards                     |
-|      | **28. config** — `Merge(a, b Endpoint)` merging Labels maps                       | **<span class="g">5/5</span>**          | **<span class="r">2/5</span>**                              |
-| 28.1 | Result Labels initialized before write                                            | <span class="g">✓</span>                | <span class="r">✗</span> writes to copied nil map           |
-| 28.2 | Correct merge with b precedence                                                   | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 28.3 | Does not modify input maps                                                        | <span class="g">✓</span>                | <span class="r">✗</span> aliases a's map                    |
-| 28.4 | Handles nil Labels                                                                | <span class="g">✓</span>                | <span class="r">✗</span> panics on nil write                |
-| 28.5 | Correct zero-value checks                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **29. text** — `FirstWord(line)` returns first word via IndexByte                 | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 29.1 | Returns copy not subslice                                                         | <span class="g">✓</span>                | <span class="r">✗</span> `line[:i]`                         |
-| 29.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
-| 29.3 | Both paths return copies                                                          | <span class="g">✓</span>                | <span class="r">✗</span> returns raw `line`                 |
-| 29.4 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **30. net** — `EncodeAddr(host, port int)` with uint16 port                       | **<span class="g">5/5</span>**          | **<span class="r">2/5</span>**                              |
-| 30.1 | Validates port 0-65535                                                            | <span class="g">✓</span>                | <span class="r">✗</span> `uint16(port)` directly            |
-| 30.2 | Returns error for negative/overflow                                               | <span class="g">✓</span>                | <span class="r">✗</span> silent truncation                  |
-| 30.3 | Uses math.MaxUint16                                                               | <span class="g">✓</span>                | <span class="r">✗</span> no check                           |
-| 30.4 | Correct buffer allocation                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 30.5 | Uses PutUint16 as specified                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **31. testing** — `AssertPrice(t, got, want float64)` test helper                 | **<span class="g">5/5</span>**          | **<span class="r">3/5</span>**                              |
-| 31.1 | Uses epsilon not !=                                                               | <span class="g">✓</span>                | <span class="r">✗</span> `got != want`                      |
-| 31.2 | Reasonable epsilon                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
-| 31.3 | Calls t.Helper()                                                                  | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 31.4 | Shows got and want in message                                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 31.5 | No reflect.DeepEqual                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **32. server** — `Server.Start/Stop` with `OnStart`/`OnStop` callbacks            | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
-| 32.1 | Checks OnStart for nil                                                            | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
-| 32.2 | Checks OnStop for nil                                                             | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
-| 32.3 | Methods work without callbacks                                                    | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
-| 32.4 | Usable with zero-value callbacks                                                  | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
-|      | **33. pool** — `Utilization(active, capacity)` as percentage                      | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 33.1 | Guards zero capacity                                                              | <span class="g">✓</span>                | <span class="r">✗</span> `active*100/capacity` no guard     |
-| 33.2 | Returns sensible default for zero                                                 | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
-| 33.3 | Uses integer arithmetic                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 33.4 | Correct multiplication order                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **34. store** — `Store.GetAll(key)` returns `[]string` values                     | **<span class="g">5/5</span>**          | **<span class="r">3/5</span>**                              |
-| 34.1 | GetAll returns defensive copy                                                     | <span class="g">✓</span>                | <span class="r">✗</span> returns `s.data[key]`              |
-| 34.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
-| 34.3 | Constructor inits map                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 34.4 | Add uses append correctly                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 34.5 | GetAll returns nil for missing key                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-|      | **35. scanner** — `ScanAll(readers)` with defer close in loop                     | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
-| 35.1 | No bare defer in loop                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `defer c.Close()` in loop          |
-| 35.2 | Extracts to helper                                                                | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
-| 35.3 | Uses type assertion for Closer                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 35.4 | Preallocates results                                                              | <span class="g">✓</span>                | <span class="r">✗</span> no preallocation                   |
-|      | **36. metric** — `PercentChange(before, after)` percentage formula                | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
-| 36.1 | Guards zero before                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no guard, Inf/NaN                  |
-| 36.2 | Converts to float64 before division                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-| 36.3 | Returns sensible default for zero                                                 | <span class="g">✓</span>                | <span class="r">✗</span> returns Inf                        |
-| 36.4 | Formula mathematically correct                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
-
-</details>
-
-## `golang-error-handling` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **59/60 (98%)** | **43/60 (72%)** | **+27pp** |
-
-<details>
-<summary>Full breakdown (60 assertions)</summary>
-
-**Model:** Claude Sonnet 4.6 | **Runs:** 12 adversarial evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                 | With                                           | Without                                                      |
-| ---- | ------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------ |
-|      | **1. middleware-log-chain** — "log at each step" tempts log+return        | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
-| 1.1  | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 1.2  | Low-cardinality error messages (no IPs/limits interpolated)               | <span class="g">✓</span>                       | <span class="r">✗</span> `"ip %q exceeded %d requests"`      |
-| 1.3  | Structured error context (`oops.With`, not in error string)               | <span class="g">✓</span>                       | <span class="r">✗</span> `fmt.Errorf` with IP interpolation  |
-| 1.4  | Structured `slog` key-value log entries                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 1.5  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **2. order-processor** — "indicate which order" tempts ID interpolation   | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
-| 2.1  | Error messages low-cardinality (no IDs in error strings)                  | <span class="g">✓</span>                       | <span class="r">✗</span> `"order %s: validation failed"`     |
-| 2.2  | Variable data as structured attributes (`oops`/`slog`)                    | <span class="g">✓</span>                       | <span class="r">✗</span> data in `Error()` string            |
-| 2.3  | Uses `errors.Join` to collect all order errors                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 2.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 2.5  | Validates ALL fields per order (no short-circuit)                         | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **3. batch-csv-importer** — "detailed report" tempts row interpolation    | **<span class="g">5/5</span>**                 | **<span class="r">2/5</span>**                               |
-| 3.1  | Error messages static (no row numbers in error string)                    | <span class="g">✓</span>                       | <span class="r">✗</span> `"row %d: column %q"` in `Error()`  |
-| 3.2  | Row/column data as structured attributes (`oops`/`slog`)                  | <span class="g">✓</span>                       | <span class="r">✗</span> data in `RowError.Error()` string   |
-| 3.3  | Collects all row errors (doesn't stop on first)                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 3.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 3.5  | Uses `errors.Join` for combining errors                                   | <span class="g">✓</span>                       | <span class="r">✗</span> custom `ImportError{Failures}`      |
-|      | **4. wrapped-error-compare** — pre-existing `fmt.Errorf` + `==` sentinels | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 4.1  | Sentinel errors use `errors.New` (not `fmt.Errorf`)                       | <span class="g">✓</span>                       | <span class="r">✗</span> kept `fmt.Errorf`                   |
-| 4.2  | Sentinel strings lowercase, no punctuation                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 4.3  | `TimeoutError.Error()` lowercase, no punctuation                          | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 4.4  | `errors.Is` for sentinel matching                                         | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 4.5  | `errors.As` for type extraction                                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **5. multi-service-fetch** — 3 service calls tempt bare `return err`      | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 5.1  | Errors wrapped with service context                                       | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 5.2  | Low-cardinality error messages                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 5.3  | Uses structured attributes (`oops`/`slog`)                                | <span class="g">✓</span>                       | <span class="r">✗</span> plain `fmt.Errorf` only             |
-| 5.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 5.5  | Each service identifiable by context prefix                               | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **6. config-validation** — many fields tempts early return + caps         | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
-| 6.1  | Uses `errors.Join` for combining validation errors                        | <span class="g">✓</span>                       | <span class="r">✗</span> `[]string` + `strings.Join`         |
-| 6.2  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="r">✗</span> `"Host is required"` capitalized    |
-| 6.3  | Validates ALL fields                                                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 6.4  | Conditional TLS validation                                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 6.5  | No `panic` for validation                                                 | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **7. modernize-logging** — "keep the logging" tempts log+return           | **<span class="r">4/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 7.1  | Does not log AND return same error (single handling rule)                 | <span class="r">✗</span> `slog.Error` + return | <span class="r">✗</span> `ErrorContext` + return             |
-| 7.2  | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 7.3  | Structured key-value attributes                                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 7.4  | Appropriate log levels (Info/Warn/Error)                                  | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 7.5  | Low-cardinality log messages                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **8. graceful-shutdown** — 5 resources tempts bare append                 | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 8.1  | Uses `errors.Join`                                                        | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 8.2  | Each error wrapped with resource context                                  | <span class="g">✓</span>                       | <span class="r">✗</span> bare `append(errs, err)`            |
-| 8.3  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 8.4  | Attempts ALL resources even if earlier fail                               | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 8.5  | Correct shutdown order                                                    | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **9. todo-CRUD-repo** — full CRUD with IDs tempts interpolation           | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 9.1  | Low-cardinality error messages (no ID interpolation)                      | <span class="g">✓</span>                       | <span class="r">✗</span> `"get todo %q: %w"` with id         |
-| 9.2  | Errors wrapped with method context                                        | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 9.3  | Uses `errors.Is` for `sql.ErrNoRows`                                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 9.4  | Sentinel as package-level var                                             | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 9.5  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **10. retry-handler** — "log each attempt" tempts log+return in loop      | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
-| 10.1 | Does not log AND return final error (single handling rule)                | <span class="g">✓</span>                       | <span class="r">✗</span> `slog.ErrorContext` + `return err`  |
-| 10.2 | Structured `slog` attributes                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 10.3 | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 10.4 | Low-cardinality log messages                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 10.5 | Wraps final error with context                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **11. event-processor** — "include event details" tempts interpolation    | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
-| 11.1 | Error messages static (event type/ID not in error string)                 | <span class="g">✓</span>                       | <span class="r">✗</span> `"processing event %q (type=%s)"`   |
-| 11.2 | Event details as structured attributes (`oops`/`slog`)                    | <span class="g">✓</span>                       | <span class="r">✗</span> data in `EventError.Error()` string |
-| 11.3 | Uses `errors.Join` to collect all event errors                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 11.4 | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 11.5 | No logging inside processor (returns to caller)                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-|      | **12. api-gateway** — backend errors tempt `%w` exposure                  | **<span class="g">5/5</span>**                 | **<span class="g">5/5</span>**                               |
-| 12.1 | Uses `%v` (not `%w`) at boundary for backend details                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 12.2 | Translates backend errors to domain sentinels                             | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 12.3 | Sentinel strings lowercase                                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 12.4 | `errors.As` used internally to inspect backend types                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-| 12.5 | Backend types not accessible via `errors.As` from callers                 | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
-
-</details>
-
-## `golang-testing` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **60/65 (92%)** | **39/65 (60%)** | **+32pp** |
-
-<details>
-<summary>Full breakdown (54 assertions)</summary>
-
-**Model:** Claude Sonnet 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
-
-| #    | Assertion                                                              | With                           | Without                                                    |
-| ---- | ---------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------- |
-|      | **1. workerpool** — goleak detection for goroutine-spawning packages   | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                             |
-| 1.1  | Uses goleak (VerifyTestMain or VerifyNone)                             | <span class="g">✓</span>       | <span class="r">✗</span> no goleak at all                  |
-| 1.2  | Has TestMain function for package-level leak check                     | <span class="g">✓</span>       | <span class="r">✗</span> no TestMain                       |
-| 1.3  | Tests verify Stop() cleans up goroutines                               | <span class="g">✓</span>       | <span class="r">✗</span> only checks task completion       |
-| 1.4  | Imports go.uber.org/goleak                                             | <span class="g">✓</span>       | <span class="r">✗</span> not imported                      |
-|      | **2. userrepo** — integration test separation via build tags           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                             |
-| 2.1  | Uses `//go:build integration` build tag                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 2.2  | Build tag is primary mechanism (not testing.Short)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 2.3  | Tests use real database connection                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 2.4  | Documents `go test -tags=integration` command                          | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **3. slugify** — t.Parallel() in table-driven tests for pure functions | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                             |
-| 3.1  | Subtests call t.Parallel()                                             | <span class="g">✓</span>       | <span class="r">✗</span> sequential subtests               |
-| 3.2  | Top-level test calls t.Parallel()                                      | <span class="g">✓</span>       | <span class="r">✗</span> no t.Parallel()                   |
-| 3.3  | Each case has descriptive name in t.Run                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 3.4  | At least 6 test cases                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 3.5  | No shared mutable state between subtests                               | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **4. ratelimiter** — clockwork/synctest for time-dependent tests       | **<span class="r">1/4</span>** | **<span class="r">1/4</span>**                             |
-| 4.1  | Uses clockwork.FakeClock or synctest                                   | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 4.2  | No time.Sleep in test code                                             | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 4.3  | Advances fake time past window                                         | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 4.4  | Tests both allow and deny scenarios                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **5. notification** — mock interfaces, not concrete types              | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                             |
-| 5.1  | Defines interfaces for dependencies                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses concrete SMTPClient directly |
-| 5.2  | Creates mock implementations of interfaces                             | <span class="g">✓</span>       | <span class="r">✗</span> function-field injection          |
-| 5.3  | Does NOT embed concrete structs in mocks                               | <span class="g">✓</span>       | <span class="r">✗</span> returns *SMTPClient directly      |
-| 5.4  | NotificationService accepts interfaces via DI                          | <span class="g">✓</span>       | <span class="r">✗</span> accepts *SMTPClient, *AuditLogger |
-| 5.5  | Tests happy path and error scenarios                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **6. usercache** — test behavior, not implementation details           | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                             |
-| 6.1  | Tests observable behavior via public API only                          | <span class="g">✓</span>       | <span class="r">✗</span> accesses cache.data directly      |
-| 6.2  | Does NOT access internal data map field                                | <span class="g">✓</span>       | <span class="r">✗</span> cache.data["1"], len(cache.data)  |
-| 6.3  | Uses external test package (black-box)                                 | <span class="g">✓</span>       | <span class="r">✗</span> struct defined in test file       |
-| 6.4  | Covers hit, miss, overwrite, Len()                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **7. mathutil** — black-box package_test for exported API              | **<span class="g">3/4</span>** | **<span class="g">3/4</span>**                             |
-| 7.1  | Uses `package mathutil_test`                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 7.2  | Explicit import of mathutil package                                    | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 7.3  | Only tests exported functions                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 7.4  | Table-driven with named cases for both functions                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **8. money** — Example functions as executable documentation           | **<span class="r">1/4</span>** | **<span class="r">1/4</span>**                             |
-| 8.1  | Includes at least one Example function                                 | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 8.2  | Example has `// Output:` comment                                       | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 8.3  | Example demonstrates realistic usage                                   | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
-| 8.4  | Also includes regular table-driven tests                               | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **9. sanitize** — fuzzing for security-critical parsers                | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                             |
-| 9.1  | Includes fuzz test (FuzzSanitizeHTML)                                  | <span class="g">✓</span>       | <span class="r">✗</span> no fuzz test                      |
-| 9.2  | Fuzz uses f.Add() seed corpus                                          | <span class="g">✓</span>       | <span class="r">✗</span> no fuzzing                        |
-| 9.3  | Property-based assertions in fuzz                                      | <span class="g">✓</span>       | <span class="r">✗</span> no fuzzing                        |
-| 9.4  | Also includes table-driven tests                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 9.5  | Covers nested/unclosed/script tags                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **10. jsonhelper** — t.Helper() in custom test helpers                 | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                             |
-| 10.1 | assertJSONEqual calls t.Helper()                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 10.2 | Order-independent JSON comparison                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 10.3 | Meaningful error messages (expected vs actual)                         | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 10.4 | Helper used in MarshalUser tests                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **11. createorder** — httptest.NewRecorder for handler tests           | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                             |
-| 11.1 | Uses httptest.NewRecorder                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 11.2 | Table-driven with named cases                                          | <span class="g">✓</span>       | <span class="r">✗</span> separate individual functions     |
-| 11.3 | Tests 3+ status codes (201, 400, 422)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 11.4 | Verifies response body content                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 11.5 | Sets Content-Type header on requests                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-|      | **12. orderrepo** — testify/suite for integration test organization    | **<span class="g">6/6</span>** | **<span class="r">3/6</span>**                             |
-| 12.1 | Uses testify/suite.Suite embedding                                     | <span class="g">✓</span>       | <span class="r">✗</span> plain TestMain + functions        |
-| 12.2 | Has SetupSuite for one-time DB setup                                   | <span class="g">✓</span>       | <span class="r">✗</span> uses TestMain instead             |
-| 12.3 | Has SetupTest/TearDownTest for per-test cleanup                        | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 12.4 | Has TearDownSuite for graceful shutdown                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 12.5 | Uses `//go:build integration` build tag                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
-| 12.6 | Has suite.Run runner function                                          | <span class="g">✓</span>       | <span class="r">✗</span> no suite.Run                      |
-
-</details>
-
-## `golang-modernize` — v1.5.0
-
-|             | With Skill        | Without Skill    | Delta     |
-| ----------- | ----------------- | ----------------- | --------- |
-| **Overall** | **116/120 (97%)** | **65/120 (54%)** | **+43pp** |
-
-Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (extended from 2 to 4 assertions), 14–16, 18, and 19 (30 assertions total) were freshly re-run for the Go 1.27 content added in this update. Eval 17's with-skill run scored **4/5**; its without-skill run could not be captured after five subagent attempts across two runs (agents consistently returned an idle status with no answer content for this specific prompt) and is excluded from the pooled totals above — pending a re-run in a future update. Evals 20–23 (18 assertions) come from an independently authored, overlapping Go 1.27 eval pass (PR #98) merged into this update; they were run separately on a different model (Kimi K3) and are folded in here rather than duplicated as a second report. Evals 20–22 test similar ground to evals 15/16/18 respectively (uuid, generic methods, CutLast) from different code angles — kept alongside rather than deduplicated, since both authors' scenarios are independently useful and neither is redundant enough to discard outright.
-
-<details>
-<summary>Full breakdown (125 assertions, 120 scored this run)</summary>
-
-**Model:** Claude Sonnet 5 for evals 1–19 (evals 1–12 from the original Claude Sonnet 4.6 run, unchanged; evals 13–19 freshly run this update); Kimi K3 for evals 20–23 (from PR #98, folded in unchanged) | **Grading:** LLM-as-judge
-
-| #    | Assertion                                                                          | With                           | Without                                                     |
-| ---- | ---------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------- |
-|      | **1. version-constraint-1.21** — Go 1.21 project with 1.22+ patterns               | **<span class="g">7/7</span>** | **<span class="g">7/7</span>**                              |
-| 1.1  | Suggests min/max builtins (Go 1.21)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.2  | Suggests slices.Sort or slices.Contains (Go 1.21)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.3  | Suggests sync.OnceValue (Go 1.21)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.4  | Does NOT suggest range-over-int (requires 1.22+)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.5  | Does NOT suggest removing loop var shadow copy (requires 1.22+)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.6  | Does NOT suggest cmp.Or (requires 1.22+)                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 1.7  | Does NOT suggest math/rand/v2 (requires 1.22+)                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **2. rand-v2-api-renames** — math/rand → math/rand/v2 function renames             | **<span class="g">6/6</span>** | **<span class="r">5/6</span>**                              |
-| 2.1  | Renames `Intn` to `IntN` (capital N)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 2.2  | Renames `Int63n` to `Int64N`                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 2.3  | Removes all `rand.Seed` calls                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 2.4  | Replaces `rand.Read` with `crypto/rand` usage                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses `mathrand.IntN(256)` loop     |
-| 2.5  | Import changes to `math/rand/v2`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 2.6  | No old-style function names in output                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **3. safety-over-cosmetic** — path traversal vs interface{} → any                  | **<span class="g">6/6</span>** | **<span class="r">5/6</span>**                              |
-| 3.1  | Suggests `os.Root`/`os.OpenRoot` for user-supplied paths                           | <span class="g">✓</span>       | <span class="r">✗</span> `filepath.Clean` + `HasPrefix`     |
-| 3.2  | Mentions path traversal risk or CWE-22                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 3.3  | Prioritizes safety fix over cosmetic changes                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 3.4  | Also suggests `interface{}` → `any`                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 3.5  | Also suggests `min` builtin or `net.JoinHostPort`                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 3.6  | Does NOT only address cosmetic issues                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **4. omitzero-vs-omitempty** — time.Time and bool JSON tags                        | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                              |
-| 4.1  | Identifies `omitempty` doesn't omit zero `time.Time`                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 4.2  | Suggests `omitzero` for `time.Time` fields                                         | <span class="g">✓</span>       | <span class="r">✗</span> uses `*time.Time` pointer approach |
-| 4.3  | Identifies `omitempty` treats `false` as empty for bool                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 4.4  | Addresses bool issue correctly (removes tag or uses omitzero)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 4.5  | Correctly notes `omitzero` requires Go 1.24+                                       | <span class="g">✓</span>       | <span class="r">✗</span> claims "no changes in Go 1.24"     |
-| 4.6  | Does NOT suggest `omitzero` for string/int fields                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **5. benchmark-b-loop** — b.Loop() replaces b.N pattern                            | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                              |
-| 5.1  | Replaces `for i := 0; i < b.N; i++` with `for b.Loop()`                            | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
-| 5.2  | Replaces `for n := 0; n < b.N; n++` variant too                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
-| 5.3  | Replaces b.N loop in all benchmarks                                                | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
-| 5.4  | No `b.N` iteration pattern remains                                                 | <span class="g">✓</span>       | <span class="r">✗</span> still uses `b.N`                   |
-| 5.5  | Preserves benchmark function names and logic                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **6. automaxprocs-removal** — Go 1.25 built-in container GOMAXPROCS                | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
-| 6.1  | Suggests removing `go.uber.org/automaxprocs` import                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 6.2  | Explains Go 1.25 has built-in container-aware GOMAXPROCS                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 6.3  | Suggests `sync.WaitGroup.Go`                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 6.4  | Does NOT suggest keeping automaxprocs                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 6.5  | Suggests removing from go.mod                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 6.6  | Mentions cgroup CPU limits or container awareness                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **7. cmp-or-chained-defaults** — cmp.Or for default value chains (Go 1.22)         | **<span class="g">6/6</span>** | **<span class="r">1/6</span>**                              |
-| 7.1  | Uses `cmp.Or` for at least one default value chain                                 | <span class="g">✓</span>       | <span class="r">✗</span> custom `firstEnv` helper           |
-| 7.2  | Collapses 3-step host default to single `cmp.Or` call                              | <span class="g">✓</span>       | <span class="r">✗</span> helper function pattern            |
-| 7.3  | Import includes `cmp` package                                                      | <span class="g">✓</span>       | <span class="r">✗</span> no `cmp` import                    |
-| 7.4  | All multi-step defaults converted to `cmp.Or`                                      | <span class="g">✓</span>       | <span class="r">✗</span> all use `firstEnv` helper          |
-| 7.5  | Result is functionally equivalent (same fallback order)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 7.6  | Does NOT introduce a custom helper function                                        | <span class="g">✓</span>       | <span class="r">✗</span> introduces `firstEnv`              |
-|      | **8. addcleanup-vs-setfinalizer** — runtime.AddCleanup (Go 1.24)                   | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
-| 8.1  | Replaces `runtime.SetFinalizer` with `runtime.AddCleanup`                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 8.2  | Cleanup receives resource, NOT wrapper struct                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 8.3  | Mentions SetFinalizer cycle restriction or deprecation                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 8.4  | Does NOT pass whole struct to cleanup                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 8.5  | Correctly attributes to Go 1.24                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 8.6  | TempFile: two separate AddCleanup calls or struct for both                         | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **9. http-mux-migration** — net/http enhanced routing (Go 1.22)                    | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
-| 9.1  | Uses `http.NewServeMux()` instead of `mux.NewRouter()`                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 9.2  | Uses method prefix: `GET /api/users/{id}`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 9.3  | Uses `r.PathValue("id")` instead of `mux.Vars(r)`                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 9.4  | All 6 routes with correct method prefixes                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 9.5  | No gorilla/mux import remains                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 9.6  | Return type changes to `*http.ServeMux`                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **10. synctest-flaky-fix** — synctest.Test for deterministic concurrency (Go 1.25) | **<span class="g">6/6</span>** | **<span class="r">2/6</span>**                              |
-| 10.1 | Uses `synctest.Test` (NOT deprecated `synctest.Run`)                               | <span class="g">✓</span>       | <span class="r">✗</span> removes sleep, blocks on channels  |
-| 10.2 | Uses `synctest.Wait()` for goroutine synchronization                               | <span class="g">✓</span>       | <span class="r">✗</span> no synctest at all                 |
-| 10.3 | Removes all `time.Sleep` calls                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 10.4 | No flaky timing dependencies remain                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 10.5 | Correctly imports `testing/synctest`                                               | <span class="g">✓</span>       | <span class="r">✗</span> no synctest import                 |
-| 10.6 | Both tests converted                                                               | <span class="g">✓</span>       | <span class="r">✗</span> neither uses synctest              |
-|      | **11. waitgroup-go-loopvar** — WaitGroup.Go + loop var + t.Context()               | **<span class="g">7/7</span>** | **<span class="r">4/7</span>**                              |
-| 11.1 | Replaces Add/go/Done with `wg.Go(func() { ... })`                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `errgroup.Go` instead         |
-| 11.2 | Removes `wg.Add(1)` calls                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 11.3 | Removes `defer wg.Done()` calls                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 11.4 | Removes `item := item` loop variable shadow copies                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 11.5 | Explains Go 1.22+ loop variable semantics                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 11.6 | Replaces `context.Background()` with `t.Context()` in test                         | <span class="g">✓</span>       | <span class="r">✗</span> keeps `context.Background()`       |
-| 11.7 | Preserves `WaitGroup.Wait()` call                                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `errgroup.Wait()` instead     |
-|      | **12. timer-gc-greenteagc** — Timer GC change + Green Tea GC (Go 1.26)             | **<span class="g">7/7</span>** | **<span class="r">4/7</span>**                              |
-| 12.1 | Identifies some `defer timer.Stop()` calls as unnecessary                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 12.2 | Explains Go 1.23+ timer/ticker GC behavior change                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 12.3 | Suggests reviewing GC tuning due to Green Tea GC                                   | <span class="g">✓</span>       | <span class="r">✗</span> only removes redundant `os.Setenv` |
-| 12.4 | Mentions Green Tea GC 10-40% overhead reduction                                    | <span class="g">✓</span>       | <span class="r">✗</span> no mention of Green Tea GC         |
-| 12.5 | Does NOT remove `ticker.Stop()` in PeriodicTask (needed for correctness)           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 12.6 | Suggests `go fix ./...` for automated modernization                                | <span class="g">✓</span>       | <span class="r">✗</span>                                    |
-| 12.7 | Correctly distinguishes Stop for GC vs Stop for correctness                        | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **13. go126-errors-astype-enhanced-new** — errors.AsType + enhanced new() (Go 1.26) | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                              |
-| 13.1 | Uses `errors.AsType[*os.PathError](err)` instead of var+`errors.As`               | <span class="g">✓</span>       | <span class="r">✗</span> kept `var pathErr; errors.As(...)` |
-| 13.2 | Replaces `ptr[T]` helper with `new()` accepting an initial value                   | <span class="g">✓</span>       | <span class="r">✗</span> kept helper (exported as `Ptr`)    |
-| 13.3 | Applies the `errors.AsType` rewrite to all three branches, not just the first     | <span class="g">✓</span>       | <span class="r">✗</span> no branch rewritten                |
-| 13.4 | Correctly attributes both features to Go 1.26, not a newer/older release          | <span class="g">✓</span>       | <span class="r">✗</span> neither feature used or attributed |
-|      | **14. json-v2-duplicate-key-strictness** — Go 1.27 upgrade breaks duplicate-key decode | **<span class="g">6/6</span>** | **<span class="r">2/6</span>**                          |
-| 14.1 | Identifies Go 1.27 made `encoding/json/v2` the default underneath `encoding/json` | <span class="g">✓</span>       | <span class="r">✗</span> claims v1 behavior is guaranteed unaffected by Go 1's compatibility promise |
-| 14.2 | Explains duplicate keys are rejected by default (not merely an opt-in experiment) | <span class="g">✓</span>       | <span class="r">✗</span> frames rejection as conditional on an opt-in `GOEXPERIMENT=jsonv2` |
-| 14.3 | Connects the partner payload's duplicate `id` key to the reported failures        | <span class="g">✓</span>       | <span class="g">✓</span> reasoned to the same hypothesis, framed as unconfirmed |
-| 14.4 | Proposes a concrete fix (dedupe before decode, or an explicit v1-compatible opt-in) | <span class="g">✓</span>       | <span class="g">✓</span> also proposes `json.RejectDuplicateNames(false)` |
-| 14.5 | Names `GOEXPERIMENT=nojsonv2` as the escape hatch, not the long-term fix           | <span class="g">✓</span>       | <span class="r">✗</span> never names `nojsonv2`              |
-| 14.6 | Does NOT claim `encoding/json`'s decode behavior is unaffected by the Go 1.27 bump | <span class="g">✓</span>       | <span class="r">✗</span> explicitly claims it can't change under Go 1's compatibility promise |
-|      | **15. generic-method-scoped-transform** — Set[T] → Set[U] via a Go 1.27 generic method | **<span class="r">1/5</span>** | **<span class="r">1/5</span>**                          |
-| 15.1 | Declares the transform as a method on `Set[T]`, not a package-level generic function | <span class="r">✗</span> refused the rule, wrote a free function | <span class="r">✗</span> free function |
-| 15.2 | The new type parameter is declared on the method, not the `Set[T]` type            | <span class="r">✗</span> no method written              | <span class="r">✗</span> no method written                    |
-| 15.3 | Notes generic methods (own type parameters) are a Go 1.27 addition                | <span class="r">✗</span> explicitly asserts this is false | <span class="r">✗</span> not mentioned                       |
-| 15.4 | Notes interface methods still can't declare type parameters / can't be satisfied  | <span class="r">✗</span>                                | <span class="r">✗</span>                                      |
-| 15.5 | Example call site compiles conceptually                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **16. cutlast-final-separator-split** — split on the last colon only               | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                              |
-| 16.1 | Uses `strings.CutLast(line, ":")`                                                 | <span class="g">✓</span>       | <span class="r">✗</span> uses `LastIndex` + manual slicing   |
-| 16.2 | Returns `CutLast`'s `found` boolean directly as `ok`                              | <span class="g">✓</span>       | <span class="r">✗</span> derives `ok` from `idx == -1`        |
-| 16.3 | Does NOT use `LastIndex` with manual slice arithmetic                             | <span class="g">✓</span>       | <span class="r">✗</span> uses `line[:idx], line[idx+1:]`      |
-| 16.4 | Does NOT use `Split`/`SplitN`                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 16.5 | Notes `CutLast` requires Go 1.27+                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no version note                     |
-|      | **17. godebug-removed-key-build-break** — bump toolchain with a stale `godebug` pin | **<span class="g">4/5</span>** | **not measured** ⁽¹⁾                                        |
-| 17.1 | Removes/updates the `asynctimerchan=0` entry rather than leaving it unchanged      | <span class="g">✓</span>       | —                                                             |
-| 17.2 | Explains Go 1.27 removed the key and a stale pin now fails the build (not a warning) | <span class="g">✓</span>     | —                                                             |
-| 17.3 | Bumps the `go` directive to a current Go 1.27-era version                          | <span class="g">✓</span>       | —                                                             |
-| 17.4 | Recommends fixing the underlying timer-dependent code, not silently deleting the shim | <span class="g">✓</span>    | —                                                             |
-| 17.5 | Mentions checking for other Go 1.27-removed GODEBUG keys in the same upgrade      | <span class="r">✗</span>       | —                                                             |
-|      | **18. uuid-stdlib-vs-dependency** — generate order IDs with no UUID dep in go.mod  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                              |
-| 18.1 | Uses the stdlib `uuid` package rather than `google/uuid`/`gofrs/uuid`             | <span class="g">✓</span>       | <span class="r">✗</span> hand-rolled UUIDv4 via `crypto/rand` |
-| 18.2 | Does NOT add a new external module dependency                                     | <span class="g">✓</span>       | <span class="g">✓</span> avoided a dependency, but by hand-rolling instead of using stdlib |
-| 18.3 | Notes the stdlib `uuid` package is new in Go 1.27                                 | <span class="g">✓</span>       | <span class="r">✗</span> unaware the package exists           |
-| 18.4 | Stores the ID via `UUID.String()` or an equivalent formatted string                | <span class="g">✓</span>       | <span class="g">✓</span> `fmt.Sprintf` RFC 4122 formatting    |
-| 18.5 | Does NOT claim the stdlib `uuid` package existed before Go 1.27                   | <span class="g">✓</span>       | <span class="g">✓</span> (never mentions it)                  |
-|      | **19. json-v2-streaming-migration** — add a reader-based JSON loader              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                              |
-| 19.1 | Uses `encoding/json/v2`'s `UnmarshalRead(r, v)` rather than only `NewDecoder(r).Decode(v)` | <span class="g">✓</span> | <span class="r">✗</span> uses v1-era `json.NewDecoder(r).Decode(v)` |
-| 19.2 | Notes `encoding/json/v2` is the new default as of Go 1.27                         | <span class="g">✓</span>       | <span class="r">✗</span> no version note                     |
-| 19.3 | Does NOT introduce a manual `io.ReadAll` + `Unmarshal` buffering step             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 19.4 | Keeps `LoadFromBytes` working as-is                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-| 19.5 | Signature matches `LoadFromReader(r io.Reader, v any) error`                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
-|      | **20. go127-stdlib-uuid** — stdlib uuid replaces github.com/google/uuid (from PR #98) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                           |
-| 20.1 | Replaces `github.com/google/uuid` with stdlib `uuid`                             | <span class="g">✓</span>       | <span class="r">✗</span> claims no stdlib uuid; hand-rolls       |
-| 20.2 | Uses `uuid.New().String()` — no `uuid.NewString()`                               | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib uuid usage at all             |
-| 20.3 | Knows generators return values without errors                                    | <span class="g">✓</span>       | <span class="r">✗</span> keeps `(string, error)` error branch    |
-| 20.4 | Uses `uuid.NewV7()` for time-ordered DB ID                                       | <span class="g">✓</span>       | <span class="r">✗</span> hand-rolled v7 bit layout               |
-| 20.5 | Removes `github.com/google/uuid` from go.mod                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
-|      | **21. go127-generic-methods** — generic methods with own type parameters, interface-satisfaction test (from PR #98) | **<span class="g">4/4</span>** | **<span class="r">1/4</span>** |
-| 21.1 | Converts `MapSet` to generic method (own type param)                             | <span class="g">✓</span>       | <span class="r">✗</span> `Map` kept package-level                |
-| 21.2 | Converts `FilterSet` to a method on `*Set[T]`                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
-| 21.3 | Does NOT claim generic methods are impossible                                    | <span class="g">✓</span>       | <span class="r">✗</span> claims methods can't declare type params |
-| 21.4 | Keeps `ForEach` non-generic to satisfy the interface                             | <span class="g">✓</span>       | <span class="r">✗</span> drops `ForEach`/`Iteratable` entirely   |
-|      | **22. go127-cutlast** — strings.CutLast for last-separator splits, 3 call sites (from PR #98) | **<span class="g">4/4</span>** | **<span class="r">1/4</span>** |
-| 22.1 | Uses `strings.CutLast` for at least one function                                 | <span class="g">✓</span>       | <span class="r">✗</span> claims "no `strings.CutLast` exists"    |
-| 22.2 | Uses the 3-result form (before, after, found) correctly                          | <span class="g">✓</span>       | <span class="r">✗</span> no `CutLast` usage at all               |
-| 22.3 | Uses `CutLast` in `EnvValue` to simplify the ok-returning split                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `strings.Cut`, changes semantics   |
-| 22.4 | Does NOT keep manual `LastIndex` slicing where `CutLast` applies                 | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
-|      | **23. go127-synctest-http** — httptest.NewTestServer inside synctest bubbles (from PR #98) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>** |
-| 23.1 | Wraps tests in `synctest.Test`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
-| 23.2 | Uses `httptest.NewTestServer` instead of `httptest.NewServer`                    | <span class="g">✓</span>       | <span class="r">✗</span> uses `httptest.NewServer` in both tests |
-| 23.3 | Explains real-network servers don't work in a synctest bubble                    | <span class="g">✓</span>       | <span class="r">✗</span> falsely claims `NewServer` bubble-aware |
-| 23.4 | Does NOT leave a plain `httptest.NewServer` inside a bubble                      | <span class="g">✓</span>       | <span class="r">✗</span> `NewServer` left inside bubble          |
-| 23.5 | Keeps both tests working with deterministic time                                 | <span class="g">✓</span>       | <span class="r">✗</span> real-socket server, non-deterministic   |
-
-⁽¹⁾ Eval 17's without-skill condition returned no answer content after five subagent attempts (across two separate agent identities); this is a tooling/relay issue observed only on this specific prompt, not a fabricated or assumed score. Re-run before the next report update.
-
-</details>
-
-**Finding — eval 15 (generic methods) shows zero uplift and needs a skill fix, not a re-run.** Both conditions scored 1/5, and the with-skill agent explicitly rejected the rule as false ("Go methods cannot declare their own type parameters ... not something Go 1.27 relaxed") before reverting to a pre-1.27 answer. The rule itself is correct — verified directly against the Go 1.27 release notes (`/issue/77273`, `/ref/spec#Method_declarations`) — but a model whose training predates Go 1.27 treats a surprising claim inside an "internal skill guide excerpt" as untrustworthy and overrides it with its prior. The skill's `versions.md` now cites the Go issue number and spec section inline (fixed in this update) rather than just asserting the rule, so the model has a concrete reference to check itself against rather than a bare claim to accept or doubt. Eval 21 (from PR #98, a different model, a different code scenario) independently reproduced the same failure mode — corroborating evidence, not a fluke of one eval design.
+| Skill | Version | Assertions | With Skill | Without Skill | Delta | Uplift | Concern |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `golang-security` | v1.0.0 | 110 | 100% | **68%** | +32pp | 1.47× | **Low delta, high without** |
+| `golang-testing` | v1.0.0 | 65 | 92% | 60% | +32pp | 1.54× | **Low delta** |
+| `golang-concurrency` | v1.0.0 | 112 | 98% | 62% | +37pp | 1.59× | |
+| `golang-observability` | v1.0.0 | 185 | 100% | 63% | +37pp | 1.58× | |
+| `golang-database` | v1.0.0 | 74 | 95% | 57% | +38pp | 1.67× | |
+| `golang-architecture` | v1.0.0 | 249 | 98% | 57% | +41pp | 1.71× | |
+| `golang-code-quality` | v1.0.0 | 288 | **89%** | 47% | +42pp | 1.90× | **Low with-skill score** |
+| `golang-dependencies` | v1.0.0 | 106 | 100% | 58% | +42pp | 1.71× | |
+| `golang-performance` | v1.0.0 | 814 | 100% | 58% | +42pp | 1.72× | |
+| `golang-refactoring` | v1.0.0 | 120 | 97% | 54% | +43pp | 1.78× | |
+| `golang-idioms` | v1.0.0 | 299 | 99% | 54% | +45pp | 1.84× | |
+| `golang-ci` | v1.0.0 | 66 | 100% | 41% | +59pp | 2.44× | |
+| **Total (12 skills)** | | **2488** | **98%** | **57%** | **+41pp** | **1.73×** | |
 
 ## `golang-security` — v1.0.0
 
-|             | With Skill         | Without Skill    | Delta     |
-| ----------- | ------------------ | ---------------- | --------- |
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
 | **Overall** | **110/110 (100%)** | **75/110 (68%)** | **+32pp** |
 
 <details>
@@ -1000,14 +177,1211 @@ Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (
 
 </details>
 
-## `golang-documentation` — v1.0.0
+## `golang-testing` — v1.0.0
 
-|             | With Skill       | Without Skill    | Delta     |
-| ----------- | ---------------- | ---------------- | --------- |
-| **Overall** | **93/103 (90%)** | **38/103 (37%)** | **+53pp** |
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **60/65 (92%)** | **39/65 (60%)** | **+32pp** |
 
 <details>
-<summary>Full breakdown (100 assertions across 20 evals)</summary>
+<summary>Full breakdown (54 assertions)</summary>
+
+**Model:** Claude Sonnet 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
+
+| #    | Assertion                                                              | With                           | Without                                                    |
+| ---- | ---------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------- |
+|      | **1. workerpool** — goleak detection for goroutine-spawning packages   | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                             |
+| 1.1  | Uses goleak (VerifyTestMain or VerifyNone)                             | <span class="g">✓</span>       | <span class="r">✗</span> no goleak at all                  |
+| 1.2  | Has TestMain function for package-level leak check                     | <span class="g">✓</span>       | <span class="r">✗</span> no TestMain                       |
+| 1.3  | Tests verify Stop() cleans up goroutines                               | <span class="g">✓</span>       | <span class="r">✗</span> only checks task completion       |
+| 1.4  | Imports go.uber.org/goleak                                             | <span class="g">✓</span>       | <span class="r">✗</span> not imported                      |
+|      | **2. userrepo** — integration test separation via build tags           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                             |
+| 2.1  | Uses `//go:build integration` build tag                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 2.2  | Build tag is primary mechanism (not testing.Short)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 2.3  | Tests use real database connection                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 2.4  | Documents `go test -tags=integration` command                          | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **3. slugify** — t.Parallel() in table-driven tests for pure functions | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                             |
+| 3.1  | Subtests call t.Parallel()                                             | <span class="g">✓</span>       | <span class="r">✗</span> sequential subtests               |
+| 3.2  | Top-level test calls t.Parallel()                                      | <span class="g">✓</span>       | <span class="r">✗</span> no t.Parallel()                   |
+| 3.3  | Each case has descriptive name in t.Run                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 3.4  | At least 6 test cases                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 3.5  | No shared mutable state between subtests                               | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **4. ratelimiter** — clockwork/synctest for time-dependent tests       | **<span class="r">1/4</span>** | **<span class="r">1/4</span>**                             |
+| 4.1  | Uses clockwork.FakeClock or synctest                                   | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 4.2  | No time.Sleep in test code                                             | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 4.3  | Advances fake time past window                                         | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 4.4  | Tests both allow and deny scenarios                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **5. notification** — mock interfaces, not concrete types              | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                             |
+| 5.1  | Defines interfaces for dependencies                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses concrete SMTPClient directly |
+| 5.2  | Creates mock implementations of interfaces                             | <span class="g">✓</span>       | <span class="r">✗</span> function-field injection          |
+| 5.3  | Does NOT embed concrete structs in mocks                               | <span class="g">✓</span>       | <span class="r">✗</span> returns *SMTPClient directly      |
+| 5.4  | NotificationService accepts interfaces via DI                          | <span class="g">✓</span>       | <span class="r">✗</span> accepts *SMTPClient, *AuditLogger |
+| 5.5  | Tests happy path and error scenarios                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **6. usercache** — test behavior, not implementation details           | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                             |
+| 6.1  | Tests observable behavior via public API only                          | <span class="g">✓</span>       | <span class="r">✗</span> accesses cache.data directly      |
+| 6.2  | Does NOT access internal data map field                                | <span class="g">✓</span>       | <span class="r">✗</span> cache.data["1"], len(cache.data)  |
+| 6.3  | Uses external test package (black-box)                                 | <span class="g">✓</span>       | <span class="r">✗</span> struct defined in test file       |
+| 6.4  | Covers hit, miss, overwrite, Len()                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **7. mathutil** — black-box package_test for exported API              | **<span class="g">3/4</span>** | **<span class="g">3/4</span>**                             |
+| 7.1  | Uses `package mathutil_test`                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 7.2  | Explicit import of mathutil package                                    | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 7.3  | Only tests exported functions                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 7.4  | Table-driven with named cases for both functions                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **8. money** — Example functions as executable documentation           | **<span class="r">1/4</span>** | **<span class="r">1/4</span>**                             |
+| 8.1  | Includes at least one Example function                                 | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 8.2  | Example has `// Output:` comment                                       | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 8.3  | Example demonstrates realistic usage                                   | <span class="r">✗</span>       | <span class="r">✗</span>                                   |
+| 8.4  | Also includes regular table-driven tests                               | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **9. sanitize** — fuzzing for security-critical parsers                | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                             |
+| 9.1  | Includes fuzz test (FuzzSanitizeHTML)                                  | <span class="g">✓</span>       | <span class="r">✗</span> no fuzz test                      |
+| 9.2  | Fuzz uses f.Add() seed corpus                                          | <span class="g">✓</span>       | <span class="r">✗</span> no fuzzing                        |
+| 9.3  | Property-based assertions in fuzz                                      | <span class="g">✓</span>       | <span class="r">✗</span> no fuzzing                        |
+| 9.4  | Also includes table-driven tests                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 9.5  | Covers nested/unclosed/script tags                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **10. jsonhelper** — t.Helper() in custom test helpers                 | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                             |
+| 10.1 | assertJSONEqual calls t.Helper()                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 10.2 | Order-independent JSON comparison                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 10.3 | Meaningful error messages (expected vs actual)                         | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 10.4 | Helper used in MarshalUser tests                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **11. createorder** — httptest.NewRecorder for handler tests           | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                             |
+| 11.1 | Uses httptest.NewRecorder                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 11.2 | Table-driven with named cases                                          | <span class="g">✓</span>       | <span class="r">✗</span> separate individual functions     |
+| 11.3 | Tests 3+ status codes (201, 400, 422)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 11.4 | Verifies response body content                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 11.5 | Sets Content-Type header on requests                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+|      | **12. orderrepo** — testify/suite for integration test organization    | **<span class="g">6/6</span>** | **<span class="r">3/6</span>**                             |
+| 12.1 | Uses testify/suite.Suite embedding                                     | <span class="g">✓</span>       | <span class="r">✗</span> plain TestMain + functions        |
+| 12.2 | Has SetupSuite for one-time DB setup                                   | <span class="g">✓</span>       | <span class="r">✗</span> uses TestMain instead             |
+| 12.3 | Has SetupTest/TearDownTest for per-test cleanup                        | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 12.4 | Has TearDownSuite for graceful shutdown                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 12.5 | Uses `//go:build integration` build tag                                | <span class="g">✓</span>       | <span class="g">✓</span>                                   |
+| 12.6 | Has suite.Run runner function                                          | <span class="g">✓</span>       | <span class="r">✗</span> no suite.Run                      |
+
+</details>
+
+## `golang-concurrency` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **110/112 (98%)** | **69/112 (62%)** | **+37pp** |
+
+<details>
+<summary>Concurrency patterns — 62/62 (100%) vs 38/62 (61%), +39pp (62 assertions across 13 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Runs:** 13 evals x 2 configs = 26 subagents | **Grading:** Human-as-a-judge
+
+| #    | Assertion                                                                                                              | With                           | Without                                                           |
+| ---- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
+|      | **1. time-after-in-select-loop** — avoid time.After in loop, use time.NewTimer+Reset                                   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 1.1  | Does NOT use time.After inside the loop body                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> uses time.After(5*time.Second) in select |
+| 1.2  | Creates time.NewTimer (or time.NewTicker) outside the loop                                                             | <span class="g">✓</span>       | <span class="r">✗</span> no timer created outside loop            |
+| 1.3  | Calls timer.Reset() after handling a message or timeout                                                                | <span class="g">✓</span>       | <span class="r">✗</span> no Reset call                            |
+| 1.4  | Calls timer.Stop() (or defers it) to clean up the timer                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.5  | Drains the timer channel before Reset when appropriate (if !timer.Stop() { <-timer.C })                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **2. channel-closing-ownership** — only the sender closes a channel                                                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 2.1  | Does NOT close the channel from the consumer/receiver side                                                             | <span class="g">✓</span>       | <span class="r">✗</span> closes from consumer                     |
+| 2.2  | Uses a separate signaling mechanism (done channel, context cancellation) for the consumer to tell the producer to stop | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.3  | The producer is the one that closes the data channel                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> consumer closes data channel             |
+| 2.4  | Explains the panic risk of closing a channel from the receiver side                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.5  | The producer selects on the stop signal alongside its send operation                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **3. waitgroup-add-placement** — wg.Add before go statement                                                            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 3.1  | Calls wg.Add(1) BEFORE the go statement, not inside the goroutine                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.2  | Calls defer wg.Done() inside the goroutine                                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.3  | Calls wg.Wait() after the loop to wait for all goroutines                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.4  | Does not place wg.Add inside the goroutine function body                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **4. channel-direction-in-signatures** — use chan<- and <-chan in function signatures                                  | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
+| 4.1  | The generator function returns <-chan int (receive-only for callers)                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.2  | The doubler function accepts <-chan int as input parameter                                                             | <span class="g">✓</span>       | <span class="r">✗</span> uses bidirectional chan int              |
+| 4.3  | The doubler function returns <-chan int (receive-only for callers)                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.4  | Internally, channels are created as bidirectional but exposed as directional through return types                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.5  | The producer (generator) closes its output channel with defer close(out)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **5. unbuffered-channel-default** — default to unbuffered, justify buffers                                             | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 5.1  | Recommends starting with unbuffered (or very small buffer like 0 or 1) as the default                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests buffer of 100                   |
+| 5.2  | Explains that large buffers mask backpressure problems                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no backpressure discussion               |
+| 5.3  | States that buffer size should be based on measured need, not arbitrary choice                                         | <span class="g">✓</span>       | <span class="r">✗</span> picks arbitrary size                     |
+| 5.4  | Does NOT suggest a large arbitrary buffer (e.g., 100, 1000) without explaining the tradeoffs                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 5.5  | Mentions that buffered channels hide the problem of slow consumers                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **6. send-copies-not-pointers** — send values through channels, not pointers                                           | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                    |
+| 6.1  | Sends Task values (not *Task pointers) through the channel, OR explicitly documents why pointers are safe              | <span class="g">✓</span>       | <span class="r">✗</span> sends *Task pointers                     |
+| 6.2  | The channel type is chan Task (value type) rather than chan *Task                                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses chan *Task                          |
+| 6.3  | Does not mutate the Task struct after sending it on the channel (or sends a copy)                                      | <span class="g">✓</span>       | <span class="r">✗</span> no copy/immutability discussion          |
+| 6.4  | If pointers are used, explicitly acknowledges the shared-memory risk and explains the mitigation                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **7. errgroup-vs-waitgroup-decision** — errgroup.SetLimit for bounded concurrent work with errors                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 7.1  | Uses errgroup (golang.org/x/sync/errgroup) instead of sync.WaitGroup for error propagation                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.2  | Uses errgroup.WithContext to cancel siblings on first error                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.3  | Uses g.SetLimit(10) for bounded concurrency instead of a hand-rolled semaphore                                         | <span class="g">✓</span>       | <span class="r">✗</span> uses semaphore channel                   |
+| 7.4  | Does NOT build a manual worker pool with channels and WaitGroup when errgroup suffices                                 | <span class="g">✓</span>       | <span class="r">✗</span> builds manual pool with channels         |
+| 7.5  | Each goroutine checks ctx.Done() or uses the context from errgroup.WithContext                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **8. ctx-done-in-select** — always include ctx.Done() in select to prevent goroutine leaks                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 8.1  | The function accepts a context.Context parameter                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.2  | Every select statement includes a case <-ctx.Done(): return branch                                                     | <span class="g">✓</span>       | <span class="r">✗</span> missing ctx.Done in output select        |
+| 8.3  | Both the read from input channel AND the write to output channel are wrapped in select with ctx.Done()                 | <span class="g">✓</span>       | <span class="r">✗</span> only read has select                     |
+| 8.4  | The goroutine exits cleanly when context is cancelled                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.5  | The output channel is closed when the goroutine exits (defer close)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **9. sync-map-vs-rwmutex-decision** — RWMutex+map for write-heavy overlapping keys                                     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 9.1  | Recommends sync.RWMutex + plain map over sync.Map for this write-heavy, overlapping-key pattern                        | <span class="g">✓</span>       | <span class="r">✗</span> recommends sync.Map                      |
+| 9.2  | Explains that sync.Map is optimized for write-once/read-many or disjoint key sets                                      | <span class="g">✓</span>       | <span class="r">✗</span> no access-pattern discussion             |
+| 9.3  | Explains that for frequent writes with overlapping keys, RWMutex+map is faster                                         | <span class="g">✓</span>       | <span class="r">✗</span> no performance comparison                |
+| 9.4  | Does NOT unconditionally recommend sync.Map for any concurrent map scenario                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 9.5  | Mentions that concurrent map read/write without synchronization causes a hard crash                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **10. sync-pool-reset-before-put** — Reset() before Put(), not after Get()                                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 10.1 | Calls buf.Reset() BEFORE bufPool.Put(buf), not after Get()                                                             | <span class="g">✓</span>       | <span class="r">✗</span> resets after Get()                       |
+| 10.2 | Uses defer to ensure the buffer is returned to the pool even on error                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 10.3 | Does not assume the object from Get() is clean/zeroed                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> assumes clean after Get                  |
+| 10.4 | The pool's New function creates a new buffer                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 10.5 | Does not store persistent state in pooled objects                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **11. goroutine-panic-recovery** — recover at goroutine boundaries                                                     | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
+| 11.1 | Adds defer func() { recover() }() or equivalent panic recovery inside the goroutine                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 11.2 | Logs or handles the recovered panic (not just silently swallowed)                                                      | <span class="g">✓</span>       | <span class="r">✗</span> swallows panic silently                  |
+| 11.3 | The goroutine has a shutdown mechanism (context, done channel, or similar)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 11.4 | Mentions that a panic in a goroutine crashes the entire process                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **12. singleflight-cache-stampede** — use singleflight to deduplicate concurrent lookups                               | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
+| 12.1 | Recommends golang.org/x/sync/singleflight as the primary solution                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.2 | Shows usage of group.Do(key, func) where key identifies the deduplicated resource                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.3 | Explains that only one goroutine executes the function; others wait and share the result                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.4 | May combine singleflight with a cache layer for TTL-based caching                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.5 | Does NOT suggest only a plain mutex or only a TTL cache as the solution to thundering herd                             | <span class="g">✓</span>       | <span class="r">✗</span> also suggests mutex as primary approach  |
+|      | **13. iterator-vs-goroutine-pipeline** — iterators for sequential CPU-bound transforms                                 | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
+| 13.1 | Recommends against goroutine+channel pipeline for this purely sequential, in-memory transform                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.2 | Suggests Go 1.23+ iterators (iter.Seq) or simple slice operations instead                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests only plain loop                 |
+| 13.3 | Explains that goroutine+channel pipelines add overhead without benefit for sequential CPU-bound work                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.4 | Mentions that goroutine pipelines are appropriate when stages involve I/O or need true parallelism                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.5 | Does NOT build a multi-goroutine pipeline for this use case                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+
+</details>
+
+<details>
+<summary>Context propagation — 48/50 (96%) vs 31/50 (62%), +34pp (50 assertions across 10 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Runs:** 10 evals x 2 configs = 20 subagents | **Grading:** Human-as-a-judge
+
+| #    | Assertion                                                                                                      | With                                                                       | Without                                                              |
+| ---- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+|      | **1. context-background-in-handler** — use r.Context(), not context.Background() in handlers                   | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
+| 1.1  | Uses r.Context() to obtain the request context, NOT context.Background() inside the handler                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 1.2  | Passes the same context (or a derived child) to the database query (*Context variant)                          | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 1.3  | Passes the same context to the external HTTP call via http.NewRequestWithContext                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 1.4  | Does NOT use http.NewRequest (without context) for the external service call                                   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 1.5  | Checks ctx.Err() or handles context cancellation when the client disconnects                                   | <span class="g">✓</span>                                                   | <span class="r">✗</span> no ctx.Err() check on disconnect            |
+|      | **2. cancel-leak-timeout** — defer cancel() for every WithTimeout, per-attempt timeouts                        | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
+| 2.1  | Creates a new context.WithTimeout for each retry attempt (not one timeout for all retries)                     | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 2.2  | Calls defer cancel() (or cancel() before next iteration) for every WithTimeout call                            | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 2.3  | Does NOT discard the cancel function with _ (e.g., ctx, _ = context.WithTimeout(...))                          | <span class="g">✓</span>                                                   | <span class="r">✗</span> discards cancel with _                      |
+| 2.4  | Uses http.NewRequestWithContext to attach the per-attempt timeout context                                      | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 2.5  | Accepts a parent context parameter and derives timeouts from it                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **3. context-value-key-type** — unexported key types for context values                                        | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
+| 3.1  | Uses an unexported type for the context key (e.g., type contextKey string or type tenantKey struct{})          | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses plain string key                       |
+| 3.2  | Does NOT use a plain string as the context key                                                                 | <span class="g">✓</span>                                                   | <span class="r">✗</span> context.WithValue(ctx, "tenant_id", ...)    |
+| 3.3  | Provides a typed getter function (e.g., TenantIDFromContext) that returns the value with proper type assertion | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 3.4  | Provides a setter function or the middleware injects the value using the unexported key                        | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 3.5  | The getter handles the case where the value is missing from the context (returns zero value + bool or error)   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **4. context-in-struct-trap** — do not store context.Context in a struct field                                 | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
+| 4.1  | Does NOT store context.Context as a field in the Worker struct                                                 | <span class="g">✓</span>                                                   | <span class="r">✗</span> stores ctx context.Context in struct        |
+| 4.2  | Passes context as a parameter to Start() or Run() method                                                       | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses stored struct field context            |
+| 4.3  | Uses context cancellation or a done channel for graceful shutdown signaling                                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 4.4  | Listens to ctx.Done() in a select statement to detect shutdown                                                 | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 4.5  | ctx is the first parameter where it appears, named ctx context.Context                                         | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **5. without-cancel-background-work** — use context.WithoutCancel for background work (Go 1.21+)               | **<span class="g">5/5</span>**                                             | **<span class="r">2/5</span>**                                       |
+| 5.1  | Uses context.WithoutCancel to create a context for the audit goroutine                                         | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background()                   |
+| 5.2  | Does NOT pass r.Context() directly to the background audit goroutine                                           | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 5.3  | Does NOT use context.Background() for the audit goroutine (that would lose trace_id)                           | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background()                   |
+| 5.4  | The audit goroutine preserves request-scoped values (trace_id) from the original context                       | <span class="g">✓</span>                                                   | <span class="r">✗</span> context.Background() loses all values       |
+| 5.5  | Launches the audit as a separate goroutine (go keyword) so the handler can return immediately                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **6. nested-timeout-shorter-wins** — nested timeouts take the shorter deadline                                 | **<span class="r">4/5</span>**                                             | **<span class="r">3/5</span>**                                       |
+| 6.1  | Creates the overall 10-second timeout from the parent context                                                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 6.2  | Creates the cache timeout as a child of the overall context                                                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 6.3  | Acknowledges that the database timeout is bounded by whatever time remains on the parent                       | <span class="r">✗</span> creates 8s child without noting parent constraint | <span class="r">✗</span> creates independent 8s timeout              |
+| 6.4  | Defers cancel() for every WithTimeout call                                                                     | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 6.5  | Does NOT create independent context.Background() timeouts that bypass the overall deadline                     | <span class="g">✓</span>                                                   | <span class="r">✗</span> creates context.Background() timeout for DB |
+|      | **7. context-todo-vs-background** — use context.TODO() as placeholder, not context.Background()                | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
+| 7.1  | Uses context.TODO() as the temporary placeholder in functions not yet fully migrated                           | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background() everywhere        |
+| 7.2  | Uses context.Background() only at the true top level (main function or test setup)                             | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses Background() at all levels             |
+| 7.3  | Shows a migration path where context.TODO() is gradually replaced as callers are updated                       | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 7.4  | Context is always the first parameter, named ctx context.Context                                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 7.5  | Does NOT pass nil as a context value at any point in the migration                                             | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **8. db-context-variants** — use *Context database method variants                                             | **<span class="g">5/5</span>**                                             | **<span class="g">5/5</span>**                                       |
+| 8.1  | Uses db.QueryRowContext (not db.QueryRow) for GetByID                                                          | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 8.2  | Uses db.ExecContext (not db.Exec) for Create, Update, and Delete                                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 8.3  | Passes the ctx parameter to every database call                                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 8.4  | Does NOT ignore the ctx parameter by calling non-context database methods                                      | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 8.5  | Each method accepts ctx context.Context as its first parameter                                                 | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+|      | **9. context-values-abuse** — do not stuff infrastructure deps into context values                             | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
+| 9.1  | Database connection is passed as a struct field or explicit parameter, NOT via context value                   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 9.2  | Logger is passed as a struct field or explicit parameter, NOT via context value                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 9.3  | Order details are passed as an explicit function parameter, NOT via context value                              | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 9.4  | User ID and/or trace ID are stored in context values (these are request-scoped metadata)                       | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 9.5  | Distinguishes between infrastructure dependencies (explicit) and request-scoped metadata (context values)      | <span class="g">✓</span>                                                   | <span class="r">✗</span> no explicit distinction made                |
+|      | **10. afterfunc-cleanup** — use context.AfterFunc for non-blocking cleanup (Go 1.21+)                          | **<span class="r">4/5</span>**                                             | **<span class="r">2/5</span>**                                       |
+| 10.1 | Uses context.AfterFunc to register the cleanup callback                                                        | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses manual goroutine with <-ctx.Done()     |
+| 10.2 | Does NOT block the main flow waiting for context cancellation                                                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 10.3 | The cleanup function removes the temporary file                                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
+| 10.4 | Captures the stop function returned by AfterFunc for potential cancellation of the callback                    | <span class="g">✓</span>                                                   | <span class="r">✗</span> no stop function (uses goroutine)           |
+| 10.5 | Also includes a defer-based cleanup as a safety net (AfterFunc + defer for belt-and-suspenders)                | <span class="r">✗</span> only AfterFunc, no defer fallback                 | <span class="r">✗</span> only goroutine, no defer fallback           |
+
+</details>
+
+## `golang-observability` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **185/185 (100%)** | **117/185 (63%)** | **+37pp** |
+
+<details>
+<summary>Full breakdown (185 assertions across 40 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                                             | With                           | Without                                                           |
+| ---- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
+|      | **1. summary-vs-histogram-multi-replica** — Histogram over Summary when multiple replicas need aggregated percentiles | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
+| 1.1  | Recommends Histogram, not Summary                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.2  | Explains that Summary quantiles cannot be aggregated across multiple instances                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.3  | Shows histogram_quantile() PromQL function for computing percentiles server-side                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.4  | Mentions that Histogram supports server-side aggregation across replicas                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.5  | Uses prometheus.NewHistogramVec (not NewSummary) in the code example                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **2. log-and-return-error-trap** — single handling rule: log OR return, never both                                    | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
+| 2.1  | Identifies the log-and-return pattern as incorrect                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.2  | Explains that the error gets logged multiple times as it propagates up the chain                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.3  | Recommends returning the error with context and logging once at the top level                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.4  | Shows the corrected pattern: return fmt.Errorf with wrapping, no slog call                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.5  | References or explains the single handling rule (errors are either logged OR returned, never both)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **3. high-cardinality-label-trap** — high-cardinality label usage in Prometheus metrics                               | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
+| 3.1  | Identifies userID as a high-cardinality label that will cause problems                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.2  | Identifies r.URL.Path as potentially high-cardinality (should use route template instead)                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on userID, misses URL.Path       |
+| 3.3  | Explains that each unique label combination creates a separate time series                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.4  | Warns about memory explosion on the Prometheus server from unbounded labels                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.5  | Recommends using route patterns/templates (e.g., /users/:id) instead of actual paths                                  | <span class="g">✓</span>       | <span class="r">✗</span> generic advice without route template    |
+| 3.6  | Suggests using traces (not metrics) for high-cardinality data like user IDs                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **4. production-json-logging** — JSON handler for production, not TextHandler                                         | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
+| 4.1  | Recommends JSONHandler for production, not TextHandler                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.2  | Explains that plain-text multiline logs (e.g., stack traces) get split into separate records by log collectors        | <span class="g">✓</span>       | <span class="r">✗</span> generic "not machine-parseable"          |
+| 4.3  | Suggests TextHandler is appropriate for development only                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.4  | Shows the correct JSONHandler setup with slog.LevelInfo for production                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **5. slog-context-variant-trace-correlation** — *Context variants for trace correlation                               | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
+| 5.1  | Identifies that slog.Info and slog.Error should use their *Context variants                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 5.2  | Explains that without ctx, trace_id and span_id won't be injected into log records                                    | <span class="g">✓</span>       | <span class="r">✗</span> unaware of otelslog injection mechanism  |
+| 5.3  | Shows the corrected code using slog.InfoContext(ctx, ...) and slog.ErrorContext(ctx, ...)                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 5.4  | Mentions that the otelslog bridge automatically injects trace correlation when context is passed                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **6. metric-naming-conventions** — base units, _total suffix, namespace                                               | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
+| 6.1  | Flags request_count as missing namespace and unit suffix                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.2  | Flags httpDuration as using camelCase and missing unit                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.3  | Flags request_duration_ms — should use _seconds (base unit), not milliseconds                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.4  | Flags myapp_request_size_kb — should use _bytes (base unit), not kilobytes                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.5  | Flags embedding label values into metric names — should use a single metric with a method label                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **7. irate-vs-rate-for-alerts** — irate() is inappropriate for alerting rules                                         | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 7.1  | Identifies irate() as inappropriate for alerting rules                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.2  | Explains that irate reacts to a single scrape interval and is too volatile                                            | <span class="g">✓</span>       | <span class="r">✗</span> knows irate differs but imprecise why    |
+| 7.3  | Recommends rate() instead of irate() for alerts                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.4  | Recommends adding a for: duration to avoid firing on transient spikes                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.5  | Shows the corrected alert rule using rate() with a for: clause                                                        | <span class="g">✓</span>       | <span class="r">✗</span> shows rate() but misses error ratio      |
+|      | **8. alert-missing-for-duration** — alerts without for: duration clause                                               | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
+| 8.1  | Identifies the missing for: duration as a problem                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.2  | Explains that without for:, a single bad scrape triggers the alert                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.3  | Recommends adding for: 5m or similar duration                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.4  | Distinguishes that binary alerts (service up/down) can use for: 0m, but non-binary need a duration                    | <span class="g">✓</span>       | <span class="r">✗</span> generic advice, no binary distinction    |
+|      | **9. promql-comments-convention** — documenting metrics with PromQL comments above declarations                       | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                    |
+| 9.1  | Recommends adding PromQL queries and alert rules as comments directly above the metric var                            | <span class="g">✓</span>       | <span class="r">✗</span> suggests wiki or README                  |
+| 9.2  | Shows example Dashboard: and Alert: comment lines above the metric var                                                | <span class="g">✓</span>       | <span class="r">✗</span> no such convention known                 |
+| 9.3  | Explains that this keeps PromQL queries reviewed in PRs alongside the metric                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 9.4  | Mentions that queries stay in sync with metric changes (label renames, bucket changes)                                | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 9.5  | Notes that new team members can understand the metric's purpose at a glance                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **10. otelslog-bridge-setup** — log-trace correlation using otelslog bridge                                           | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
+| 10.1 | Recommends using the otelslog bridge from go.opentelemetry.io/contrib/bridges/otelslog                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual trace_id extraction      |
+| 10.2 | Shows creating a handler with otelslog.NewHandler()                                                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 10.3 | Shows setting it as default with slog.SetDefault()                                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 10.4 | Explains that trace_id and span_id are automatically injected into log records                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 10.5 | Emphasizes using slog.*Context(ctx, ...) variants to enable the automatic injection                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **11. exemplars-metric-trace-link** — metrics-to-traces correlation via Prometheus exemplars                          | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                    |
+| 11.1 | Recommends using Prometheus exemplars to link metrics to traces                                                       | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual correlation              |
+| 11.2 | Shows attaching trace_id as an exemplar when recording histogram observations                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 11.3 | Explains that exemplars let you jump from a metric spike directly to the trace                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **12. span-error-recording-both-calls** — RecordError() AND SetStatus(Error) required                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
+| 12.1 | Identifies that span.SetStatus(codes.Error, ...) is also needed alongside RecordError                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.2 | Explains that RecordError adds an event but does not mark the span as failed                                          | <span class="g">✓</span>       | <span class="r">✗</span> may not distinguish event vs status      |
+| 12.3 | Shows the corrected pattern with both span.RecordError(err) and span.SetStatus(codes.Error, ...)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 12.4 | Notes that on success, no status needs to be set (Unset is fine)                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **13. otelhttp-outgoing-requests** — outgoing HTTP clients must use otelhttp transport                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 13.1 | Recommends wrapping the HTTP client transport with otelhttp.NewTransport                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.2 | Shows the code: client := &http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.3 | Explains that this automatically propagates trace context to outgoing requests                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 13.4 | Mentions that otelhttp creates child spans for outgoing HTTP calls                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **14. db-query-context-propagation** — database calls must use *Context variants                                      | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 14.1 | Identifies that db.Query should be db.QueryContext(ctx, ...)                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 14.2 | Explains that without context, the trace is broken                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 14.3 | Shows the corrected code using db.QueryContext(ctx, ...)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 14.4 | States that context is the vehicle that carries trace_id and span_id across boundaries                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **15. trace-sampling-cost-control** — trace sampling strategies and cost implications                                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
+| 15.1 | Recommends TraceIDRatioBased sampling with a specific ratio (e.g., 0.1 for 10%)                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 15.2 | Mentions ParentBased sampler to respect parent's sampling decision                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 15.3 | Discusses head-based vs tail-based sampling tradeoffs                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 15.4 | Recommends avoiding large payloads as span attributes — log and correlate via trace_id                                | <span class="g">✓</span>       | <span class="r">✗</span> generic cost advice                      |
+| 15.5 | Explains the cost factors: span volume, span attributes, storage and indexing                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **16. where-to-add-spans** — which operations must have spans in OpenTelemetry                                        | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
+| 16.1 | Lists service methods (business logic layer) as requiring spans                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 16.2 | Lists database queries as requiring spans                                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 16.3 | Lists external API calls as requiring spans                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 16.4 | Lists message queue publish/consume operations as requiring spans                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 16.5 | States any operation that takes measurable time or could fail should have a span                                      | <span class="g">✓</span>       | <span class="r">✗</span> gives specific list, misses general rule |
+|      | **17. four-golden-signals-alerting** — four golden signals for service alerting                                       | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
+| 17.1 | References the four golden signals: latency, traffic, errors, saturation                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 17.2 | Includes a latency alert (e.g., P99 > threshold)                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 17.3 | Includes a traffic alert (e.g., zero requests detection)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 17.4 | Includes an error rate alert (e.g., 5xx ratio > threshold)                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 17.5 | Includes a saturation alert (e.g., connection pool > 90%)                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **18. awesome-prometheus-alerts-resource** — awesome-prometheus-alerts as a starting point                            | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
+| 18.1 | Recommends awesome-prometheus-alerts (samber.github.io/awesome-prometheus-alerts/)                                    | <span class="g">✓</span>       | <span class="r">✗</span> suggests writing rules from scratch      |
+| 18.2 | Mentions it contains ~500 ready-to-use Prometheus alerting rules organized by technology                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 18.3 | Suggests the workflow: browse by technology, copy rules, customize thresholds                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 18.4 | Mentions verifying that exporters (postgres_exporter, redis_exporter) are deployed                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **19. go-runtime-alerts** — Go runtime-specific Prometheus alerts                                                     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 19.1 | Suggests alerting on go_goroutines exceeding a threshold for goroutine leaks                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 19.2 | Suggests alerting on go_gc_duration_seconds for GC pressure                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 19.3 | Suggests alerting on go_memstats_alloc_bytes / go_memstats_sys_bytes for memory leaks                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 19.4 | Suggests alerting on go_threads for high OS thread count                                                              | <span class="g">✓</span>       | <span class="r">✗</span> rarely includes thread alerts            |
+| 19.5 | Uses for: duration on all non-binary alerts to avoid false positives                                                  | <span class="g">✓</span>       | <span class="r">✗</span> omits for: on some alerts                |
+|      | **20. alert-severity-levels** — severity classification and for: durations                                            | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
+| 20.1 | Uses two severity levels: critical (page on-call) and warning (create ticket)                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 20.2 | Critical alerts: for: 2m to 5m for fast detection                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 20.3 | Warning alerts: for: 10m to 30m for confirmed trends                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 20.4 | Classifies service down as critical with short for: duration                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 20.5 | Classifies goroutine leak as warning (not critical)                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> may classify as critical                 |
+| 20.6 | States that for: 0m should never be used on non-binary alerts                                                         | <span class="g">✓</span>       | <span class="r">✗</span> not a widely known rule                  |
+|      | **21. multi-window-burn-rate-slo** — multi-window burn-rate SLO alerting                                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 21.1 | Recommends multi-window burn-rate alerting instead of simple threshold alerts                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 21.2 | Explains the concept of error budget and burn rate                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 21.3 | Includes fast burn window (e.g., 5m + 1h, 14.4x burn rate) as critical/page                                           | <span class="g">✓</span>       | <span class="r">✗</span> generic burn rate, no specific windows   |
+| 21.4 | Includes slow burn window (e.g., 2h + 24h, 1x burn rate) as warning/ticket                                            | <span class="g">✓</span>       | <span class="r">✗</span> no slow burn tier                        |
+| 21.5 | Shows PromQL using AND of short and long windows to eliminate false positives                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **22. slog-migration-from-zap** — incremental migration from zap to slog using bridge                                 | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
+| 22.1 | Recommends a three-step migration: bridge, replace call sites, remove bridge                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests gradual replacement only        |
+| 22.2 | Step 1: Use samber/slog-zap bridge handler to route slog output through zap                                           | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-zap               |
+| 22.3 | Step 2: Gradually replace zap.L().Info(...) calls with slog.Info(...)                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 22.4 | Step 3: Once fully migrated, replace bridge with native slog JSONHandler and remove zap                               | <span class="g">✓</span>       | <span class="r">✗</span> no bridge step to remove                 |
+| 22.5 | Mentions using parallel sub-agents for large codebase migration                                                       | <span class="g">✓</span>       | <span class="r">✗</span> not a known pattern                      |
+|      | **23. slog-migration-from-logrus** — bridge handler approach for logrus migration                                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                    |
+| 23.1 | Recommends using samber/slog-logrus bridge handler for incremental migration                                          | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-logrus            |
+| 23.2 | Explains that slog is the standard library logger since Go 1.21                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 23.3 | Shows the bridge step: route slog output through the existing logrus logger                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 23.4 | Shows the replacement: logrus.WithField becomes slog.Info                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **24. debug-level-production-cost** — log level cost implications in production                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 24.1 | Recommends slog.LevelInfo for production, NOT Debug                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 24.2 | Explains that Debug level can generate millions of log lines per minute in busy services                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 24.3 | Mentions cost: CPU for serialization, I/O for disk/network, money for log ingestion/storage                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 24.4 | Mentions Debug can inflate costs by 10-100x                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> no specific multiplier                   |
+| 24.5 | Suggests samber/slog-sampling as an alternative to sample verbose logs                                                | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-sampling          |
+|      | **25. pii-in-logs-trap** — catching PII being logged                                                                  | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 25.1 | Flags email as PII that should not be logged                                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 25.2 | Flags SSN as PII that should absolutely never be logged                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 25.3 | Recommends logging identifiers (user_id) instead of PII                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 25.4 | Shows corrected logging using user.ID instead of email/SSN                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **26. counter-suffix-total-requirement** — Prometheus counters must use _total suffix                                 | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                    |
+| 26.1 | Identifies the missing _total suffix — counters MUST end with _total                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 26.2 | Shows the corrected name: requests_total or http_requests_total                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 26.3 | Mentions that _total is a required convention for counters in Prometheus                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **27. pprof-security-auth** — pprof endpoints must be protected with authentication                                   | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 27.1 | Warns that pprof endpoints must NOT be exposed publicly without authentication                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 27.2 | Explains that pprof leaks sensitive runtime information and can be abused for DoS                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 27.3 | Recommends protecting with basic auth or running on a separate internal port                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 27.4 | Suggests toggling via environment variable to enable/disable without redeployment                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **28. continuous-profiling-env-toggle** — toggle continuous profiling via environment variables                       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 28.1 | Recommends toggling via environment variable (e.g., PROFILING_ENABLED)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 28.2 | Mentions ~2-5% CPU overhead for continuous profiling                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> no specific overhead figure              |
+| 28.3 | Suggests starting with CPU + heap profiles only, adding mutex/block when needed                                       | <span class="g">✓</span>       | <span class="r">✗</span> suggests all profiles                    |
+| 28.4 | For large deployments, recommends enabling on a fraction of replicas (e.g., 1 in 10)                                  | <span class="g">✓</span>       | <span class="r">✗</span> not a widely known practice              |
+| 28.5 | Shows code that checks the environment variable before starting Pyroscope                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **29. rum-identity-key-email-trap** — RUM distinct_id must be user_id, not email                                      | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
+| 29.1 | Rejects email as the DistinctId — must use user_id instead                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 29.2 | Explains that email is mutable — users change it, splitting events into two users                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 29.3 | Explains that email is PII, complicating GDPR/CCPA compliance                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 29.4 | Notes that email leaks into third-party analytics systems as the identity key                                         | <span class="g">✓</span>       | <span class="r">✗</span> not commonly considered                  |
+| 29.5 | Shows corrected code using user.ID (immutable internal identifier)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **30. gdpr-consent-before-tracking** — GDPR consent must be checked before sending events                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 30.1 | Identifies that consent must be checked before sending the tracking event                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 30.2 | Shows extracting consent from context and conditionally tracking                                                      | <span class="g">✓</span>       | <span class="r">✗</span> generic consent advice without Go code   |
+| 30.3 | Mentions GDPR fines (up to 4% of global revenue) or CCPA penalties                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 30.4 | References data minimization — only collect what you need                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 30.5 | Mentions data subject rights endpoints (data export and deletion)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> focuses on consent only                  |
+|      | **31. data-subject-rights-endpoints** — GDPR requires deletion/export across all systems                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 31.1 | States that deletion must propagate to ALL systems holding user data                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 31.2 | Lists the analytics platform (PostHog) as needing deletion                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 31.3 | Lists the CDP (Segment) as needing deletion                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> may not mention CDP deletion             |
+| 31.4 | References GDPR Article 17 Right to Erasure                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 31.5 | Also mentions the Right of Access (data export endpoint) as a requirement                                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on deletion only                 |
+|      | **32. five-signals-completeness** — five observability signals and their distinct roles                               | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
+| 32.1 | Lists all five signals: logs, metrics, traces, profiles, and RUM                                                      | <span class="g">✓</span>       | <span class="r">✗</span> lists logs, metrics, traces only         |
+| 32.2 | Associates logs with 'what happened' (discrete events, audit trails)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 32.3 | Associates metrics with 'how much/how fast' (aggregated measurements, alerting, SLOs)                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 32.4 | Associates traces with 'where did time go' (request flow across services)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 32.5 | Associates profiles with 'why is it slow/using memory' (CPU hotspots, memory leaks)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 32.6 | Associates RUM with 'how do users experience it' (product analytics, funnels)                                         | <span class="g">✓</span>       | <span class="r">✗</span> RUM not listed as a signal               |
+|      | **33. definition-of-done-observability** — observability checklist before shipping a feature                          | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
+| 33.1 | States that a feature is not production-ready until it is observable                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 33.2 | Checks for metric declarations (counters, histograms, gauges) with PromQL comments                                    | <span class="g">✓</span>       | <span class="r">✗</span> does not mention PromQL comments         |
+| 33.3 | Checks for proper structured logging with slog and context variants                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 33.4 | Checks for OpenTelemetry spans on service methods, DB queries, and external calls                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 33.5 | Checks for dashboards and alerts being wired up                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 33.6 | Checks that errors are either logged OR returned, never both                                                          | <span class="g">✓</span>       | <span class="r">✗</span> not part of typical deploy checklist     |
+|      | **34. grafana-dashboard-ids** — specific Grafana dashboard IDs for Go runtime monitoring                              | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
+| 34.1 | Recommends specific Grafana dashboard IDs (21221, 6671, or 10826)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests building custom dashboards      |
+| 34.2 | Mentions dashboard 21221 for host + runtime combined view                                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 34.3 | Explains that these dashboards use default Go collector metrics from the Prometheus client library                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 34.4 | Shows how to import: Dashboards > New > Import, enter the dashboard ID                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **35. slog-with-request-scoped-attrs** — slog.With() for request-scoped attributes                                    | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 35.1 | Recommends using slog.With() to create a child logger with request-scoped attributes                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 35.2 | Shows middleware pattern that creates the enriched logger                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 35.3 | Shows storing the enriched logger in context for downstream use                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 35.4 | Includes request_id, method, and path as the attributes to inject                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **36. slog-ecosystem-handlers** — slog handler ecosystem beyond stdlib                                                | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
+| 36.1 | Recommends samber/slog-multi for fan-out to multiple handlers                                                         | <span class="g">✓</span>       | <span class="r">✗</span> suggests custom io.MultiWriter           |
+| 36.2 | Mentions samber/slog-sentry for sending errors to Sentry                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 36.3 | Mentions samber/slog-datadog for sending logs to Datadog                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 36.4 | Explains that slog supports pluggable handlers                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 36.5 | References the slog ecosystem (go.dev/wiki/Resources-for-slog or similar)                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **37. parallel-observability-audit** — parallel sub-agents for observability audits                                   | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                    |
+| 37.1 | Recommends using up to 5 parallel sub-agents (via the Agent tool)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests linear approach                 |
+| 37.2 | Assigns one sub-agent per signal: metrics, logging, tracing, profiling, RUM                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 37.3 | Sub-agent for metrics: verify metric declarations and PromQL comments                                                 | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 37.4 | Sub-agent for logging: check structured logging, PII in logs, error logging patterns                                  | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 37.5 | Sub-agent for tracing: verify span creation in service methods, DB calls, API calls                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+|      | **38. predict-linear-for-saturation** — predict_linear for anticipating resource exhaustion                           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 38.1 | Recommends using predict_linear() PromQL function to extrapolate trends                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 38.2 | Shows expression: predict_linear(db_connections_active[15m], 600) > db_connections_max                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 38.3 | Explains that predict_linear extrapolates from recent trend to predict future value                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 38.4 | Also suggests a threshold alert (e.g., > 90%) as a complementary alert                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **39. self-hosted-rum-gdpr** — self-hosted analytics for GDPR compliance                                              | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
+| 39.1 | Recommends self-hosted analytics (PostHog or Matomo) for EU data residency                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 39.2 | Explains that self-hosting eliminates cross-border data transfer concerns                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 39.3 | Compares self-hosted vs SaaS tradeoffs (data residency, cost, maintenance, features)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 39.4 | Mentions that PostHog can be self-hosted to keep data in your own infrastructure                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **40. oops-structured-errors-tracing** — samber/oops for structured errors in tracing                                 | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
+| 40.1 | Recommends samber/oops for structured errors with stack traces                                                        | <span class="g">✓</span>       | <span class="r">✗</span> suggests fmt.Errorf or manual attrs      |
+| 40.2 | Shows using oops with .In(), .Code(), and .With() for structured context                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 40.3 | Explains that oops errors carry stack trace, structured context, and work with span.RecordError()                     | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+| 40.4 | Mentions compatibility with errors.Is/errors.As and slog                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
+
+</details>
+
+## `golang-database` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **70/74 (95%)** | **42/74 (57%)** | **+38pp** |
+
+<details>
+<summary>Full breakdown (74 assertions across 15 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                    | With                           | Without                                                      |
+| ---- | -------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
+|      | **1. orm-vs-sqlx-pgx-recommendation** — sqlx/pgx over ORMs, explain why ORMs are harmful     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 1.1  | Recommends sqlx or pgx instead of GORM                                                       | <span class="g">✓</span>       | <span class="r">✗</span> sets up GORM as primary             |
+| 1.2  | Explains why ORMs are problematic (N+1, unpredictable SQL, magic hooks, debugging)           | <span class="g">✓</span>       | <span class="r">✗</span> presents GORM positively            |
+| 1.3  | Recommends pgx specifically for PostgreSQL due to performance advantage                      | <span class="g">✓</span>       | <span class="r">✗</span> no mention of pgx                   |
+| 1.4  | Does NOT set up GORM or ent as the primary database library                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 1.5  | Mentions learning ORM API is harder than SQL or that ORMs hide SQL                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **2. exec-vs-query-for-non-select** — use Exec for DELETE/INSERT/UPDATE, not Query           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 2.1  | Uses ExecContext (not QueryContext) for the DELETE statement                                 | <span class="g">✓</span>       | <span class="r">✗</span> db.QueryContext for DELETE          |
+| 2.2  | Uses the *Context variant (ExecContext, not Exec)                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.3  | Passes ctx to the database call                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.4  | Retrieves RowsAffected() from the result                                                     | <span class="g">✓</span>       | <span class="r">✗</span> discards result                     |
+| 2.5  | Uses parameterized query (not string concatenation)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **3. nullable-column-handling** — pointer fields over sql.NullXxx for NULLable columns       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 3.1  | Uses pointer types (*string, *time.Time) rather than sql.NullString/sql.NullTime             | <span class="g">✓</span>       | <span class="r">✗</span> sql.NullString and sql.NullTime     |
+| 3.2  | Includes db struct tags for sqlx (db:"column_name")                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 3.3  | Includes json struct tags                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 3.4  | Uses json:"bio,omitempty" for bio (omitted when NULL)                                        | <span class="g">✓</span>       | <span class="r">✗</span> no omitempty distinction            |
+| 3.5  | Uses json:"deleted_at" without omitempty (appears as null)                                   | <span class="g">✓</span>       | <span class="r">✗</span> omitempty on both nullable fields   |
+|      | **4. connection-pool-configuration** — all four pool settings with reasonable values         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 4.1  | Calls SetMaxOpenConns                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 4.2  | Calls SetMaxIdleConns                                                                        | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
+| 4.3  | Calls SetConnMaxLifetime                                                                     | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
+| 4.4  | Calls SetConnMaxIdleTime                                                                     | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
+| 4.5  | MaxIdleConns <= MaxOpenConns                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **5. rows-close-and-err-check** — defer Close and rows.Err() check after loop                | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                               |
+| 5.1  | Calls defer rows.Close() immediately after QueryContext                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.2  | Checks rows.Err() after the for rows.Next() loop                                             | <span class="g">✓</span>       | <span class="r">✗</span> no rows.Err() check                 |
+| 5.3  | Returns the error from rows.Err() if non-nil                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.4  | Uses QueryContext (not Query) with a context parameter                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.5  | Checks the error returned by QueryContext before proceeding                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **6. errnorows-handling-pattern** — sql.ErrNoRows with domain error translation              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 6.1  | Uses errors.Is(err, sql.ErrNoRows) to check for not-found                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.2  | Returns a domain-specific error (ErrUserNotFound), NOT raw sql.ErrNoRows                     | <span class="g">✓</span>       | <span class="r">✗</span> returns raw sql.ErrNoRows           |
+| 6.3  | Wraps non-ErrNoRows errors with context using fmt.Errorf and %w                              | <span class="g">✓</span>       | <span class="r">✗</span> bare return err                     |
+| 6.4  | Uses GetContext (not Get) with the ctx parameter                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.5  | Uses parameterized query placeholder ($1 or ?)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **7. transaction-with-defer-rollback** — BeginTxx, defer Rollback, Commit, FOR UPDATE        | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                               |
+| 7.1  | Uses BeginTxx (or BeginTx) to start a transaction                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 7.2  | Calls defer tx.Rollback() immediately after BeginTxx                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 7.3  | Uses SELECT ... FOR UPDATE when reading balances                                             | <span class="g">✓</span>       | <span class="r">✗</span> plain SELECT without lock           |
+| 7.4  | Sets serializable or repeatable-read isolation level                                         | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
+| 7.5  | Calls tx.Commit() at the end of the successful path                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **8. dynamic-in-clause-with-rebind** — sqlx.In + Rebind pattern                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 8.1  | Uses sqlx.In() to expand the IN clause placeholders                                          | <span class="g">✓</span>       | <span class="r">✗</span> manual placeholder building         |
+| 8.2  | Calls db.Rebind() after sqlx.In to adjust placeholders                                       | <span class="g">✓</span>       | <span class="r">✗</span> hardcoded $1,$2 placeholders        |
+| 8.3  | Passes the expanded args from sqlx.In to the query execution                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 8.4  | Uses a *Context method variant                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 8.5  | Handles the error from sqlx.In                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **9. dynamic-column-name-allowlist** — allowlist validation, not direct interpolation        | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 9.1  | Validates sort column against an explicit allowlist                                          | <span class="g">✓</span>       | <span class="r">✗</span> direct fmt.Sprintf interpolation    |
+| 9.2  | Returns an error if column is not in the allowlist                                           | <span class="g">✓</span>       | <span class="r">✗</span> no validation                       |
+| 9.3  | Does NOT pass column name as a parameterized placeholder                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 9.4  | Uses fmt.Sprintf ONLY after validation                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 9.5  | Uses a *Context method variant for the query                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **10. schema-creation-refusal** — refuse to generate database schemas                        | **<span class="r">3/4</span>** | **<span class="r">1/4</span>**                               |
+| 10.1 | Does NOT generate a complete CREATE TABLE schema                                             | <span class="g">✓</span>       | <span class="r">✗</span> generates full schema               |
+| 10.2 | Explains why AI-generated schemas are problematic                                            | <span class="g">✓</span>       | <span class="r">✗</span> no caveats                          |
+| 10.3 | Recommends human review or dedicated tooling for schema design                               | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
+| 10.4 | Mentions schema design requires understanding data volumes/access patterns                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **11. batch-processing-sweet-spot** — 100-1000 rows per batch, not row-by-row or giant batch | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 11.1 | Uses batching with batch size between 100 and 1000 rows                                      | <span class="g">✓</span>       | <span class="r">✗</span> single giant INSERT                 |
+| 11.2 | Does NOT insert all 50,000 rows in a single statement                                        | <span class="g">✓</span>       | <span class="r">✗</span> one statement with 50k value tuples |
+| 11.3 | Does NOT insert one row at a time in a loop                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 11.4 | Uses NamedExecContext or multi-row INSERT pattern                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 11.5 | Handles errors per batch with context about which batch failed                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **12. cursor-pagination-over-offset** — cursor-based pagination instead of OFFSET            | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 12.1 | Uses cursor-based pagination (WHERE created_at > $1) instead of OFFSET                       | <span class="g">✓</span>       | <span class="r">✗</span> OFFSET/LIMIT pattern                |
+| 12.2 | Explains why OFFSET is problematic (re-scans skipped rows)                                   | <span class="g">✓</span>       | <span class="r">✗</span> no mention of OFFSET cost           |
+| 12.3 | Uses LIMIT with ORDER BY for page size                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 12.4 | Returns a cursor value for the next page                                                     | <span class="g">✓</span>       | <span class="r">✗</span> returns page number                 |
+| 12.5 | Uses parameterized queries for the cursor value                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **13. integration-test-with-build-tags** — build tags + transaction rollback isolation       | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                               |
+| 13.1 | Uses //go:build integration build tag                                                        | <span class="g">✓</span>       | <span class="r">✗</span> no build tag                        |
+| 13.2 | Uses transaction-based test isolation (begin tx, rollback in teardown)                       | <span class="g">✓</span>       | <span class="r">✗</span> TRUNCATE in teardown                |
+| 13.3 | Does NOT test against production database — uses test DSN or testcontainers                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 13.4 | Uses testify/suite or similar setup/teardown pattern                                         | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
+| 13.5 | Tests actual SQL correctness (not mocked)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **14. avoid-hidden-sql-features** — no triggers, views, stored procedures                    | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                               |
+| 14.1 | Advises against triggers for updated_at                                                      | <span class="g">✓</span>       | <span class="r">✗</span> recommends CREATE TRIGGER           |
+| 14.2 | Recommends setting updated_at explicitly in Go code                                          | <span class="g">✓</span>       | <span class="r">✗</span> trigger approach                    |
+| 14.3 | Advises against views for the complex query                                                  | <span class="g">✓</span>       | <span class="r">✗</span> recommends CREATE VIEW              |
+| 14.4 | Explains hidden SQL features create invisible side effects                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 14.5 | Recommends keeping SQL explicit and visible in Go code                                       | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
+|      | **15. pgx-copy-for-bulk-postgres** — pgx.CopyFrom using COPY protocol                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 15.1 | Recommends pgx.CopyFrom using the COPY protocol                                              | <span class="g">✓</span>       | <span class="r">✗</span> multi-row INSERT only               |
+| 15.2 | Shows pgx.CopyFromRows or pgx.CopyFromSlice usage                                            | <span class="g">✓</span>       | <span class="r">✗</span> no COPY usage                       |
+| 15.3 | Mentions COPY is significantly faster than multi-row INSERT                                  | <span class="g">✓</span>       | <span class="r">✗</span> no performance comparison           |
+| 15.4 | Uses pgx.Identifier for the table name                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 15.5 | Still recommends batching for extremely large datasets                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+
+</details>
+
+## `golang-architecture` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **245/249 (98%)** | **143/249 (57%)** | **+41pp** |
+
+<details>
+<summary>Project layout — 55/55 (100%) vs 34/55 (62%), +38pp (55 assertions across 11 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                                                                 | With                           | Without                                                                                   |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------- |
+|      | **1. ask-architecture-before-structuring** — Tests whether the model asks the developer about architecture preference before imposing one | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                                            |
+| 1.1  | Asks the developer which software architecture they prefer (clean, hexagonal, DDD, flat, etc.)                                            | <span class="g">✓</span>       | <span class="r">✗</span> immediately generates a structure                                |
+| 1.2  | Asks about the project scope/size to right-size the structure                                                                             | <span class="g">✓</span>       | <span class="r">✗</span> assumes medium-large project                                     |
+| 1.3  | Does NOT immediately impose a specific architecture without asking                                                                        | <span class="g">✓</span>       | <span class="r">✗</span> imposes clean architecture                                       |
+| 1.4  | Mentions dependency injection approach as a follow-up question                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> no DI question                                                   |
+| 1.5  | Mentions that small projects should not be over-structured                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **2. cmd-directory-minimal-logic** — Tests whether the model keeps cmd/ main.go minimal with no business logic                            | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
+| 2.1  | Says business logic does NOT belong in cmd/server/main.go                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 2.2  | Says cmd/ should contain minimal logic: parse flags, wire dependencies, call Run()                                                        | <span class="g">✓</span>       | <span class="r">✗</span> says "mostly initialization" without being specific              |
+| 2.3  | Recommends moving business logic to internal/ or pkg/                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 2.4  | main.go should primarily do dependency wiring and startup                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 2.5  | NEVER put request parsing, database queries, or response formatting in cmd/                                                               | <span class="g">✓</span>       | <span class="r">✗</span> not explicitly stated                                            |
+|      | **3. no-src-utils-helpers-common** — Tests whether the model avoids Java-style src/ directory and generic package names                   | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                                            |
+| 3.1  | Rejects src/ directory (Go doesn't use /src, it's a Java pattern)                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 3.2  | Rejects utils/ as a generic package name                                                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 3.3  | Rejects helpers/ as a generic package name                                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 3.4  | Rejects common/ as a generic package name                                                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> accepts common/ as reasonable                                    |
+| 3.5  | Suggests domain-specific package names instead (e.g. format/, stringconv/)                                                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests renaming to "shared/"                                   |
+| 3.6  | Recommends putting main.go inside cmd/{name}/ not at root or in src/                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **4. module-naming-conventions** — Tests whether the model follows Go module naming conventions                                           | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
+| 4.1  | Identifies option 3 (github.com/jdoe/my-project) as correct                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 4.2  | Rejects option 1 (myproject) -- must match repository URL                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 4.3  | Rejects option 2 (MyProject) -- must be lowercase only                                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 4.4  | Rejects option 4 (my_project) -- use hyphens not underscores                                                                              | <span class="g">✓</span>       | <span class="r">✗</span> accepts underscores as valid                                     |
+| 4.5  | Rejects option 5 (utils) -- not semantic, doesn't match a repo URL                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **5. internal-vs-pkg-decision** — Tests whether the model correctly decides between internal/ and pkg/                                    | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
+| 5.1  | Puts the shared logging library in pkg/ (useful to external consumers)                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 5.2  | Puts the private request parsing code in internal/ (not exported)                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 5.3  | Explains that internal/ cannot be imported by external packages (Go enforces this)                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 5.4  | Mentions that pkg/ should only be used when code is genuinely intended for external use                                                   | <span class="g">✓</span>       | <span class="r">✗</span> treats pkg/ as default location                                  |
+| 5.5  | Service/business logic goes in internal/ by default                                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **6. workspace-when-to-use** — Tests whether the model recommends go.work only for multi-module scenarios                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                                            |
+| 6.1  | Recommends AGAINST using go.work for a single-module project                                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 6.2  | Explains that go.work is for multiple related Go modules that import each other                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 6.3  | Mentions that a single module with multiple packages does not need a workspace                                                            | <span class="g">✓</span>       | <span class="r">✗</span> not explicitly stated                                            |
+| 6.4  | Lists valid use cases: monorepo with separate modules, local cross-module development                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **7. twelve-factor-app-conventions** — Tests whether the model applies 12-Factor App principles for Go services                           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
+| 7.1  | Recommends reading database URL from environment variables, not a checked-in config file                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 7.2  | Recommends writing logs to stdout, not to a file                                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> says file logging is fine for development                        |
+| 7.3  | References or describes 12-Factor App principles                                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> no 12-Factor reference                                           |
+| 7.4  | Mentions that sensitive values (like DB URLs) should never be in config files committed to source control                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 7.5  | Explains WHY: environment-based config allows different values per deployment without code changes                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **8. library-layout-no-cmd** — Tests whether the model uses the correct layout for a Go library                                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                                            |
+| 8.1  | Public API packages are at the root level (e.g. logger/), NOT inside pkg/ or cmd/                                                         | <span class="g">✓</span>       | <span class="r">✗</span> puts public API in pkg/                                          |
+| 8.2  | No cmd/ directory (unless for example binaries)                                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> includes cmd/ with example binary                                |
+| 8.3  | Uses internal/ for private implementation details                                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 8.4  | Includes example/ directory for usage examples                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> no example directory                                             |
+| 8.5  | Structure follows the library layout pattern, not the application layout pattern                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **9. test-file-colocation** — Tests whether the model co-locates test files with the code they test                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
+| 9.1  | Recommends co-locating test files with the code they test (same directory)                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 9.2  | Test files use the _test.go suffix                                                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 9.3  | Does NOT recommend a centralized tests/ directory for unit tests                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests tests/ for integration tests alongside unit co-location |
+| 9.4  | Mentions testdata/ directory for test fixtures                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                                                    |
+| 9.5  | Distinguishes between white-box (same package) and black-box (package_test) testing approaches                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+|      | **10. config-sensitive-values-env-only** — Tests whether the model requires sensitive config values from env vars or secret managers      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
+| 10.1 | Rejects putting database password, API keys, and JWT secret in config.yaml                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 10.2 | Recommends environment variables for sensitive values                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 10.3 | May suggest a secret manager as an alternative                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> only mentions env vars                                           |
+| 10.4 | Config files are acceptable for non-sensitive values (port, log level, etc.)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 10.5 | Explains WHY: config files can be accidentally committed, leaked in backups, or visible to other processes                                | <span class="g">✓</span>       | <span class="r">✗</span> says "security best practice" without explaining why             |
+|      | **11. multiple-binaries-cmd-structure** — Tests whether the model creates separate subdirectories in cmd/ for each binary                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
+| 11.1 | Creates separate subdirectories: cmd/server/, cmd/cli/, cmd/migrate/ (or similar names)                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 11.2 | Each subdirectory has its own main.go with package main                                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 11.3 | Each binary can be built independently (go build ./cmd/server, etc.)                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+| 11.4 | Mentions go build ./cmd/... to build all binaries at once                                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> only shows individual builds                                     |
+| 11.5 | Business logic is in internal/, not duplicated across cmd/ directories                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
+
+</details>
+
+<details>
+<summary>Design patterns — 87/87 (100%) vs 55/87 (63%), +37pp (87 assertions across 18 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                           | With                           | Without                                                       |
+| ---- | --------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------- |
+|      | **1. functional-options-over-builder** — constructor API for HTTP server with growing config        | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                |
+| 1.1  | Uses functional options pattern (Option type as func that modifies the struct)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 1.2  | Constructor accepts variadic ...Option parameter                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 1.3  | Each option is a With* function returning an Option                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 1.4  | Sets sensible defaults inside the constructor before applying options                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 1.5  | Mentions that functional options should return an error if validation can fail                      | <span class="g">✓</span>       | <span class="r">✗</span> no error-returning variant mentioned |
+|      | **2. avoid-init-function** — database init() review                                                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 2.1  | Explicitly recommends against using init() for database initialization                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 2.2  | Mentions that init() makes testing harder or unpredictable                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 2.3  | Mentions that init() cannot return errors (must panic or log.Fatal)                                 | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 2.4  | Suggests explicit constructor or initialization function                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 2.5  | Mentions that init() runs before main/tests creating hidden dependencies                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+|      | **3. enum-start-at-one** — order status enum with iota                                              | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
+| 3.1  | Zero value (iota = 0) is either skipped, named Unknown, Invalid, or Unspecified                     | <span class="g">✓</span>       | <span class="r">✗</span> Pending at iota 0                    |
+| 3.2  | First meaningful enum value starts at 1 or higher                                                   | <span class="g">✓</span>       | <span class="r">✗</span> starts at 0                          |
+| 3.3  | Explains WHY: Go's zero value would silently pass as the first enum member                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 3.4  | Uses a custom type (not raw int or string)                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **4. panic-vs-error-judgment** — config parser: invalid format, missing field, nil arg              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 4.1  | Invalid config format: return error (caller can handle it)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 4.2  | Missing required field: return error (expected validation failure)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 4.3  | Nil passed to non-nil function: panic is acceptable (violated invariant)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 4.4  | Articulates the principle: panic is for bugs/invariant violations, errors are for expected failures | <span class="g">✓</span>       | <span class="r">✗</span> vague distinction                    |
+| 4.5  | Mentions Must* constructor pattern as a valid panic use case                                        | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+|      | **5. runtime-addcleanup-over-setfinalizer** — automatic cleanup for cgo resource (Go 1.24)          | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
+| 5.1  | Recommends runtime.AddCleanup as the preferred approach                                             | <span class="g">✓</span>       | <span class="r">✗</span> uses SetFinalizer                    |
+| 5.2  | Mentions that AddCleanup supports multiple cleanups on the same object                              | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
+| 5.3  | Mentions that AddCleanup avoids object resurrection risk                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
+| 5.4  | Mentions that AddCleanup works even with cyclic references                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
+| 5.5  | Either warns against SetFinalizer or explains why AddCleanup is better                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **6. resource-pool-bounded-channel** — connection pool design                                       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 6.1  | Uses a buffered channel (chan *Conn with fixed capacity) as the pool mechanism                      | <span class="g">✓</span>       | <span class="r">✗</span> uses slice+mutex                     |
+| 6.2  | Pool has a maximum size / bounded capacity                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 6.3  | Get operation uses select with context for timeout/cancellation                                     | <span class="g">✓</span>       | <span class="r">✗</span> no context support                   |
+| 6.4  | Put operation handles pool-full case (discards excess connections)                                  | <span class="g">✓</span>       | <span class="r">✗</span> no overflow handling                 |
+| 6.5  | Does NOT use sync.Pool as the primary pooling mechanism                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **7. graceful-shutdown-signal-notifycontext** — HTTP server SIGINT/SIGTERM handling                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 7.1  | Uses signal.NotifyContext (not raw signal.Notify with a channel)                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses signal.Notify channel           |
+| 7.2  | Listens for both SIGINT and SIGTERM                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 7.3  | Starts the HTTP server in a goroutine                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 7.4  | Creates a separate timeout context for the shutdown phase                                           | <span class="g">✓</span>       | <span class="r">✗</span> no separate shutdown timeout         |
+| 7.5  | Closes other resources (DB, queues) after server shutdown                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **8. iterator-streaming-large-data** — export 2M rows to JSON HTTP response                         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 8.1  | Does NOT load all 2M rows into a slice in memory                                                    | <span class="g">✓</span>       | <span class="r">✗</span> loads all into []User                |
+| 8.2  | Streams the JSON response (writes records one at a time to the ResponseWriter)                      | <span class="g">✓</span>       | <span class="r">✗</span> json.Marshal entire slice            |
+| 8.3  | Uses rows.Next() loop or iter.Seq2 iterator pattern                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 8.4  | Defers rows.Close() immediately after query                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 8.5  | Mentions OOM risk or memory concern as motivation for streaming                                     | <span class="g">✓</span>       | <span class="r">✗</span> no OOM discussion                    |
+|      | **9. regexp-compile-once** — email validation regex called thousands of times/sec                   | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                |
+| 9.1  | Compiles the regexp at package level (var emailRegex = regexp.MustCompile(...))                     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 9.2  | Does NOT compile the regexp inside the validation function                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 9.3  | Uses regexp.MustCompile (not regexp.Compile) for package-level initialization                       | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 9.4  | Explains WHY: compilation is O(n) and allocates, so doing it per-call is wasteful                   | <span class="g">✓</span>       | <span class="r">✗</span> mentions performance but not O(n)    |
+|      | **10. architecture-right-sizing** — 200-line CSV CLI tool architecture                              | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 10.1 | Recommends a flat or minimal structure (no multi-layer architecture)                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests cmd/internal/pkg layout     |
+| 10.2 | Does NOT suggest clean architecture, hexagonal, DDD, or ports and adapters                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests layered packages            |
+| 10.3 | Does NOT suggest dependency injection frameworks                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 10.4 | Structure has at most cmd/ and possibly internal/, not handler/service/repository layers            | <span class="g">✓</span>       | <span class="r">✗</span> includes service layer               |
+| 10.5 | Mentions that architecture complexity should match project scope                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **11. hexagonal-vs-clean-architecture** — 8K-line order service with HTTP/gRPC/MQ                   | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 11.1 | Correctly explains hexagonal: ports (interfaces) + adapters with primary/secondary distinction      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 11.2 | Correctly explains clean architecture: dependency rule (inward) with entities/use-cases/adapters    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 11.3 | Recommends hexagonal for this case (multiple entry points: HTTP, gRPC, message consumer)            | <span class="g">✓</span>       | <span class="r">✗</span> recommends clean architecture        |
+| 11.4 | Mentions that both keep domain logic pure and free from infrastructure dependencies                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 11.5 | Provides a directory structure with adapter/primary/ and adapter/secondary/ or equivalent           | <span class="g">✓</span>       | <span class="r">✗</span> generic layered layout               |
+|      | **12. ddd-aggregate-root-mutations** — Order aggregate with AddItem, Draft status guard             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 12.1 | AddItem is a method on the Order aggregate root (not on OrderItem or a service)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 12.2 | Order fields (items, status) are unexported to prevent external mutation                            | <span class="g">✓</span>       | <span class="r">✗</span> exported Items/Status fields         |
+| 12.3 | AddItem validates the status constraint (only Draft orders are editable)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 12.4 | Repository interface is defined in the domain package, not in the infrastructure package            | <span class="g">✓</span>       | <span class="r">✗</span> repo interface in infrastructure     |
+| 12.5 | Domain types have no infrastructure imports (no sql, no http, no framework dependencies)            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **13. ddd-bounded-context-communication** — Order and Billing context communication                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 13.1 | Uses domain events (e.g. OrderPlaced event) for cross-context communication                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 13.2 | Billing context does NOT directly import order's internal domain types                              | <span class="g">✓</span>       | <span class="r">✗</span> imports order types directly         |
+| 13.3 | Shows or describes an anti-corruption layer that translates order events to billing types           | <span class="g">✓</span>       | <span class="r">✗</span> no ACL layer                         |
+| 13.4 | Each bounded context has its own domain, application, and adapter layers                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 13.5 | Mentions that direct type imports between contexts create tight coupling                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **14. make-illegal-states-unrepresentable** — Email type to prevent invalid emails                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 14.1 | Creates a dedicated Email type (struct with unexported address field)                               | <span class="g">✓</span>       | <span class="r">✗</span> validates at function entry          |
+| 14.2 | Email can only be created via a constructor (NewEmail) that validates the address                   | <span class="g">✓</span>       | <span class="r">✗</span> no constructor                       |
+| 14.3 | The send function accepts the Email type instead of a raw string                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 14.4 | Explains the principle: make illegal states unrepresentable through the type system                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 14.5 | The unexported field prevents creating an Email without validation                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **15. fail-fast-validate-at-boundaries** — three-layer validation strategy                          | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 15.1 | Recommends validating at the HTTP handler layer (the system boundary)                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 15.2 | Recommends that the service and repository layers trust the data is already valid                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests validating in service too   |
+| 15.3 | Explains WHY: re-validating at every layer clutters code and violates DRY                           | <span class="g">✓</span>       | <span class="r">✗</span> advocates "defense in depth"         |
+| 15.4 | Does NOT suggest adding the same validation checks in all three layers                              | <span class="g">✓</span>       | <span class="r">✗</span> validates at all layers              |
+| 15.5 | May distinguish between input validation (at boundary) and business rule validation (in domain)     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **16. explicit-over-implicit-defaults** — struct tag `default:"8080"` review                        | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
+| 16.1 | Recommends against using struct tags + reflection for defaults                                      | <span class="g">✓</span>       | <span class="r">✗</span> endorses struct tags as convenient   |
+| 16.2 | Suggests explicit defaults in a constructor function (e.g. NewConfig())                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 16.3 | Explains WHY: Go favors explicitness, struct tags hide behavior                                     | <span class="g">✓</span>       | <span class="r">✗</span> presents it as valid Go pattern      |
+| 16.4 | Shows a constructor that returns a Config with default values set explicitly                        | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **17. retry-context-check** — production-ready retry with exponential backoff                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 17.1 | Function accepts a context.Context parameter                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 17.2 | Checks ctx.Err() or ctx.Done() between retry attempts                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 17.3 | Uses select with ctx.Done() for the backoff delay (not time.Sleep)                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses time.Sleep                      |
+| 17.4 | Implements exponential backoff                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 17.5 | Returns the context error if the context is cancelled during retry                                  | <span class="g">✓</span>       | <span class="r">✗</span> returns last operation error         |
+|      | **18. ddd-value-object-money** — monetary amounts with addition and comparison                      | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 18.1 | Uses int64 (cents) not float64 for the amount                                                       | <span class="g">✓</span>       | <span class="r">✗</span> uses float64                         |
+| 18.2 | Includes a currency field                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 18.3 | Fields are unexported (immutable value object, only created via constructor)                        | <span class="g">✓</span>       | <span class="r">✗</span> exported Amount/Currency             |
+| 18.4 | Add method validates currency match before addition                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 18.5 | Constructor validates input (e.g. currency is required)                                             | <span class="g">✓</span>       | <span class="r">✗</span> no validation in constructor         |
+
+</details>
+
+<details>
+<summary>Dependency injection — 48/49 (98%) vs 24/49 (49%), +49pp (49 assertions across 10 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                 | With                           | Without                                                           |
+| ---- | ----------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
+|      | **1. constructor-injection-not-globals** — inject via constructors, not globals or init() | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
+| 1.1  | Uses constructor injection (NewUserService taking dependencies as parameters)             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.2  | Explicitly advises against package-level variables for service dependencies               | <span class="g">✓</span>       | <span class="r">✗</span> accepts global var approach              |
+| 1.3  | Explains why globals are problematic (untestable, hidden dependencies, or coupling)       | <span class="g">✓</span>       | <span class="r">✗</span> no explanation of problems               |
+| 1.4  | Does NOT use `init()` for service initialization                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 1.5  | Returns a concrete struct pointer from the constructor, not an interface                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **2. interface-defined-at-consumer** — interfaces defined where consumed, not implemented | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 2.1  | Defines the interface in the consuming package, not the implementation package            | <span class="g">✓</span>       | <span class="r">✗</span> defines interface next to implementation |
+| 2.2  | Explains the principle: accept interfaces, return structs                                 | <span class="g">✓</span>       | <span class="r">✗</span> not stated                               |
+| 2.3  | The implementation package returns a concrete struct pointer                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 2.4  | The consumer depends on its own locally-defined interface                                 | <span class="g">✓</span>       | <span class="r">✗</span> imports provider interface               |
+| 2.5  | Does NOT have the implementation package import the consumer's interface                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **3. container-not-passed-as-dependency** — service locator anti-pattern                  | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 3.1  | Advises against passing the injector/container as a dependency                            | <span class="g">✓</span>       | <span class="r">✗</span> accepts passing injector                 |
+| 3.2  | Identifies this as the service locator anti-pattern                                       | <span class="g">✓</span>       | <span class="r">✗</span> not identified                           |
+| 3.3  | Shows that the Injector should only exist at the composition root                         | <span class="g">✓</span>       | <span class="r">✗</span> injector used throughout                 |
+| 3.4  | Shows UserService receiving Database and Mailer directly as constructor parameters        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 3.5  | Shows the provider function using `do.MustInvoke` inside the provider, not inside methods | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **4. manual-di-for-small-projects** — small projects use manual DI, not a library         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 4.1  | Recommends manual constructor injection for a project with only 5 services                | <span class="g">✓</span>       | <span class="r">✗</span> recommends Fx                            |
+| 4.2  | Does NOT recommend a DI library as the primary approach                                   | <span class="g">✓</span>       | <span class="r">✗</span> leads with DI library                    |
+| 4.3  | Shows wiring in `main()` with explicit constructor calls in dependency order              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 4.4  | Initializes infrastructure first, then repositories, then services, then transport        | <span class="g">✓</span>       | <span class="r">✗</span> no layered ordering                      |
+| 4.5  | Mentions that a DI library becomes worthwhile at 10-20+ services                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **5. di-library-selection-judgment** — correct library recommendation based on criteria   | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                    |
+| 5.1  | Recommends samber/do as a strong fit (generics, lifecycle, compile-time safety)           | <span class="g">✓</span>       | <span class="r">✗</span> recommends uber-go/fx                    |
+| 5.2  | Explains why uber-go/fx uses reflection (runtime errors, not compile-time)                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 5.3  | Mentions that samber/do requires Go 1.18+ for generics                                    | <span class="g">✓</span>       | <span class="r">✗</span> samber/do not discussed                  |
+| 5.4  | Discusses multiple DI library options from the decision table                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **6. fx-lifecycle-hooks-pattern** — uber-go/fx OnStart/OnStop hooks for DB connection     | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
+| 6.1  | Uses `fx.Lifecycle` parameter in the provider function                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.2  | Registers OnStart hook for establishing the database connection                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.3  | Registers OnStop hook for closing the database connection                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.4  | Uses `lc.Append(fx.Hook{...})` pattern                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 6.5  | OnStart and OnStop take `context.Context` as parameter                                    | <span class="g">✓</span>       | <span class="r">✗</span> omitted context parameter                |
+|      | **7. testing-with-di-mock-injection** — inject mocks at the interface boundary            | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
+| 7.1  | Creates a mock implementation of the UserStore interface                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.2  | Injects the mock into UserService via the constructor (NewUserService)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.3  | Tests both the success path (user found) and the error path (not found)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.4  | Does NOT use a real database connection in the test                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 7.5  | The mock is defined in the test file, not as a package-level or global variable           | <span class="g">✓</span>       | <span class="r">✗</span> mock as package-level var                |
+|      | **8. shallow-dependency-graph** — deep chains are a design problem                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 8.1  | Identifies the deep dependency chain as a design problem                                  | <span class="g">✓</span>       | <span class="r">✗</span> accepts as normal layered architecture   |
+| 8.2  | Recommends flattening the dependency graph                                                | <span class="g">✓</span>       | <span class="r">✗</span> no flattening suggested                  |
+| 8.3  | Suggests that most services should depend on repositories and config directly             | <span class="g">✓</span>       | <span class="r">✗</span> keeps transitive chain                   |
+| 8.4  | Explains negative consequences of deep chains (fragility, hard to test)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 8.5  | Proposes a concrete restructuring                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **9. one-container-per-app-not-per-request** — container created once, not per request   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
+| 9.1  | Identifies creating a new container per request as a mistake                              | <span class="g">✓</span>       | <span class="r">✗</span> accepts per-request as reasonable        |
+| 9.2  | Recommends one container per application created at startup                               | <span class="g">✓</span>       | <span class="r">✗</span> no single-container guidance             |
+| 9.3  | Explains the performance/correctness problem (recreating singletons, no connection reuse) | <span class="g">✓</span>       | <span class="r">✗</span> no performance concern                   |
+| 9.4  | Suggests using scopes for request-level isolation if needed                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 9.5  | Shows the container being created once in `main()` and services injected into handlers    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+|      | **10. lazy-vs-eager-initialization** — lazy init preference, singleton vs transient       | **<span class="r">4/5</span>** | **<span class="r">1/5</span>**                                    |
+| 10.1 | Recommends lazy initialization (services created on first use, not all at startup)        | <span class="g">✓</span>       | <span class="r">✗</span> recommends eager for everything          |
+| 10.2 | Recommends singletons for stateful services like database connections                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| 10.3 | Recommends transients (or factories) for stateless request processing services            | <span class="g">✓</span>       | <span class="r">✗</span> all singletons                           |
+| 10.4 | Explains why lazy loading is beneficial (unused services never created, faster startup)   | <span class="r">✗</span>       | <span class="r">✗</span> no lazy benefits explained               |
+| 10.5 | Notes how DI libraries handle lazy vs eager initialization (samber/do, dig, fx)           | <span class="g">✓</span>       | <span class="r">✗</span> no library comparison for lazy           |
+
+</details>
+
+<details>
+<summary>CLI design — 55/58 (95%) vs 30/58 (52%), +43pp (58 assertions across 12 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                  | With                           | Without                                                 |
+| ---- | ------------------------------------------------------------------------------------------ | ------------------------------ | ------------------------------------------------------- |
+|      | **1. minimal-main-and-execute** — main.go minimal, os.Exit only in main                    | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
+| 1.1  | main.go only calls Execute() — no config, flag setup, or business logic                    | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 1.2  | Root command sets SilenceUsage: true                                                       | <span class="g">✓</span>       | <span class="r">✗</span> not set                        |
+| 1.3  | Root command sets SilenceErrors: true                                                      | <span class="g">✓</span>       | <span class="r">✗</span> not set                        |
+| 1.4  | Subcommands do NOT call os.Exit() inside RunE                                              | <span class="g">✓</span>       | <span class="r">✗</span> os.Exit(1) in RunE             |
+| 1.5  | Push subcommand registered via rootCmd.AddCommand() in init()                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **2. viper-config-layering** — flags > env > config file > defaults                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
+| 2.1  | Calls viper.BindPFlag to bind the port flag to Viper                                       | <span class="g">✓</span>       | <span class="r">✗</span> flag and Viper disconnected    |
+| 2.2  | Sets env prefix with viper.SetEnvPrefix                                                    | <span class="g">✓</span>       | <span class="r">✗</span> no prefix, bare PORT           |
+| 2.3  | Calls viper.AutomaticEnv()                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 2.4  | Handles viper.ConfigFileNotFoundError gracefully                                           | <span class="g">✓</span>       | <span class="r">✗</span> log.Fatal on missing config    |
+| 2.5  | Precedence order correct: flags > env > config > defaults                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **3. persistent-pre-run-config-init** — config init in PersistentPreRunE                   | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                          |
+| 3.1  | Config init in PersistentPreRunE on root command                                           | <span class="g">✓</span>       | <span class="r">✗</span> duplicated in each RunE        |
+| 3.2  | Config init NOT duplicated in each subcommand                                              | <span class="g">✓</span>       | <span class="r">✗</span> three copies of init logic     |
+| 3.3  | --config is a persistent flag on root command                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 3.4  | Uses SetEnvKeyReplacer for hyphens-to-underscores                                          | <span class="r">✗</span>       | <span class="r">✗</span>                                |
+| 3.5  | Logging configured to write to stderr                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **4. stdout-vs-stderr-separation** — output to stdout, diagnostics to stderr               | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
+| 4.1  | Program output uses cmd.OutOrStdout(), not os.Stdout                                       | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Println to os.Stdout       |
+| 4.2  | Logs/progress go to stderr                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> log.Println to stdout          |
+| 4.3  | Errors go to stderr via cmd.ErrOrStderr()                                                  | <span class="g">✓</span>       | <span class="r">✗</span> errors mixed with stdout       |
+| 4.4  | Uses cmd.OutOrStdout() instead of os.Stdout directly                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 4.5  | Returns error from RunE, not os.Exit() or log.Fatal()                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **5. version-ldflags-injection** — version via ldflags, not hardcoded                      | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                          |
+| 5.1  | Version/commit/date are var (not const) with placeholder defaults                          | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 5.2  | Shows -ldflags '-X ...' build command                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 5.3  | Version command uses cmd.OutOrStdout()                                                     | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Println                    |
+| 5.4  | Version NOT hardcoded as const                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 5.5  | Includes runtime/debug.ReadBuildInfo() fallback                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **6. exit-code-conventions** — 0 success, 1 general, 2 usage                               | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                          |
+| 6.1  | Exit codes 0/1/2 follow Unix conventions                                                   | <span class="g">✓</span>       | <span class="r">✗</span> all errors exit 1              |
+| 6.2  | os.Exit() only in main()                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> os.Exit inside handlers        |
+| 6.3  | Typed error or ExitError with Code field to propagate exit codes                           | <span class="r">✗</span>       | <span class="r">✗</span>                                |
+| 6.4  | Errors returned from commands, not swallowed by os.Exit()                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 6.5  | Different error categories map to different exit codes                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **7. signal-handling-with-context** — signal.NotifyContext for cancellation                | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                          |
+| 7.1  | Uses signal.NotifyContext, NOT raw channel with signal.Notify                              | <span class="g">✓</span>       | <span class="r">✗</span> raw channel + select           |
+| 7.2  | Handles both os.Interrupt and syscall.SIGTERM                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 7.3  | Creates shutdown timeout context (10-30s)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 7.4  | Calls srv.Shutdown(ctx), not srv.Close()                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 7.5  | Distinguishes http.ErrServerClosed from unexpected errors                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **8. flag-binding-and-constraints** — persistent vs local, mutual exclusion, Viper binding | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
+| 8.1  | --verbose is a persistent flag on root, not local to deploy                                | <span class="g">✓</span>       | <span class="r">✗</span> local flag on deploy           |
+| 8.2  | Uses MarkFlagRequired for --env and --tag                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 8.3  | Uses MarkFlagsMutuallyExclusive for --dry-run and --force                                  | <span class="g">✓</span>       | <span class="r">✗</span> manual check in RunE           |
+| 8.4  | Uses RegisterFlagCompletionFunc for --env values                                           | <span class="g">✓</span>       | <span class="r">✗</span> no completion                  |
+| 8.5  | Binds flags to Viper with viper.BindPFlag                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **9. argument-validation** — Cobra built-in validators, not manual len(args)               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                          |
+| 9.1  | Uses cobra.NoArgs for status command                                                       | <span class="g">✓</span>       | <span class="r">✗</span> manual len(args) == 0          |
+| 9.2  | Uses cobra.ExactArgs(1) for deploy command                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 9.3  | Uses cobra.RangeArgs(2, 3) for scale command                                               | <span class="g">✓</span>       | <span class="r">✗</span> manual range check in RunE     |
+| 9.4  | Validators set on Args field, not inside RunE                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **10. cli-testing-pattern** — execute programmatically with captured output                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                          |
+| 10.1 | Creates executeCommand helper with cmd.SetOut(buf) and cmd.SetErr(buf)                     | <span class="g">✓</span>       | <span class="r">✗</span> no helper, tests run binary    |
+| 10.2 | Table-driven tests with multiple cases                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 10.3 | Uses cmd.SetArgs() — not os/exec.Command                                                   | <span class="g">✓</span>       | <span class="r">✗</span> exec.Command("./greet")        |
+| 10.4 | Captures output via bytes.Buffer — not redirecting os.Stdout                               | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 10.5 | Tests check both output and error return value                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **11. machine-readable-output-format** — --output flag with json/table/plain               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                          |
+| 11.1 | Supports --output flag with json and table formats                                         | <span class="g">✓</span>       | <span class="r">✗</span> --json boolean toggle only     |
+| 11.2 | JSON output uses encoding/json to cmd.OutOrStdout()                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 11.3 | Table output uses text/tabwriter for aligned columns                                       | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Printf with manual spacing |
+| 11.4 | Default format is human-readable table                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+|      | **12. shell-completion-setup** — Cobra built-in generators + custom completions            | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                          |
+| 12.1 | Completion subcommand supports bash, zsh, fish, powershell                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 12.2 | Uses Cobra's built-in GenBashCompletionV2, GenZshCompletion, etc.                          | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 12.3 | Uses RegisterFlagCompletionFunc for --env flag                                             | <span class="g">✓</span>       | <span class="r">✗</span> no custom completions          |
+| 12.4 | Uses ValidArgs or cobra.ExactValidArgs for completion command                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
+| 12.5 | Returns cobra.ShellCompDirectiveNoFileComp for non-file flags                              | <span class="r">✗</span>       | <span class="r">✗</span>                                |
+
+</details>
+
+## `golang-code-quality` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **256/288 (89%)** | **135/288 (47%)** | **+42pp** |
+
+<details>
+<summary>Code style — 66/83 (80%) vs 33/83 (40%), +40pp (83 assertions across 24 evals)</summary>
+
+**Model:** Claude Sonnet 4.6 | **Runs:** 24 evals × 2 configs = 48 runs | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                         | With                                        | Without                                                    |
+| ---- | --------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------- |
+|      | **1. cache** — var declarations: `:=` vs `var`, zero-value init                   | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
+| 1.1  | Zero-value fields omitted from constructor (rely on Go zero values)               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 1.2  | Non-zero assignments use `:=` short declaration                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 1.3  | Done channel created with `make()`, not nil                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **2. handler** — slice/map initialization: never nil                              | **<span class="g">3/3</span>**              | **<span class="r">2/3</span>**                             |
+| 2.1  | Empty slice uses `[]User{}` or `make()`, not nil                                  | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 2.2  | Empty map uses `map[K]V{}` or `make()`, not nil                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 2.3  | Known-capacity collections use `make()` with size hint                            | <span class="g">✓</span>                    | <span class="r">✗</span> no capacity hint                  |
+|      | **3. server** — composite literals: named fields                                  | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
+| 3.1  | `http.Server` uses named fields                                                   | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 3.2  | `tls.Config` uses named fields                                                    | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 3.3  | No positional struct syntax in file                                               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **4. orders** — early return: guard clauses, flat happy path                      | **<span class="g">3/3</span>**              | **<span class="r">0/3</span>**                             |
+| 4.1  | Validation uses early return, not nested else                                     | <span class="g">✓</span>                    | <span class="r">✗</span> deeply nested if-else             |
+| 4.2  | Happy path at indentation level 1                                                 | <span class="g">✓</span>                    | <span class="r">✗</span> level 5 nesting                   |
+| 4.3  | Max 2 indentation levels for main logic                                           | <span class="g">✓</span>                    | <span class="r">✗</span> 6 levels deep                     |
+|      | **5. auth** — unnecessary else: early return, default-then-override               | **<span class="g">2/2</span>**              | **<span class="r">1/2</span>**                             |
+| 5.1  | `GetUserRole` uses no else after return                                           | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 5.2  | `SetLogLevel` uses default-then-override (no else)                                | <span class="g">✓</span>                    | <span class="r">✗</span> `var` zero-value + switch default |
+|      | **6. events** — switch vs if-else chains                                          | **<span class="g">3/3</span>**              | **<span class="r">2/3</span>**                             |
+| 6.1  | `HandleEvent` uses switch                                                         | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 6.2  | `MapStatusCode` uses switch                                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 6.3  | Both switches include default case                                                | <span class="g">✓</span>                    | <span class="r">✗</span> HandleEvent no default            |
+|      | **7. notify** — function design: ≤4 params, options struct                        | **<span class="g">3/3</span>**              | **<span class="r">1/3</span>**                             |
+| 7.1  | `context.Context` is first parameter                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 7.2  | Options struct reduces params to ≤4                                               | <span class="g">✓</span>                    | <span class="r">✗</span> 10 individual params              |
+| 7.3  | Config fields grouped in options struct                                           | <span class="g">✓</span>                    | <span class="r">✗</span> no struct                         |
+|      | **8. users** — value vs pointer: small types by value                             | **<span class="g">3/3</span>**              | **<span class="r">1/3</span>**                             |
+| 8.1  | `FormatName` takes `string` by value, not `*string`                               | <span class="g">✓</span>                    | <span class="r">✗</span> `*string` params                  |
+| 8.2  | `UpdateAge` takes `*User` (mutation)                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 8.3  | `CompareUsers` takes `User` by value (small, read-only)                           | <span class="g">✓</span>                    | <span class="r">✗</span> `*User` params                    |
+|      | **9. repository** — code organization: canonical ordering                         | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
+| 9.1  | File ordered: imports → constants → interface → struct → ctor → methods → helpers | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 9.2  | Interface declared before implementing struct                                     | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 9.3  | Helpers after all methods, not interleaved                                        | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **10. report** — string handling: strconv, Builder, Sprintf                       | **<span class="g">3/3</span>**              | **<span class="g">3/3</span>**                             |
+| 10.1 | Int-to-string uses `strconv.Itoa`, not `fmt.Sprintf`                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 10.2 | Loop concatenation uses `strings.Builder`                                         | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 10.3 | Complex formatting uses `fmt.Sprintf`                                             | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **11. authz** — complex conditions: named booleans                                | **<span class="r">1/3</span>**              | **<span class="r">1/3</span>**                             |
+| 11.1 | ≥2 conditions extracted to named booleans                                         | <span class="r">✗</span> all inline         | <span class="r">✗</span> all inline                        |
+| 11.2 | Named booleans have descriptive names                                             | <span class="r">✗</span> no booleans        | <span class="r">✗</span> no booleans                       |
+| 11.3 | Expensive check kept inline for short-circuit                                     | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **12. router** — line breaking: semantic boundaries                               | **<span class="r">0/3</span>**              | **<span class="r">0/3</span>**                             |
+| 12.1 | Multi-arg calls broken across lines                                               | <span class="r">✗</span> single-line calls  | <span class="r">✗</span> single-line calls                 |
+| 12.2 | Breaks at semantic boundaries (commas)                                            | <span class="r">✗</span> no breaks          | <span class="r">✗</span> no breaks                         |
+| 12.3 | Closing paren on own line (trailing-comma style)                                  | <span class="r">✗</span> no multi-line      | <span class="r">✗</span> no multi-line                     |
+|      | **13. nil-return** — (adversarial: "return nil, caller checks")                   | **<span class="r">0/3</span>**              | **<span class="r">0/3</span>**                             |
+| 13.1 | GetUsers returns `[]User{}` not nil for empty                                     | <span class="r">✗</span> `var` nil slice    | <span class="r">✗</span> `var` nil slice                   |
+| 13.2 | GetMetadata returns `map{}` not nil for empty                                     | <span class="r">✗</span> lazy-init nil      | <span class="r">✗</span> lazy-init nil                     |
+| 13.3 | No `return nil` as success path                                                   | <span class="r">✗</span> returns nil        | <span class="r">✗</span> returns nil                       |
+|      | **14. sprintf-concat** — (adversarial: "use Sprintf and +=")                      | **<span class="r">0/4</span>**              | **<span class="r">0/4</span>**                             |
+| 14.1 | Uses `strconv.Itoa`, not `fmt.Sprintf`                                            | <span class="r">✗</span> Sprintf            | <span class="r">✗</span> Sprintf                           |
+| 14.2 | Uses `strings.Builder`, not `+=`                                                  | <span class="r">✗</span> result +=          | <span class="r">✗</span> result +=                         |
+| 14.3 | No `+=` inside loop body                                                          | <span class="r">✗</span> += in loop         | <span class="r">✗</span> += in loop                        |
+| 14.4 | Builder declared before loop                                                      | <span class="r">✗</span> no Builder         | <span class="r">✗</span> no Builder                        |
+|      | **15. positional-fields** — (adversarial: "positional for brevity")               | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
+| 15.1 | Point uses named fields                                                           | <span class="g">✓</span>                    | <span class="r">✗</span> `Point{1.5, 2.5}`                 |
+| 15.2 | Color uses named fields                                                           | <span class="g">✓</span>                    | <span class="r">✗</span> `Color{255, 128, 0, 255}`         |
+| 15.3 | ServerConfig uses named fields                                                    | <span class="g">✓</span>                    | <span class="r">✗</span> positional                        |
+| 15.4 | No positional syntax in file                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> all positional                    |
+|      | **16. deep-nesting** — (adversarial: "nested if-else is clearer")                 | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
+| 16.1 | Validations use early return                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> nested if-else                    |
+| 16.2 | No nested else blocks for validation                                              | <span class="g">✓</span>                    | <span class="r">✗</span> 6 else blocks                     |
+| 16.3 | Happy path at indentation level 1                                                 | <span class="g">✓</span>                    | <span class="r">✗</span> level 6 nesting                   |
+| 16.4 | Max 2 indentation levels                                                          | <span class="g">✓</span>                    | <span class="r">✗</span> 7 levels deep                     |
+|      | **17. ctx-last-many-params** — (adversarial: "keep exact order")                  | **<span class="r">0/4</span>**              | **<span class="r">0/4</span>**                             |
+| 17.1 | `context.Context` is first parameter                                              | <span class="r">✗</span> position 11        | <span class="r">✗</span> position 11                       |
+| 17.2 | ≤4 params with options struct                                                     | <span class="r">✗</span> 12 params          | <span class="r">✗</span> 12 params                         |
+| 17.3 | Options struct groups config                                                      | <span class="r">✗</span> no struct          | <span class="r">✗</span> no struct                         |
+| 17.4 | Logger in struct or on Service type                                               | <span class="r">✗</span> standalone         | <span class="r">✗</span> standalone                        |
+|      | **18. pointer-everything** — (adversarial: "pointers for zero-copy")              | **<span class="g">5/5</span>**              | **<span class="g">5/5</span>**                             |
+| 18.1 | `Add` takes `(int, int) int`                                                      | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 18.2 | `IsEven` takes `(int) bool`                                                       | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 18.3 | `FormatDuration` takes `(Duration) string`                                        | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 18.4 | `Concat` takes `(string, string) string`                                          | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 18.5 | No pointer params for small types                                                 | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **19. inline-conditions** — (adversarial: "do NOT use variables", 5 conds)        | **<span class="g">4/4</span>**              | **<span class="r">1/4</span>**                             |
+| 19.1 | ≥3 conditions extracted to named booleans                                         | <span class="g">✓</span>                    | <span class="r">✗</span> all inline                        |
+| 19.2 | Descriptive domain names (isSuperAdmin, sameDepartment…)                          | <span class="g">✓</span>                    | <span class="r">✗</span> no booleans                       |
+| 19.3 | Final if/switch reads like business logic                                         | <span class="g">✓</span>                    | <span class="r">✗</span> wall of conditions                |
+| 19.4 | Expensive checks extracted last or kept inline                                    | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **20. single-line-handlers** — (adversarial: "compact single line", 8 args)       | **<span class="g">4/4</span>**              | **<span class="r">1/4</span>**                             |
+| 20.1 | `processRequest` broken across multiple lines                                     | <span class="g">✓</span>                    | <span class="r">✗</span> single-line calls                 |
+| 20.2 | No line exceeds ~140 characters                                                   | <span class="g">✓</span>                    | <span class="r">✗</span> 170+ char lines                   |
+| 20.3 | Closing paren on own line                                                         | <span class="g">✓</span>                    | <span class="r">✗</span> all inline                        |
+| 20.4 | Service name extracted to constant                                                | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **21. else-chains** — (adversarial: "use else after every if")                    | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
+| 21.1 | Uses switch or early returns, not if-else chain                                   | <span class="g">✓</span>                    | <span class="r">✗</span> if/else-if/else chain             |
+| 21.2 | No `else` keyword in function body                                                | <span class="g">✓</span>                    | <span class="r">✗</span> 5 else keywords                   |
+| 21.3 | Each condition returns without else block                                         | <span class="g">✓</span>                    | <span class="r">✗</span> every return has else             |
+| 21.4 | Uses tagless switch for multi-condition                                           | <span class="g">✓</span>                    | <span class="r">✗</span> no switch                         |
+|      | **22. export-everything** — (adversarial: "export all for reusability")           | **<span class="r">3/4</span>**              | **<span class="r">2/4</span>**                             |
+| 22.1 | ≥2 internal helpers unexported                                                    | <span class="r">✗</span> all funcs exported | <span class="r">✗</span> all exported                      |
+| 22.2 | Internal types unexported                                                         | <span class="g">✓</span>                    | <span class="r">✗</span> `DangerousHeaders` exported       |
+| 22.3 | Public API functions remain exported                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 22.4 | No purely-internal function exported                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **23. speculative-prealloc** — (adversarial: "make([], 0, 100000)")               | **<span class="g">4/4</span>**              | **<span class="g">4/4</span>**                             |
+| 23.1 | Results not preallocated with 100000                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 23.2 | Metadata not preallocated with 10000                                              | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 23.3 | Outer slice uses `len(jobIDs)` hint                                               | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+| 23.4 | No capacity hint > 1000                                                           | <span class="g">✓</span>                    | <span class="g">✓</span>                                   |
+|      | **24. nested-loop** — (adversarial: "nested if-else in loop body")                | **<span class="g">4/4</span>**              | **<span class="r">0/4</span>**                             |
+| 24.1 | Uses `continue` for validation failures                                           | <span class="g">✓</span>                    | <span class="r">✗</span> nested if-else                    |
+| 24.2 | Max 2 indentation levels in loop                                                  | <span class="g">✓</span>                    | <span class="r">✗</span> 5 levels deep                     |
+| 24.3 | ≥1 helper function extracted                                                      | <span class="g">✓</span>                    | <span class="r">✗</span> everything inline                 |
+| 24.4 | Happy path at shallowest loop level                                               | <span class="g">✓</span>                    | <span class="r">✗</span> nested 4+ deep                    |
+
+</details>
+
+<details>
+<summary>Naming conventions — 48/51 (94%) vs 36/51 (71%), +24pp (51 assertions)</summary>
+
+**Model:** Claude Opus 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** automated regex
+
+| #    | Assertion                                                                        | With                           | Without                                     |
+| ---- | -------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------- |
+|      | **1. cache** — Get/Set/Delete, sentinel errors, options                          | **<span class="g">4/5</span>** | **<span class="g">4/5</span>**              |
+| 1.1  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 1.2  | Error strings include `"cache:"` prefix                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 1.3  | Option functions use `With` prefix                                               | <span class="r">✗</span>       | <span class="r">✗</span>                    |
+| 1.4  | Error strings fully lowercase                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 1.5  | Option type is `Option` not `CacheOption`                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **2. worker** — boolean fields: processing/initialized/canAccept                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**              |
+| 2.1  | Boolean fields use `is`/`has`/`can` prefix                                       | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 2.2  | Getter methods use `Is`/`Has`/`Can` prefix                                       | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 2.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span>                    |
+| 2.4  | Receiver is 1-2 letter abbreviation                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **3. taskqueue** — `TaskStatus` enum (iota) + `String()`                         | **<span class="g">2/3</span>** | **<span class="g">2/3</span>**              |
+| 3.1  | Enum values prefixed with type name                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 3.2  | Zero value is `TaskStatusUnknown` sentinel                                       | <span class="r">✗</span>       | <span class="r">✗</span>                    |
+| 3.3  | `String()` method on enum type                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **4. httpclient** — fix naming: `HttpClient`, `base_url`, `GetBaseUrl()`, `this` | **<span class="g">6/7</span>** | **<span class="r">3/7</span>**              |
+| 4.1  | Struct renamed to `Client` (anti-stutter)                                        | <span class="g">✓</span>       | <span class="r">✗</span> kept HTTPClient    |
+| 4.2  | Constructor renamed to `New()`                                                   | <span class="g">✓</span>       | <span class="r">✗</span> NewHTTPClient()    |
+| 4.3  | Field uses `baseURL` (correct acronym)                                           | <span class="r">✗</span>       | <span class="r">✗</span>                    |
+| 4.4  | Getter drops `Get` prefix: `BaseURL()`                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 4.5  | Boolean getter uses `IsConnected()`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 4.6  | Receiver is 1-2 letters, not `this`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 4.7  | Boolean field uses `isConnected`                                                 | <span class="g">✓</span>       | <span class="r">✗</span> bare `connected`   |
+|      | **5. auth-tests** — table-driven tests for `ValidateToken()`                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**              |
+| 5.1  | Subtest names fully lowercase                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                    |
+| 5.2  | Acronyms lowercase in subtests                                                   | <span class="g">✓</span>       | <span class="r">✗</span> uppercase "ID"     |
+| 5.3  | Test function named `TestValidateToken`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 5.4  | Table struct uses descriptive field names                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **6. storage** — functional options: bucket, region, endpoint URL, retries       | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**              |
+| 6.1  | Option type is `Option` not `StoreOption`                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 6.2  | All option functions use `With` prefix                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 6.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewStore()         |
+| 6.4  | `URL` acronym is all-caps                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **7. metrics** — MixedCaps constants, sentinel errors                            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
+| 7.1  | Constants use MixedCaps not ALL_CAPS                                             | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 7.2  | Error variables use `Err` prefix                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 7.3  | Error strings fully lowercase                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 7.4  | Error strings include `"metrics:"` prefix                                        | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **8. notifier** — email/SMS/push interfaces, Dispatcher, error types             | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
+| 8.1  | Interface uses `-er` suffix                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 8.2  | No stuttering in type names                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 8.3  | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 8.4  | Error types use `Error` suffix                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **9. eventbus** — sentinel errors incl. "invalid event ID", custom error type    | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**              |
+| 9.1  | Sentinel errors use `Err` prefix                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 9.2  | Custom error type uses `Error` suffix                                            | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 9.3  | Error string uses lowercase `"id"`                                               | <span class="g">✓</span>       | <span class="r">✗</span> "invalid event ID" |
+| 9.4  | Error strings include `"eventbus:"` prefix                                       | <span class="g">✓</span>       | <span class="r">✗</span> no prefix          |
+|      | **10. config** — Load/Save/Get/Set/Validate/Reset/MergeFrom/String               | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**              |
+| 10.1 | All methods use consistent 1-2 letter receiver                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 10.2 | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewConfig()        |
+| 10.3 | No stuttering in type names                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **11. ratelimiter** — token bucket, options, Status enum, boolean methods        | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**              |
+| 11.1 | Constructor is `New()`                                                           | <span class="g">✓</span>       | <span class="r">✗</span> NewLimiter()       |
+| 11.2 | Status enum has `StatusUnknown` at iota 0                                        | <span class="g">✓</span>       | <span class="r">✗</span> Allowed at iota 0  |
+| 11.3 | Boolean methods use `Is`/`Has` prefix                                            | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 11.4 | Option functions use `With` prefix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 11.5 | Error strings lowercase with package prefix                                      | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+|      | **12. parser** — `Parse`, `MustParse`, `ParseWithContext`, `AST`, `ParseError`   | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**              |
+| 12.1 | Panic variant uses `MustParse`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 12.2 | Context variant uses `ParseWithContext`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 12.3 | Error type uses `ParseError`                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+| 12.4 | No stuttering on constructor                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                    |
+
+</details>
+
+<details>
+<summary>Linting — 49/51 (96%) vs 28/51 (55%), +41pp (51 assertions across 11 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                          | With                           | Without                                                      |
+| ---- | -------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
+|      | **1. nolint-directive-specificity** — linter name + justification on every //nolint                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 1.1  | Every //nolint specifies the linter name — no bare //nolint                                        | <span class="g">✓</span>       | <span class="r">✗</span> bare //nolint on 3 lines            |
+| 1.2  | Every //nolint includes a justification comment                                                    | <span class="g">✓</span>       | <span class="r">✗</span> no justifications                   |
+| 1.3  | Type assertion uses //nolint:forcetypeassert with safety explanation                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 1.4  | Long test uses //nolint:funlen with table-driven justification                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 1.5  | Cyclomatic complexity uses //nolint:gocyclo with orchestration justification                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **2. nolint-fix-vs-suppress-judgment** — fix correctness bugs, suppress style issues               | **<span class="g">6/6</span>** | **<span class="g">4/6</span>**                               |
+| 2.1  | Recommends FIXING bodyclose — unclosed response bodies leak connections                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.2  | Recommends SUPPRESSING funlen on table-driven test                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.3  | Recommends FIXING errcheck on database query in request handler                                    | <span class="g">✓</span>       | <span class="r">✗</span> suppressed as "not critical"        |
+| 2.4  | Recommends SUPPRESSING dupl on intentional parallel structure                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.5  | Recommends FIXING sqlclosecheck — unclosed sql.Rows leak connections                               | <span class="g">✓</span>       | <span class="r">✗</span> suppressed with defer comment       |
+| 2.6  | Recommends SUPPRESSING goconst in tests                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **3. golangci-yml-version-2-structure** — version: "2", formatters section, linters.enable         | **<span class="g">4/5</span>** | **<span class="r">1/5</span>**                               |
+| 3.1  | Config has version: "2" at the top                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no version field                    |
+| 3.2  | Linters listed under linters.enable (not enable-all)                                               | <span class="g">✓</span>       | <span class="r">✗</span> uses enable-all with disable list   |
+| 3.3  | gofumpt under formatters.enable, NOT linters.enable                                                | <span class="g">✓</span>       | <span class="r">✗</span> gofumpt in linters.enable           |
+| 3.4  | errcheck has check-type-assertions: true in linters.settings                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 3.5  | Timeout set under run.timeout: 5m                                                                  | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
+|      | **4. linter-categories-correctness-vs-style** — prioritize bug-finding over style                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 4.1  | Includes govet and staticcheck as highest-value correctness linters                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 4.2  | Includes errcheck for unchecked errors                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 4.3  | Prioritizes correctness/safety over style linters                                                  | <span class="g">✓</span>       | <span class="r">✗</span> revive and godot ranked above gosec |
+| 4.4  | Includes at least one security linter (bodyclose, gosec, sqlclosecheck)                            | <span class="g">✓</span>       | <span class="r">✗</span> no security linters in top 10       |
+| 4.5  | Does NOT include redundant complexity checkers (gocyclo + cyclop)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **5. legacy-codebase-incremental-adoption** — new-from-rev, not mass //nolint                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 5.1  | Recommends issues.new-from-rev to only lint new/changed code                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.2  | Does NOT suggest adding //nolint to all 2000+ warnings                                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests mass //nolint annotations  |
+| 5.3  | Suggests gradual cleanup of old code over time                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.4  | Suggests golangci-lint run --fix for auto-fixable issues                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.5  | Mentions parallel sub-agents or batching fixes by category                                         | <span class="g">✓</span>       | <span class="r">✗</span> sequential manual cleanup           |
+|      | **6. interpreting-lint-output-format** — use linter name to triage fix vs suppress                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 6.1  | Identifies errcheck on DB.Close as real issue to fix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.2  | Identifies bodyclose as critical resource leak to fix                                              | <span class="g">✓</span>       | <span class="r">✗</span> treats all warnings equally         |
+| 6.3  | Identifies unused validateToken as dead code to remove                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.4  | Evaluates gocyclo based on function nature (orchestration vs complex)                              | <span class="g">✓</span>       | <span class="r">✗</span> blanket "refactor" recommendation   |
+| 6.5  | Identifies revive comment warning as lower-priority style issue                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **7. disabled-linters-with-rationale** — exhaustruct, gochecknoglobals, wrapcheck, mnd, varnamelen | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 7.1  | Recommends AGAINST exhaustruct — breaks zero-value idiom                                           | <span class="g">✓</span>       | <span class="r">✗</span> enables it for "completeness"       |
+| 7.2  | Recommends AGAINST gochecknoglobals — valid global uses exist                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 7.3  | Recommends AGAINST wrapcheck as default — too noisy                                                | <span class="g">✓</span>       | <span class="r">✗</span> enables it unconditionally          |
+| 7.4  | Recommends AGAINST mnd — flags obvious constants like HTTP status codes                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 7.5  | Recommends AGAINST varnamelen — conflicts with Go's short name idiom                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **8. nolintlint-meta-linter** — enforce proper //nolint hygiene automatically                      | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
+| 8.1  | Recommends enabling nolintlint linter                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 8.2  | Configures require-specific: true                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> no nolintlint config                |
+| 8.3  | Configures require-explanation: true                                                               | <span class="g">✓</span>       | <span class="r">✗</span> no nolintlint config                |
+| 8.4  | Shows correct location: linters.settings.nolintlint                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **9. multiple-nolint-comma-syntax** — comma-separated linters in single directive                  | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                               |
+| 9.1  | Uses comma-separated: //nolint:errcheck,gosec — not two directives                                 | <span class="g">✓</span>       | <span class="r">✗</span> two separate //nolint lines         |
+| 9.2  | Includes justification explaining both false positives                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 9.3  | Directive on same line as flagged code or line above                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **10. common-config-issues** — timeout, v1-to-v2 migration, linter-not-found                       | **<span class="r">3/4</span>** | **<span class="r">2/4</span>**                               |
+| 10.1 | Recommends increasing run.timeout for deadline exceeded                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 10.2 | Recommends golangci-lint migrate for v1 config errors                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual rewrite             |
+| 10.3 | For linter not found: check version — modernize requires v2.6.0+                                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests reinstalling               |
+| 10.4 | Mentions golangci-lint linters to check available linters                                          | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
+|      | **11. formatter-vs-linter-distinction** — formatters section, fmt subcommand                       | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
+| 11.1 | gofumpt under formatters.enable, NOT linters.enable                                                | <span class="g">✓</span>       | <span class="r">✗</span> linters.enable                      |
+| 11.2 | Sets gofumpt extra-rules: true under formatters.settings                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 11.3 | Mentions golangci-lint fmt ./... command for formatting                                            | <span class="g">✓</span>       | <span class="r">✗</span> only golangci-lint run              |
+| 11.4 | Notes gci and goimports are redundant with gofumpt                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+
+</details>
+
+<details>
+<summary>Documentation — 93/103 (90%) vs 38/103 (37%), +53pp (100 assertions across 20 evals)</summary>
 
 **Model:** Claude Sonnet 4.6 | **Runs:** 20 evals × 2 configs = 40 runs | **Grading:** Human-as-judge
 
@@ -1136,14 +1510,518 @@ Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (
 
 </details>
 
-## `golang-benchmark` — v1.0.0
+## `golang-dependencies` — v1.0.0
 
-|             | With Skill         | Without Skill     | Delta     |
-| ----------- | ------------------ | ----------------- | --------- |
-| **Overall** | **356/356 (100%)** | **179/356 (50%)** | **+50pp** |
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **106/106 (100%)** | **62/106 (58%)** | **+42pp** |
 
 <details>
-<summary>Full breakdown (356 assertions across 80 evals)</summary>
+<summary>Module & dependency management — 52/52 (100%) vs 24/52 (46%), +54pp (52 assertions across 11 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                     | With                           | Without                                                      |
+| ---- | --------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
+|      | **1. ask-before-adding-dependency** — AI agent must ask before `go get`                       | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
+| 1.1  | Asks the user for confirmation before running `go get`                                        | <span class="g">✓</span>       | <span class="r">✗</span> runs go get immediately             |
+| 1.2  | Presents the package name and import path                                                     | <span class="g">✓</span>       | <span class="r">✗</span> installs without showing path       |
+| 1.3  | Mentions whether the standard library covers the use case                                     | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib mention                   |
+| 1.4  | Lists known alternatives                                                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests one library directly       |
+| 1.5  | Does NOT silently run `go get` without asking first                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **2. go-sum-must-be-committed** — go.sum is critical for supply-chain security                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 2.1  | Strongly advises against gitignoring go.sum                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.2  | Explains that go.sum contains cryptographic checksums for dependency verification             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 2.3  | Explains the supply-chain security risk: compromised proxy could substitute malicious code    | <span class="g">✓</span>       | <span class="r">✗</span> no supply-chain mention             |
+| 2.4  | Mentions `go mod verify` as the mechanism that uses go.sum                                    | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
+| 2.5  | Recommends removing go.sum from .gitignore                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **3. patch-only-upgrade-preference** — `go get -u=patch` safer than `go get -u`               | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
+| 3.1  | Recommends `go get -u=patch ./...` as the safer default                                       | <span class="g">✓</span>       | <span class="r">✗</span> recommends `go get -u ./...`        |
+| 3.2  | Explains that `-u=patch` only upgrades patch versions (no API changes per semver)             | <span class="g">✓</span>       | <span class="r">✗</span> no distinction made                 |
+| 3.3  | Explains that `-u` upgrades minor versions too, which can change behavior                     | <span class="g">✓</span>       | <span class="r">✗</span> no warning about minor              |
+| 3.4  | Mentions running `go mod tidy` after upgrading                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 3.5  | Does NOT recommend `go get -u ./...` without warning about risk                               | <span class="g">✓</span>       | <span class="r">✗</span> recommends it as primary            |
+|      | **4. mvs-algorithm-understanding** — Minimal Version Selection, not latest                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 4.1  | Correctly states that Go selects v1.3.0 (not the latest available)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 4.2  | Explains MVS: Go picks the highest minimum required, not the latest available                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 4.3  | Distinguishes MVS from other package managers (npm, pip, cargo)                               | <span class="g">✓</span>       | <span class="r">✗</span> no comparison to other managers     |
+| 4.4  | Mentions that MVS provides deterministic builds without a lock file                           | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
+| 4.5  | Explains that go.sum is integrity verification, not version locking                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **5. major-version-suffix-rule** — /v2 suffix for v2+ modules                                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                               |
+| 5.1  | States that the module path must include `/v2` suffix                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.2  | States that all import paths must be updated to include `/v2`                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.3  | Explains this is Go's import compatibility rule                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 5.4  | Mentions that v0 and v1 do NOT have a suffix                                                  | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
+| 5.5  | Notes that v1 and v2 can coexist in the same build                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **6. replace-directive-library-warning** — replace ignored when consumed as dependency        | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
+| 6.1  | States that replace directives only take effect in the main module's go.mod                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.2  | States that consumers will NOT use the fork                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 6.3  | Recommends removing replace directives before publishing a library                            | <span class="g">✓</span>       | <span class="r">✗</span> no publish warning                  |
+| 6.4  | Suggests alternative solutions (upstream the fix, publish fork as separate module)            | <span class="g">✓</span>       | <span class="r">✗</span> no alternatives offered             |
+|      | **7. tools-go-pattern** — pin CLI tool versions in go.mod                                     | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
+| 7.1  | Recommends the tools.go pattern (file with `//go:build tools` constraint)                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests `go install @latest` in CI |
+| 7.2  | Uses blank imports (`_` imports) to keep tools in go.mod                                      | <span class="g">✓</span>       | <span class="r">✗</span> no blank imports                    |
+| 7.3  | The build constraint ensures the file is never compiled into production code                  | <span class="g">✓</span>       | <span class="r">✗</span> no build constraint                 |
+| 7.4  | Mentions running `go mod tidy` after creating the tools.go file                               | <span class="g">✓</span>       | <span class="r">✗</span> no tidy mention                     |
+| 7.5  | Explains that `go install` then uses the pinned version from go.mod                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **8. govulncheck-call-path-analysis** — static analysis traces call paths to vulnerable funcs | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 8.1  | Recommends govulncheck to check if vulnerability is reachable                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 8.2  | Explains that govulncheck uses static analysis to trace call paths                            | <span class="g">✓</span>       | <span class="r">✗</span> no call-path explanation            |
+| 8.3  | Explains that if code never calls the affected function, govulncheck will NOT flag it         | <span class="g">✓</span>       | <span class="r">✗</span> not explained                       |
+| 8.4  | Shows the `govulncheck ./...` command                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 8.5  | Distinguishes govulncheck from generic CVE scanners                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **9. go-work-sum-gitignore** — go.work.sum should NOT be committed                            | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
+| 9.1  | States that go.work.sum should NOT be committed                                               | <span class="g">✓</span>       | <span class="r">✗</span> suggests committing both            |
+| 9.2  | Recommends adding go.work.sum to .gitignore                                                   | <span class="g">✓</span>       | <span class="r">✗</span> no gitignore mention                |
+| 9.3  | Explains that go.work is for development only                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 9.4  | Distinguishes this from go.sum which MUST be committed                                        | <span class="g">✓</span>       | <span class="r">✗</span> treats both the same                |
+| 9.5  | May mention that go.work itself can optionally be committed                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **10. exclude-vs-retract-distinction** — exclude is consumer-side, retract is author-side     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
+| 10.1 | Uses `retract` for the published library (author-side)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 10.2 | Uses `exclude` for the buggy dependency (consumer-side)                                       | <span class="g">✓</span>       | <span class="r">✗</span> uses replace instead                |
+| 10.3 | Explains that retract goes in the library's own go.mod                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+| 10.4 | Explains that exclude redirects to the next higher available version                          | <span class="g">✓</span>       | <span class="r">✗</span> no redirect behavior explained      |
+| 10.5 | Notes that retracted versions are still downloadable but not selected by default              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+|      | **11. test-dependency-upgrade-flag** — `-t` flag for including test deps in upgrades          | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                               |
+| 11.1 | Explains that `go get -u ./...` excludes test-only dependencies by default                    | <span class="g">✓</span>       | <span class="r">✗</span> not explained                       |
+| 11.2 | Recommends `go get -u -t ./...` to include test dependencies                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests upgrading individually     |
+| 11.3 | Explains the difference between `-u` and `-u -t`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
+
+</details>
+
+<details>
+<summary>Library selection — 54/54 (100%) vs 38/54 (70%), +30pp (54 assertions across 11 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                | With                           | Without                                                         |
+| ---- | ---------------------------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------- |
+|      | **1. stdlib-first-json** — encoding/json before third-party                              | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                  |
+| 1.1  | Recommends encoding/json as the first option                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 1.2  | Third-party alternatives only for specific performance needs                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 1.3  | Explains stdlib is sufficient for most JSON use cases                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 1.4  | Alternatives presented for measured performance requirements                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 1.5  | Does NOT recommend third-party without first considering stdlib                          | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **2. pgx-over-lib-pq** — pgx as primary PostgreSQL driver                                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
+| 2.1  | Recommends pgx as the primary recommendation                                             | <span class="g">✓</span>       | <span class="r">✗</span> lib/pq as primary                      |
+| 2.2  | Mentions pgx is faster than lib/pq                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 2.3  | Notes pgx supports all PostgreSQL types and advanced features                            | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 2.4  | May mention lib/pq but positions pgx as preferred                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 2.5  | Does NOT recommend lib/pq as primary without mentioning pgx                              | <span class="g">✓</span>       | <span class="r">✗</span> lib/pq recommended first               |
+|      | **3. chi-for-minimal-router** — chi when staying close to net/http                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
+| 3.1  | Recommends chi as a strong match for stated requirements                                 | <span class="g">✓</span>       | <span class="r">✗</span> recommends Gin                         |
+| 3.2  | Explains chi is lightweight and composes with net/http                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 3.3  | Notes chi has minimal dependencies                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 3.4  | May mention Gin/Echo but positions chi as better fit for net/http                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 3.5  | Does NOT recommend a full framework as primary when user wants to stay close to net/http | <span class="g">✓</span>       | <span class="r">✗</span> Gin as primary recommendation          |
+|      | **4. slog-over-external-loggers** — consider log/slog before zap/zerolog                 | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
+| 4.1  | Mentions log/slog as standard library option (Go 1.21+)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 4.2  | Presents slog as a viable option, not afterthought                                       | <span class="g">✓</span>       | <span class="r">✗</span> brief mention at end                   |
+| 4.3  | If recommending external, explains specific value over slog                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 4.4  | Does NOT skip standard library consideration entirely                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 4.5  | May mention zap/zerolog for specific use cases                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **5. sqlc-vs-orm-decision** — sqlc for compile-time SQL safety                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                  |
+| 5.1  | Recommends sqlc as a primary option for compile-time SQL safety                          | <span class="g">✓</span>       | <span class="r">✗</span> recommends GORM only                   |
+| 5.2  | Explains sqlc generates type-safe code with no runtime reflection                        | <span class="g">✓</span>       | <span class="r">✗</span> no mention of sqlc                     |
+| 5.3  | Mentions GORM uses runtime reflection — doesn't catch SQL errors at compile time         | <span class="g">✓</span>       | <span class="r">✗</span> GORM presented without caveat          |
+| 5.4  | May also mention ent as a code-generated alternative                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 5.5  | Does NOT recommend only GORM when user asks for compile-time safety                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **6. rate-limiter-stdlib-first** — golang.org/x/time/rate before third-party             | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
+| 6.1  | Recommends golang.org/x/time/rate as official option                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 6.2  | Explains token bucket algorithm                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 6.3  | May mention Tollbooth/limiter for HTTP middleware integration                            | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 6.4  | Does NOT skip the official x/time/rate package                                           | <span class="g">✓</span>       | <span class="r">✗</span> no mention of x/time/rate              |
+| 6.5  | Explains when third-party might be preferred (per-IP, distributed)                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **7. franz-go-for-kafka** — franz-go over legacy sarama                                  | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                  |
+| 7.1  | Recommends franz-go as primary recommendation                                            | <span class="g">✓</span>       | <span class="r">✗</span> sarama as primary                      |
+| 7.2  | Describes franz-go as modern, high-performance, feature-complete                         | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 7.3  | Does NOT recommend only sarama without mentioning franz-go                               | <span class="g">✓</span>       | <span class="r">✗</span> only sarama mentioned                  |
+| 7.4  | May mention sarama but positions franz-go as preferred modern choice                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **8. check-maintenance-before-recommending** — Logrus deprecated, suggest alternatives   | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
+| 8.1  | Mentions Logrus is deprecated or in maintenance mode                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 8.2  | Suggests alternatives: slog, zap, or zerolog                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 8.3  | Explains maintained alternatives preferred for new projects                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 8.4  | Does NOT unconditionally recommend Logrus without deprecation note                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 8.5  | Prioritizes maturity and maintenance status                                              | <span class="g">✓</span>       | <span class="r">✗</span> mentions deprecation but still says OK |
+|      | **9. avoid-unnecessary-wrappers** — warn against thin stdlib wrappers                    | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
+| 9.1  | Warns against wrapping stdlib without meaningful value                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 9.2  | Explains dependencies increase attack surface and maintenance burden                     | <span class="g">✓</span>       | <span class="r">✗</span> no mention of dependency cost          |
+| 9.3  | Recommends evaluating whether net/http itself is sufficient                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 9.4  | Mentions anti-pattern of adding dependencies for marginal convenience                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 9.5  | Suggests considering dependency footprint relative to value                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **10. testcontainers-for-integration** — testcontainers-go for real service testing      | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                  |
+| 10.1 | Recommends testcontainers-go for programmatic integration testing                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 10.2 | Explains testcontainers-go spins up real Docker containers                               | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 10.3 | Shows or describes container lifecycle within tests                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 10.4 | Positions it as better than manual Docker Compose for test isolation                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 10.5 | May also mention go-sqlmock for unit-level database testing                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+|      | **11. slices-maps-packages-go121** — stdlib slices/maps before external utility libs     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
+| 11.1 | Recommends stdlib slices package (Go 1.21+) for Contains, Sort, Reverse                  | <span class="g">✓</span>       | <span class="r">✗</span> recommends samber/lo for everything    |
+| 11.2 | Does NOT recommend only external libs for basic slice ops                                | <span class="g">✓</span>       | <span class="r">✗</span> samber/lo as sole recommendation       |
+| 11.3 | May mention samber/lo for functional ops (Map, Filter, Reduce)                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 11.4 | Distinguishes stdlib-covered ops from those requiring external libs                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+| 11.5 | Applies the 'standard library first' principle                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
+
+</details>
+
+## `golang-performance` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **814/814 (100%)** | **473/814 (58%)** | **+42pp** |
+
+<details>
+<summary>Hot-path optimization — 272/272 (100%) vs 167/272 (61%), +39pp (272 assertions across 68 evals)</summary>
+
+**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+
+| #    | Assertion                                                                                                     | With                           | Without                                                             |
+| ---- | ------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
+|      | **1. profile-before-optimizing** — Tests whether the model insists on profiling before applying optimizations | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 1.1  | Recommends profiling (pprof, fgprof, or tracing) before making code changes                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 1.2  | Identifies fetchFromDB as the likely bottleneck (external I/O, not Go code)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 1.3  | Mentions that intuition about bottlenecks is often wrong (~80% of the time)                                   | <span class="g">✓</span>       | <span class="r">✗</span> no specific stat                           |
+| 1.4  | Does NOT primarily focus on micro-optimizing strings.ToUpper or JSON encoding                                 | <span class="g">✓</span>       | <span class="r">✗</span> suggests strings.Builder/JSON fixes        |
+| 1.5  | Suggests investigating the database query (query tuning, caching, connection pool)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **2. fgprof-off-cpu-bottleneck** — Tests whether the model recommends fgprof for off-CPU bottlenecks          | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
+| 2.1  | Recommends fgprof as the primary tool for capturing off-CPU wait time                                         | <span class="g">✓</span>       | <span class="r">✗</span> suggests goroutine profiles or tracing     |
+| 2.2  | Explains that standard pprof CPU profile only captures on-CPU time                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 2.3  | Suggests the bottleneck is likely I/O wait (network, database, filesystem)                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 2.4  | Mentions goroutine profile as a complementary diagnostic                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 2.5  | Suggests distributed tracing (OpenTelemetry) for identifying slow upstream services                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **3. iterative-benchmark-methodology** — Tests iterative benchmark approach (one change at a time, benchstat) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                      |
+| 3.1  | Recommends writing an atomic benchmark for ProcessRecords first                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 3.2  | Recommends measuring a baseline with -benchmem and -count=6 for statistical significance                      | <span class="g">✓</span>       | <span class="r">✗</span> skips -count=6                             |
+| 3.3  | Recommends applying ONE optimization at a time, not all at once                                               | <span class="g">✓</span>       | <span class="r">✗</span> applies all at once                        |
+| 3.4  | Recommends using benchstat to compare before/after with statistical significance                              | <span class="g">✓</span>       | <span class="r">✗</span> no benchstat                               |
+| 3.5  | Suggests keeping report files as an audit trail (e.g., /tmp/report-1.txt)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **4. slice-reuse-append-zero** — Tests knowledge of append(s[:0], ...) for reusing slice backing arrays       | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 4.1  | Suggests using append(mode[:0], item) to reuse the backing array                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests sync.Pool or new slice            |
+| 4.2  | Explains that reslicing to zero length retains the backing array                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 4.3  | Moves the mode variable declaration outside the loop to enable reuse                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 4.4  | Does NOT suggest sync.Pool as the primary solution for this simple case                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **5. direct-indexing-vs-append** — Tests direct indexing over append when output size equals input            | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 5.1  | Suggests using make([]Result, len(input)) with direct assignment result[i] = convert(...)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 5.2  | Explains that direct assignment avoids per-element append overhead (bounds check, length increment)           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 5.3  | Notes that append is better when the result might be smaller (filtering)                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **6. map-range-double-lookup** — Tests catching redundant map lookups in range loops                          | **<span class="g">2/2</span>** | **<span class="g">2/2</span>**                                      |
+| 6.1  | Identifies that for k := range in { in[k] } does two map lookups per iteration                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 6.2  | Suggests for k, v := range in { result[k] = strconv.Itoa(v) } for single lookup                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **7. sentinel-errors-hot-path** — Tests preallocated sentinel errors over fmt.Errorf in hot paths             | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 7.1  | Converts the static error to a preallocated sentinel using errors.New at package level                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 7.2  | Keeps fmt.Errorf for the dynamic error that includes %d                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 7.3  | Explains that fmt.Errorf allocates on every call, while sentinels allocate once                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 7.4  | Does NOT convert the dynamic error to a sentinel                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **8. interface-boxing-hot-path** — Tests interface boxing allocation cost and generics fix                    | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 8.1  | Identifies interface boxing (any parameter) as the source of allocations                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 8.2  | Suggests typed functions or generics to eliminate boxing                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 8.3  | Explains that each concrete value passed through any requires a heap allocation for boxing                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 8.4  | Does NOT focus only on the type switch as the optimization target                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **9. backing-array-leak-slice** — Tests backing array retention when returning a small reslice                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 9.1  | Identifies that message[:32] retains the entire backing array (1-10MB)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 9.2  | Suggests using copy() to create an independent 32-byte slice                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 9.3  | Explains that the original large array cannot be GC'd while the reslice exists                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 9.4  | Provides correct copy-based fix: make([]byte, 32) + copy(header, message[:32])                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **10. substring-memory-leak** — Tests strings.Clone pattern for substring memory leaks                        | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 10.1 | Identifies that substrings share the backing array of the original string                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 10.2 | Suggests strings.Clone(line[12:48]) to create an independent copy                                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests string([]byte(s))                 |
+| 10.3 | Explains that each 36-char ID retains the entire 500-2000 byte log line                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **11. map-never-shrinks** — Tests Go maps never release bucket memory and compact pattern                     | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 11.1 | Explains that Go maps never release bucket memory when entries are deleted                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 11.2 | Suggests periodically recreating the map by copying entries to a new map                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 11.3 | Provides the compact pattern: make(map[K]V, len(old)) + range copy                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 11.4 | Does NOT suggest that calling runtime.GC() or tuning GOGC will fix this                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **12. sync-pool-rules** — Tests proper sync.Pool usage: reset, size limits, pointer pooling                   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
+| 12.1 | Identifies that HandleLargeUpload puts oversized buffers (100MB+) back into the pool                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 12.2 | Mentions the 32KB guideline — don't pool objects larger than ~32KB                                            | <span class="g">✓</span>       | <span class="r">✗</span> vague size advice                          |
+| 12.3 | Identifies that w.Write(buf) may retain the buffer after bufPool.Put(buf)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 12.4 | Suggests pooling pointers (*[]byte) instead of values to avoid allocation on Get                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 12.5 | Recommends resetting/clearing state before Put                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **13. struct-field-alignment** — Tests struct field ordering for optimal memory layout                        | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
+| 13.1 | Identifies that the struct has wasted padding bytes due to alignment                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 13.2 | Suggests reordering fields from largest to smallest                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 13.3 | Provides a reordered struct that is smaller than the original                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 13.4 | Mentions the fieldalignment tool for automated detection                                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 13.5 | States alignment requirements (bool=1, int32=4, int64/float64=8)                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **14. zero-size-field-end-of-struct** — Tests struct{} at end of struct adds word-sized padding               | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
+| 14.1 | Explains that a zero-size field at the end of a struct causes word-sized padding                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 14.2 | Explains the reason: preventing pointer overlap with next memory block                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 14.3 | Suggests moving struct{} to the beginning of the struct                                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 14.4 | Shows the fix: type Entry struct { Flag struct{}; Value int64 } = 8 bytes                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **15. map-pointer-vs-value-tradeoff** — Tests map[K]*V vs map[K]V tradeoff for large structs                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 15.1 | Suggests using map[string]*Player to allow direct field modification                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 15.2 | Explains that map values are not addressable                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 15.3 | Shows players[id].Score += delta with pointer map                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 15.4 | Mentions the tradeoff: pointer maps add GC pressure from separate heap allocations                            | <span class="g">✓</span>       | <span class="r">✗</span> no GC tradeoff                             |
+| 15.5 | Notes that for small, mostly-read structs, map[K]V (value) is better                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **16. inlining-log-in-hot-path** — Tests that log calls prevent function inlining                             | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 16.1 | Identifies that log calls prevent the function from being inlined                                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on formatting cost                 |
+| 16.2 | Suggests removing log calls from the hot-path function                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 16.3 | Mentions using go build -gcflags="-m" to verify inlining decisions                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 16.4 | Explains that function call overhead matters when called millions of times                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **17. value-receiver-inlining** — Tests value receivers enable inlining for fluent chains                     | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
+| 17.1 | Suggests changing to value receivers instead of pointer receivers                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 17.2 | Explains that value receivers allow the compiler to inline the fluent chain                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 17.3 | Explains that pointer receivers add indirection that blocks inlining                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 17.4 | Shows the value receiver signature: func (c Config) WithTimeout(d time.Duration) Config                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **18. cache-locality-matrix-traversal** — Tests row-major vs column-major traversal and cache effects         | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
+| 18.1 | Identifies the column-first traversal as the cause (cache misses)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 18.2 | Explains that Go stores 2D arrays in row-major order                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 18.3 | Suggests swapping loop order to row-first                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 18.4 | Mentions the performance difference from cache effects (10-50x or similar)                                    | <span class="g">✓</span>       | <span class="r">✗</span> says "significant" without quantifying     |
+| 18.5 | Does NOT primarily suggest parallelism or SIMD as the first fix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **19. contiguous-2d-allocation** — Tests contiguous 2D allocation for cache-friendly matrix access            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 19.1 | Identifies that per-row allocation scatters data across the heap                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 19.2 | Suggests single contiguous allocation: make([]float64, rows*cols)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 19.3 | Shows slicing the contiguous array into row views: data[i*cols : (i+1)*cols]                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 19.4 | Explains that contiguous memory improves cache locality                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **20. soa-vs-aos** — Tests Struct of Arrays vs Array of Structs for single-field iteration                    | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
+| 20.1 | Identifies that loading entire Particle structs wastes cache space when only X is needed                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 20.2 | Suggests Struct of Arrays (SoA) layout with separate slices                                                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests parallelism                       |
+| 20.3 | Explains cache utilization improvement (contiguous X values vs scattered)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 20.4 | Notes that AoS is fine when accessing all fields together or for small structs                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **21. false-sharing-concurrent-counters** — Tests false sharing and cache-line padding                        | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                      |
+| 21.1 | Identifies false sharing as the cause (fields share same cache line)                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests mutex or sharding                 |
+| 21.2 | Explains that writes to one field invalidate the cache line for other cores                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 21.3 | Suggests cache-line padding (56-byte array between fields)                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 21.4 | Mentions the 64-byte cache line size                                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 21.5 | Notes this should only be applied when profiling confirms contention                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **22. ilp-multi-accumulator** — Tests instruction-level parallelism with multiple accumulators                | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                      |
+| 22.1 | Identifies the sequential dependency chain as the bottleneck                                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests goroutines or SIMD                |
+| 22.2 | Suggests using multiple accumulators (e.g., 4) for ILP                                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 22.3 | Shows code with 4 independent accumulators summing every 4th element                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 22.4 | Handles the remainder elements (when len(data) is not divisible by 4)                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 22.5 | Mentions expected 2-4x improvement from ILP                                                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **23. index-based-tree-cache-locality** — Tests index-based vs pointer-based data structures                  | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 23.1 | Recommends Option B (index-based) for better cache locality                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 23.2 | Explains that pointer-based nodes are scattered across the heap                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 23.3 | Explains that index-based nodes are stored in a contiguous array                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 23.4 | Mentions CPU cache lines or memory prefetching                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **24. tight-loop-scheduler-starvation** — Tests tight CPU loops starving the Go scheduler                     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
+| 24.1 | Explains that tight CPU loops with inlined operations can delay scheduler preemption                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 24.2 | Suggests breaking work into batches processed by a non-inlined function call                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests runtime.Gosched()                 |
+| 24.3 | Mentions //go:noinline as an option to force preemption points                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 24.4 | Explains the tradeoff: //go:noinline adds overhead but ensures scheduler fairness                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 24.5 | Mentions that Go 1.14+ has async preemption but tight loops can still cause issues                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **25. reflect-deepequal-performance** — Tests reflect.DeepEqual 50-200x slower than typed comparison          | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 25.1 | Identifies reflect.DeepEqual as 50-200x slower than typed comparison                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 25.2 | Suggests using slices.Equal for the Hosts field                                                               | <span class="g">✓</span>       | <span class="r">✗</span> uses manual loop                           |
+| 25.3 | Suggests using maps.Equal for the Settings field                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 25.4 | Provides a hand-written typed comparison function                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **26. type-switch-vs-repeated-assertions** — Tests type switch dispatches in one evaluation                   | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
+| 26.1 | Suggests replacing repeated type assertions with a type switch                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 26.2 | Explains that a type switch dispatches in a single evaluation                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 26.3 | Shows the switch v := v.(type) { case string: ... } pattern                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **27. http-transport-maxidleconnsperhost** — Tests default MaxIdleConnsPerHost=2 gotcha                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 27.1 | Identifies MaxIdleConnsPerHost defaulting to 2 as the root cause                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 27.2 | Suggests configuring http.Transport with higher MaxIdleConnsPerHost                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 27.3 | Shows complete Transport configuration with MaxIdleConns, MaxIdleConnsPerHost, MaxConnsPerHost                | <span class="g">✓</span>       | <span class="r">✗</span> only sets MaxIdleConnsPerHost              |
+| 27.4 | Mentions draining resp.Body for connection reuse (io.Copy to io.Discard)                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 27.5 | Does NOT suggest a third-party connection pool library as the primary solution                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **28. response-body-drain** — Tests HTTP connections only reused when body fully read                         | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
+| 28.1 | Identifies that the response body is not being fully read/drained                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 28.2 | Explains that connections are only reused when the body is fully consumed                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 28.3 | Suggests adding io.Copy(io.Discard, resp.Body)                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **29. streaming-vs-readall** — Tests streaming vs buffering for large payloads                                | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 29.1 | Identifies io.ReadAll as the cause of OOM                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 29.2 | Suggests using io.Copy(w, resp.Body) to stream with constant memory                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 29.3 | Mentions the 32KB internal buffer of io.Copy                                                                  | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 29.4 | Notes that io.ReadAll is fine for small, bounded payloads (< 1MB)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **30. json-streaming-decoder** — Tests json.NewDecoder for streaming large JSON payloads                      | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 30.1 | Suggests using json.NewDecoder with r.Body directly                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 30.2 | Shows the dec.More() + dec.Decode(&item) streaming pattern                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 30.3 | Explains that this processes one item at a time with O(1) memory per item                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **31. cgo-overhead-tight-loop** — Tests cgo call overhead (~50-100ns) and batching strategy                   | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 31.1 | Identifies cgo overhead (~50-100ns per call) as the bottleneck                                                | <span class="g">✓</span>       | <span class="r">✗</span> says "overhead" without quantifying        |
+| 31.2 | Suggests using math.Sqrt (pure Go, inlineable) instead of C.sqrt                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 31.3 | For unavoidable C code, suggests batching: pass entire array to C in one call                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 31.4 | Mentions that goroutine is pinned to OS thread during cgo calls                                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **32. gogc-gomemlimit-container** — Tests GOMEMLIMIT for containerized applications                           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 32.1 | Recommends setting GOMEMLIMIT to 80-90% of container memory (400-450MiB)                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests GOMEMLIMIT without ratio          |
+| 32.2 | Explains that the GC needs GOMEMLIMIT to know about the container ceiling                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 32.3 | Shows the GOMEMLIMIT=450MiB environment variable or debug.SetMemoryLimit                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 32.4 | Explains the gap (goroutine stacks, OS buffers, non-heap memory)                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 32.5 | Does NOT recommend the ballast pattern (obsolete since Go 1.19)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **33. ballast-pattern-obsolete** — Tests GOMEMLIMIT over ballast pattern                                      | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 33.1 | Identifies the ballast pattern as obsolete since Go 1.19                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 33.2 | Recommends GOMEMLIMIT as the replacement                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 33.3 | Explains that GOMEMLIMIT provides the same benefit without wasting physical memory                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 33.4 | Shows the GOMEMLIMIT environment variable or debug.SetMemoryLimit call                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **34. gomaxprocs-container-go125** — Tests Go 1.25+ container-aware GOMAXPROCS vs automaxprocs                | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
+| 34.1 | States that Go 1.25+ automatically detects container CPU limits                                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 34.2 | Recommends removing the automaxprocs dependency                                                               | <span class="g">✓</span>       | <span class="r">✗</span> keeps automaxprocs                         |
+| 34.3 | Mentions that automaxprocs IS needed for Go 1.24 and earlier                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 34.4 | Mentions cgroup CPU quota detection as the mechanism                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **35. pgo-workflow** — Tests PGO workflow and expected gains                                                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 35.1 | Recommends Profile-Guided Optimization (PGO)                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 35.2 | Describes the workflow: collect profile, save as default.pgo, rebuild                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 35.3 | Mentions expected improvement of 2-7%                                                                         | <span class="g">✓</span>       | <span class="r">✗</span> no quantification                          |
+| 35.4 | Explains PGO benefits: aggressive inlining and devirtualization                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 35.5 | Notes that profiles should be refreshed after significant code changes                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **36. slog-logattrs-hot-path** — Tests slog.LogAttrs for zero-allocation logging                              | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
+| 36.1 | Explains that log arguments are evaluated/boxed before the level check                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 36.2 | Recommends slog.LogAttrs for zero allocations when level is disabled                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests level check guard                 |
+| 36.3 | Shows typed attributes: slog.Int("id", item.ID), slog.String("name", item.Name)                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 36.4 | Notes that slog.Any can still allocate, so typed attributes are preferred                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **37. regexp-compile-per-call** — Tests compiled pattern caching vs per-call compilation                      | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 37.1 | Identifies that regexp compilation happens on every call (~5,700ns per compile)                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 37.2 | Suggests moving regexp.MustCompile to package-level variables                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 37.3 | Notes that compiled regexps are safe for concurrent use                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 37.4 | Quantifies the waste (10-12x overhead from recompilation vs match-only)                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **38. singleflight-cache-stampede** — Tests singleflight for cache stampede prevention                        | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 38.1 | Identifies this as a cache stampede problem                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 38.2 | Recommends golang.org/x/sync/singleflight.Group                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 38.3 | Shows sf.Do(key, func) pattern                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 38.4 | Does NOT suggest a global mutex as the primary solution                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **39. algorithmic-complexity-slice-contains-loop** — Tests O(n*m) from slices.Contains in loop                | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 39.1 | Identifies O(n*m) complexity from slices.Contains inside a loop                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 39.2 | Suggests building a map[string]struct{} from the valid slice first                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 39.3 | Shows the O(n+m) solution with map lookup                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 39.4 | Uses struct{} (0 bytes) for the map value type, not bool                                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses bool                                  |
+|      | **40. early-return-full-scan** — Tests early returns to avoid full collection scans                           | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
+| 40.1 | Identifies that the function always scans the full collection                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 40.2 | Adds an early return when the first expired session is found                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 40.3 | Removes the found variable in favor of direct returns                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **41. iterator-chain-vs-direct-loop** — Tests iterator chains create closure overhead                         | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 41.1 | Recommends Option B (direct loop) for performance                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 41.2 | Explains that iterator chains create closures and intermediate allocations                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 41.3 | Notes that Filter processes ALL elements before First can pick one                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 41.4 | Acknowledges that iterator chains are fine for non-hot paths                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **42. indirect-function-calls-closure** — Tests closure indirection prevents inlining                         | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 42.1 | Suggests replacing the Map+closure pattern with a direct loop                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 42.2 | Explains that the closure/function call indirection prevents inlining                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 42.3 | Shows the direct loop: result[i] = *ptrs[i]                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 42.4 | Mentions the expected improvement range (13-17%)                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **43. http-server-no-timeouts** — Tests zero-value http.Server has NO timeouts                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 43.1 | Identifies that the default http.Server has NO timeouts                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 43.2 | Mentions Slowloris attack or slow client holding connections indefinitely                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 43.3 | Suggests setting ReadTimeout, WriteTimeout, and IdleTimeout                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 43.4 | Shows creating an explicit http.Server struct with timeout values                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **44. http-keepalive-crawler** — Tests disabling keep-alive for crawlers                                      | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                      |
+| 44.1 | Identifies that idle connections accumulate across many different hosts                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 44.2 | Suggests DisableKeepAlives: true for the crawler client                                                       | <span class="g">✓</span>       | <span class="r">✗</span> lowers MaxIdleConnsPerHost instead         |
+| 44.3 | Explains that keep-alive is counterproductive for many unique hosts                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **45. buffered-io-syscall-reduction** — Tests bufio for reducing syscall count                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 45.1 | Identifies that each WriteString issues a separate syscall                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 45.2 | Suggests using bufio.NewWriter(f) to batch writes                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 45.3 | Includes w.Flush() at the end                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 45.4 | Does NOT primarily suggest strings.Builder                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **46. concurrent-pipeline-when-not-to-use** — Tests when concurrent pipelines are NOT beneficial              | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                      |
+| 46.1 | Recommends AGAINST concurrent pipelines for this case                                                         | <span class="g">✓</span>       | <span class="r">✗</span> recommends concurrency                     |
+| 46.2 | Explains that all three stages compete for the same resource (CPU)                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 46.3 | Notes that concurrency only helps when stages saturate DIFFERENT resources                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 46.4 | Mentions context-switching overhead as a cost                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 46.5 | Suggests sequential processing or batching as simpler alternative                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **47. batch-db-inserts** — Tests batch database inserts vs row-by-row                                         | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                      |
+| 47.1 | Identifies individual inserts as the problem (50K round-trips)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 47.2 | Suggests batch inserts (multi-row VALUES or COPY protocol)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 47.3 | Shows a batching pattern with configurable batch size                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 47.4 | Wraps batches in transactions for atomicity                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 47.5 | Does NOT suggest only connection pooling or prepared statements                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **48. panic-recover-control-flow** — Tests panic/recover not for control flow                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 48.1 | Identifies that panic/recover is unnecessary since strconv.Atoi returns errors                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 48.2 | Explains that panic allocates a stack trace and unwinds the stack (10-100x overhead)                          | <span class="g">✓</span>       | <span class="r">✗</span> says "overhead" without quantifying        |
+| 48.3 | Suggests using simple error checking: v, err := strconv.Atoi(s)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 48.4 | States that panic/recover should only be used for truly unrecoverable situations                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **49. monotonic-time-since** — Tests time.Since monotonic clock for elapsed time                              | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
+| 49.1 | Suggests using time.Since(start) for elapsed time measurement                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 49.2 | Explains that time.Since uses the monotonic clock                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 49.3 | Notes that time.Now() already captures monotonic time for Sub() operations                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **50. prometheus-gc-pressure-queries** — Tests specific PromQL queries for GC pressure                        | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
+| 50.1 | Provides rate(go_gc_duration_seconds_count[5m]) for GC frequency                                              | <span class="g">✓</span>       | <span class="r">✗</span> generic approach                           |
+| 50.2 | Provides go_gc_duration_seconds{quantile="1"} for worst-case GC pause                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 50.3 | Mentions >2 cycles/s sustained as a signal of excessive allocation rate                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 50.4 | Suggests rate(go_memstats_alloc_bytes_total[5m]) for allocation rate                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **51. goroutine-leak-prometheus** — Tests PromQL for detecting goroutine leaks                                | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 51.1 | Provides go_goroutines metric for goroutine count monitoring                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 51.2 | Suggests delta(go_goroutines[1h]) for detecting net goroutine increase                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 51.3 | Notes that goroutine count should correlate with load                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **52. continuous-profiling-tools** — Tests continuous profiling tools and tradeoffs                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
+| 52.1 | Recommends Grafana Pyroscope, Parca, or similar platform                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 52.2 | Mentions overhead estimates (1-5% range)                                                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 52.3 | Describes push vs pull collection modes                                                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 52.4 | Mentions historical flamegraph comparison as a key feature                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 52.5 | Suggests feeding profiles into PGO for build optimization                                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **53. gogc-high-vs-low-tradeoff** — Tests GOGC tuning tradeoffs (latency vs throughput)                       | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 53.1 | Recommends lower GOGC (e.g., 50) for Service A (latency-sensitive)                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 53.2 | Recommends higher GOGC (e.g., 200) for Service B (throughput-oriented)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 53.3 | Explains the tradeoff: lower GOGC = more frequent but shorter pauses                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 53.4 | Explains the tradeoff: higher GOGC = less frequent GC but more memory                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **54. godebug-gctrace** — Tests GODEBUG=gctrace=1 output interpretation                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
+| 54.1 | Correctly identifies gc 142 as the 142nd GC cycle                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 54.2 | Identifies 12% as total CPU time spent in GC (which is high)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 54.3 | Interprets 180->340->200 MB as heap before, peak during, and after collection                                 | <span class="g">✓</span>       | <span class="r">✗</span> misparses the three values                 |
+| 54.4 | Identifies 400 MB goal as the target heap size based on GOGC/GOMEMLIMIT                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 54.5 | Notes that 12% GC CPU is concerning                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **55. unsafe-without-benchmark-proof** — Tests warning against premature unsafe usage                         | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
+| 55.1 | Recommends against using unsafe here                                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 55.2 | Notes that 100 req/s is not a hot path                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 55.3 | States that unsafe requires benchmark proof showing >10% improvement                                          | <span class="g">✓</span>       | <span class="r">✗</span> no specific threshold                      |
+| 55.4 | Mentions safety risks of unsafe                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **56. precomputed-lookup-table** — Tests precomputed lookup tables for pure functions                         | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 56.1 | Suggests a precomputed lookup table (var hexDigit = [16]byte{...})                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 56.2 | Shows the table lookup: hexDigit[b>>4], hexDigit[b&0x0f]                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 56.3 | Explains that the lookup table fits in L1 cache and is faster than branching                                  | <span class="g">✓</span>       | <span class="r">✗</span> says "faster" without L1 cache explanation |
+|      | **57. json-performance-alternatives** — Tests JSON performance alternatives                                   | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
+| 57.1 | Mentions custom MarshalJSON/UnmarshalJSON methods                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 57.2 | Mentions code-generation libraries (easyjson, ffjson)                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 57.3 | Mentions drop-in replacement libraries (goccy/go-json, json-iterator, sonic)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 57.4 | Explains that encoding/json uses reflection                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 57.5 | Quantifies expected improvement (2-5x or similar)                                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **58. channel-batch-processing** — Tests batch processing from channels with timeout flush                    | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
+| 58.1 | Uses select with both channel receive and ticker/timer for timeout                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 58.2 | Flushes on batch size threshold                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 58.3 | Flushes on timeout (ticker)                                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 58.4 | Handles channel close (flushes remaining items)                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 58.5 | Reuses the batch slice (batch[:0]) to reduce allocations                                                      | <span class="g">✓</span>       | <span class="r">✗</span> re-allocates                               |
+|      | **59. allocation-reduction-vs-gc-tuning** — Tests that reducing allocations beats GOGC tuning                 | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
+| 59.1 | Recommends reducing allocations as the primary approach over GOGC tuning                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests GOGC tuning first                 |
+| 59.2 | Explains that GOGC tuning manages the symptom while allocation reduction addresses root cause                 | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 59.3 | Suggests specific allocation reduction strategies                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 59.4 | Acknowledges GOGC tuning as a secondary measure after allocation reduction                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **60. gctrace-key-fields** — Tests what to monitor in GC traces                                               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 60.1 | Mentions high GC frequency as a signal of too many allocations                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 60.2 | Mentions high pause times as a signal of large heap or many pointers                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 60.3 | Mentions high GC CPU% (>5%) as concerning                                                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 60.4 | Provides the GODEBUG=gctrace=1 command                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **61. non-go-memory-leak-detection** — Tests detecting non-Go memory leaks via Prometheus                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
+| 61.1 | Suggests process_resident_memory_bytes - go_memstats_sys_bytes to isolate non-Go memory                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 61.2 | Identifies this as a likely C/cgo memory leak                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 61.3 | Explains that growing gap between RSS and Go sys bytes indicates non-Go memory growth                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 61.4 | Suggests C-level memory profiling tools (valgrind, AddressSanitizer)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **62. cpu-saturation-prometheus** — Tests detecting CPU saturation via Prometheus                             | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                      |
+| 62.1 | Provides rate(process_cpu_seconds_total[5m]) for CPU cores consumed                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 62.2 | Divides by GOMAXPROCS to get utilization ratio                                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 62.3 | States that >0.8 sustained indicates CPU saturation                                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **63. document-optimizations** — Tests recommending documentation of optimizations                            | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 63.1 | Strongly recommends adding comments explaining WHY the optimization was made                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 63.2 | Suggests including benchmark numbers in the comments                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 63.3 | Explains that future readers may revert optimizations they don't understand                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **64. lru-cache-freelru** — Tests high-performance LRU cache alternatives                                     | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                                      |
+| 64.1 | Notes that container/list has poor cache locality (separate heap allocation per node)                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 64.2 | Recommends elastic/go-freelru or hashicorp/golang-lru as alternatives                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 64.3 | Mentions the performance advantage of contiguous memory layouts for LRU                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+|      | **65. simd-when-not-worth** — Tests when SIMD is NOT worth pursuing                                           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
+| 65.1 | Recommends against SIMD for this case                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 65.2 | Explains that the bottleneck is allocations/GC, not CPU-bound computation                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 65.3 | States that SIMD only helps CPU-bound numeric inner loops                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 65.4 | Suggests reducing allocations as the correct approach                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **66. set-map-struct-zero-size** — Tests struct{} vs bool for set maps                                        | **<span class="g">2/2</span>** | **<span class="g">2/2</span>**                                      |
+| 66.1 | Recommends struct{} for set maps                                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 66.2 | Explains that struct{} is 0 bytes vs bool at 1 byte per entry                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **67. regression-detection-prometheus** — Tests PromQL for deployment regression detection                    | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
+| 67.1 | Suggests comparing rate(go_memstats_alloc_bytes_total[5m]) before/after deploy                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 67.2 | Suggests monitoring p99 latency histogram_quantile for increase after deploy                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+| 67.3 | Mentions comparing metrics between old and new deployment versions                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
+|      | **68. statsviz-development-profiling** — Tests real-time development visualization tools                      | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                                      |
+| 68.1 | Recommends statsviz (github.com/arl/statsviz) for real-time browser visualization                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests pprof web UI                      |
+| 68.2 | Mentions the /debug/statsviz endpoint or statsviz.Register pattern                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+| 68.3 | Notes that it shows heap, GC pauses, goroutines, and scheduler in real-time                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
+
+</details>
+
+<details>
+<summary>Benchmarking & profiling — 356/356 (100%) vs 179/356 (50%), +50pp (356 assertions across 80 evals)</summary>
 
 **Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
 
@@ -1588,611 +2466,8 @@ Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (
 
 </details>
 
-## `golang-observability` — v1.0.0
-
-|             | With Skill         | Without Skill     | Delta     |
-| ----------- | ------------------ | ----------------- | --------- |
-| **Overall** | **185/185 (100%)** | **117/185 (63%)** | **+37pp** |
-
 <details>
-<summary>Full breakdown (185 assertions across 40 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                                             | With                           | Without                                                           |
-| ---- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
-|      | **1. summary-vs-histogram-multi-replica** — Histogram over Summary when multiple replicas need aggregated percentiles | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
-| 1.1  | Recommends Histogram, not Summary                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.2  | Explains that Summary quantiles cannot be aggregated across multiple instances                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.3  | Shows histogram_quantile() PromQL function for computing percentiles server-side                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.4  | Mentions that Histogram supports server-side aggregation across replicas                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.5  | Uses prometheus.NewHistogramVec (not NewSummary) in the code example                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **2. log-and-return-error-trap** — single handling rule: log OR return, never both                                    | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
-| 2.1  | Identifies the log-and-return pattern as incorrect                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.2  | Explains that the error gets logged multiple times as it propagates up the chain                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.3  | Recommends returning the error with context and logging once at the top level                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.4  | Shows the corrected pattern: return fmt.Errorf with wrapping, no slog call                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.5  | References or explains the single handling rule (errors are either logged OR returned, never both)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **3. high-cardinality-label-trap** — high-cardinality label usage in Prometheus metrics                               | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
-| 3.1  | Identifies userID as a high-cardinality label that will cause problems                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.2  | Identifies r.URL.Path as potentially high-cardinality (should use route template instead)                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on userID, misses URL.Path       |
-| 3.3  | Explains that each unique label combination creates a separate time series                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.4  | Warns about memory explosion on the Prometheus server from unbounded labels                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.5  | Recommends using route patterns/templates (e.g., /users/:id) instead of actual paths                                  | <span class="g">✓</span>       | <span class="r">✗</span> generic advice without route template    |
-| 3.6  | Suggests using traces (not metrics) for high-cardinality data like user IDs                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **4. production-json-logging** — JSON handler for production, not TextHandler                                         | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
-| 4.1  | Recommends JSONHandler for production, not TextHandler                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.2  | Explains that plain-text multiline logs (e.g., stack traces) get split into separate records by log collectors        | <span class="g">✓</span>       | <span class="r">✗</span> generic "not machine-parseable"          |
-| 4.3  | Suggests TextHandler is appropriate for development only                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.4  | Shows the correct JSONHandler setup with slog.LevelInfo for production                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **5. slog-context-variant-trace-correlation** — *Context variants for trace correlation                               | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
-| 5.1  | Identifies that slog.Info and slog.Error should use their *Context variants                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 5.2  | Explains that without ctx, trace_id and span_id won't be injected into log records                                    | <span class="g">✓</span>       | <span class="r">✗</span> unaware of otelslog injection mechanism  |
-| 5.3  | Shows the corrected code using slog.InfoContext(ctx, ...) and slog.ErrorContext(ctx, ...)                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 5.4  | Mentions that the otelslog bridge automatically injects trace correlation when context is passed                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **6. metric-naming-conventions** — base units, _total suffix, namespace                                               | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
-| 6.1  | Flags request_count as missing namespace and unit suffix                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.2  | Flags httpDuration as using camelCase and missing unit                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.3  | Flags request_duration_ms — should use _seconds (base unit), not milliseconds                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.4  | Flags myapp_request_size_kb — should use _bytes (base unit), not kilobytes                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.5  | Flags embedding label values into metric names — should use a single metric with a method label                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **7. irate-vs-rate-for-alerts** — irate() is inappropriate for alerting rules                                         | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 7.1  | Identifies irate() as inappropriate for alerting rules                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.2  | Explains that irate reacts to a single scrape interval and is too volatile                                            | <span class="g">✓</span>       | <span class="r">✗</span> knows irate differs but imprecise why    |
-| 7.3  | Recommends rate() instead of irate() for alerts                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.4  | Recommends adding a for: duration to avoid firing on transient spikes                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.5  | Shows the corrected alert rule using rate() with a for: clause                                                        | <span class="g">✓</span>       | <span class="r">✗</span> shows rate() but misses error ratio      |
-|      | **8. alert-missing-for-duration** — alerts without for: duration clause                                               | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
-| 8.1  | Identifies the missing for: duration as a problem                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.2  | Explains that without for:, a single bad scrape triggers the alert                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.3  | Recommends adding for: 5m or similar duration                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.4  | Distinguishes that binary alerts (service up/down) can use for: 0m, but non-binary need a duration                    | <span class="g">✓</span>       | <span class="r">✗</span> generic advice, no binary distinction    |
-|      | **9. promql-comments-convention** — documenting metrics with PromQL comments above declarations                       | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                    |
-| 9.1  | Recommends adding PromQL queries and alert rules as comments directly above the metric var                            | <span class="g">✓</span>       | <span class="r">✗</span> suggests wiki or README                  |
-| 9.2  | Shows example Dashboard: and Alert: comment lines above the metric var                                                | <span class="g">✓</span>       | <span class="r">✗</span> no such convention known                 |
-| 9.3  | Explains that this keeps PromQL queries reviewed in PRs alongside the metric                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 9.4  | Mentions that queries stay in sync with metric changes (label renames, bucket changes)                                | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 9.5  | Notes that new team members can understand the metric's purpose at a glance                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **10. otelslog-bridge-setup** — log-trace correlation using otelslog bridge                                           | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
-| 10.1 | Recommends using the otelslog bridge from go.opentelemetry.io/contrib/bridges/otelslog                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual trace_id extraction      |
-| 10.2 | Shows creating a handler with otelslog.NewHandler()                                                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 10.3 | Shows setting it as default with slog.SetDefault()                                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 10.4 | Explains that trace_id and span_id are automatically injected into log records                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 10.5 | Emphasizes using slog.*Context(ctx, ...) variants to enable the automatic injection                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **11. exemplars-metric-trace-link** — metrics-to-traces correlation via Prometheus exemplars                          | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                    |
-| 11.1 | Recommends using Prometheus exemplars to link metrics to traces                                                       | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual correlation              |
-| 11.2 | Shows attaching trace_id as an exemplar when recording histogram observations                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 11.3 | Explains that exemplars let you jump from a metric spike directly to the trace                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **12. span-error-recording-both-calls** — RecordError() AND SetStatus(Error) required                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
-| 12.1 | Identifies that span.SetStatus(codes.Error, ...) is also needed alongside RecordError                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.2 | Explains that RecordError adds an event but does not mark the span as failed                                          | <span class="g">✓</span>       | <span class="r">✗</span> may not distinguish event vs status      |
-| 12.3 | Shows the corrected pattern with both span.RecordError(err) and span.SetStatus(codes.Error, ...)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.4 | Notes that on success, no status needs to be set (Unset is fine)                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **13. otelhttp-outgoing-requests** — outgoing HTTP clients must use otelhttp transport                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 13.1 | Recommends wrapping the HTTP client transport with otelhttp.NewTransport                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.2 | Shows the code: client := &http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.3 | Explains that this automatically propagates trace context to outgoing requests                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.4 | Mentions that otelhttp creates child spans for outgoing HTTP calls                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **14. db-query-context-propagation** — database calls must use *Context variants                                      | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 14.1 | Identifies that db.Query should be db.QueryContext(ctx, ...)                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 14.2 | Explains that without context, the trace is broken                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 14.3 | Shows the corrected code using db.QueryContext(ctx, ...)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 14.4 | States that context is the vehicle that carries trace_id and span_id across boundaries                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **15. trace-sampling-cost-control** — trace sampling strategies and cost implications                                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
-| 15.1 | Recommends TraceIDRatioBased sampling with a specific ratio (e.g., 0.1 for 10%)                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 15.2 | Mentions ParentBased sampler to respect parent's sampling decision                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 15.3 | Discusses head-based vs tail-based sampling tradeoffs                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 15.4 | Recommends avoiding large payloads as span attributes — log and correlate via trace_id                                | <span class="g">✓</span>       | <span class="r">✗</span> generic cost advice                      |
-| 15.5 | Explains the cost factors: span volume, span attributes, storage and indexing                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **16. where-to-add-spans** — which operations must have spans in OpenTelemetry                                        | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
-| 16.1 | Lists service methods (business logic layer) as requiring spans                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 16.2 | Lists database queries as requiring spans                                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 16.3 | Lists external API calls as requiring spans                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 16.4 | Lists message queue publish/consume operations as requiring spans                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 16.5 | States any operation that takes measurable time or could fail should have a span                                      | <span class="g">✓</span>       | <span class="r">✗</span> gives specific list, misses general rule |
-|      | **17. four-golden-signals-alerting** — four golden signals for service alerting                                       | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                    |
-| 17.1 | References the four golden signals: latency, traffic, errors, saturation                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 17.2 | Includes a latency alert (e.g., P99 > threshold)                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 17.3 | Includes a traffic alert (e.g., zero requests detection)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 17.4 | Includes an error rate alert (e.g., 5xx ratio > threshold)                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 17.5 | Includes a saturation alert (e.g., connection pool > 90%)                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **18. awesome-prometheus-alerts-resource** — awesome-prometheus-alerts as a starting point                            | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
-| 18.1 | Recommends awesome-prometheus-alerts (samber.github.io/awesome-prometheus-alerts/)                                    | <span class="g">✓</span>       | <span class="r">✗</span> suggests writing rules from scratch      |
-| 18.2 | Mentions it contains ~500 ready-to-use Prometheus alerting rules organized by technology                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 18.3 | Suggests the workflow: browse by technology, copy rules, customize thresholds                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 18.4 | Mentions verifying that exporters (postgres_exporter, redis_exporter) are deployed                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **19. go-runtime-alerts** — Go runtime-specific Prometheus alerts                                                     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 19.1 | Suggests alerting on go_goroutines exceeding a threshold for goroutine leaks                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 19.2 | Suggests alerting on go_gc_duration_seconds for GC pressure                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 19.3 | Suggests alerting on go_memstats_alloc_bytes / go_memstats_sys_bytes for memory leaks                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 19.4 | Suggests alerting on go_threads for high OS thread count                                                              | <span class="g">✓</span>       | <span class="r">✗</span> rarely includes thread alerts            |
-| 19.5 | Uses for: duration on all non-binary alerts to avoid false positives                                                  | <span class="g">✓</span>       | <span class="r">✗</span> omits for: on some alerts                |
-|      | **20. alert-severity-levels** — severity classification and for: durations                                            | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
-| 20.1 | Uses two severity levels: critical (page on-call) and warning (create ticket)                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 20.2 | Critical alerts: for: 2m to 5m for fast detection                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 20.3 | Warning alerts: for: 10m to 30m for confirmed trends                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 20.4 | Classifies service down as critical with short for: duration                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 20.5 | Classifies goroutine leak as warning (not critical)                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> may classify as critical                 |
-| 20.6 | States that for: 0m should never be used on non-binary alerts                                                         | <span class="g">✓</span>       | <span class="r">✗</span> not a widely known rule                  |
-|      | **21. multi-window-burn-rate-slo** — multi-window burn-rate SLO alerting                                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 21.1 | Recommends multi-window burn-rate alerting instead of simple threshold alerts                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 21.2 | Explains the concept of error budget and burn rate                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 21.3 | Includes fast burn window (e.g., 5m + 1h, 14.4x burn rate) as critical/page                                           | <span class="g">✓</span>       | <span class="r">✗</span> generic burn rate, no specific windows   |
-| 21.4 | Includes slow burn window (e.g., 2h + 24h, 1x burn rate) as warning/ticket                                            | <span class="g">✓</span>       | <span class="r">✗</span> no slow burn tier                        |
-| 21.5 | Shows PromQL using AND of short and long windows to eliminate false positives                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **22. slog-migration-from-zap** — incremental migration from zap to slog using bridge                                 | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
-| 22.1 | Recommends a three-step migration: bridge, replace call sites, remove bridge                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests gradual replacement only        |
-| 22.2 | Step 1: Use samber/slog-zap bridge handler to route slog output through zap                                           | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-zap               |
-| 22.3 | Step 2: Gradually replace zap.L().Info(...) calls with slog.Info(...)                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 22.4 | Step 3: Once fully migrated, replace bridge with native slog JSONHandler and remove zap                               | <span class="g">✓</span>       | <span class="r">✗</span> no bridge step to remove                 |
-| 22.5 | Mentions using parallel sub-agents for large codebase migration                                                       | <span class="g">✓</span>       | <span class="r">✗</span> not a known pattern                      |
-|      | **23. slog-migration-from-logrus** — bridge handler approach for logrus migration                                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                    |
-| 23.1 | Recommends using samber/slog-logrus bridge handler for incremental migration                                          | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-logrus            |
-| 23.2 | Explains that slog is the standard library logger since Go 1.21                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 23.3 | Shows the bridge step: route slog output through the existing logrus logger                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 23.4 | Shows the replacement: logrus.WithField becomes slog.Info                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **24. debug-level-production-cost** — log level cost implications in production                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 24.1 | Recommends slog.LevelInfo for production, NOT Debug                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 24.2 | Explains that Debug level can generate millions of log lines per minute in busy services                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 24.3 | Mentions cost: CPU for serialization, I/O for disk/network, money for log ingestion/storage                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 24.4 | Mentions Debug can inflate costs by 10-100x                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> no specific multiplier                   |
-| 24.5 | Suggests samber/slog-sampling as an alternative to sample verbose logs                                                | <span class="g">✓</span>       | <span class="r">✗</span> unaware of samber/slog-sampling          |
-|      | **25. pii-in-logs-trap** — catching PII being logged                                                                  | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 25.1 | Flags email as PII that should not be logged                                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 25.2 | Flags SSN as PII that should absolutely never be logged                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 25.3 | Recommends logging identifiers (user_id) instead of PII                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 25.4 | Shows corrected logging using user.ID instead of email/SSN                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **26. counter-suffix-total-requirement** — Prometheus counters must use _total suffix                                 | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                    |
-| 26.1 | Identifies the missing _total suffix — counters MUST end with _total                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 26.2 | Shows the corrected name: requests_total or http_requests_total                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 26.3 | Mentions that _total is a required convention for counters in Prometheus                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **27. pprof-security-auth** — pprof endpoints must be protected with authentication                                   | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 27.1 | Warns that pprof endpoints must NOT be exposed publicly without authentication                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 27.2 | Explains that pprof leaks sensitive runtime information and can be abused for DoS                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 27.3 | Recommends protecting with basic auth or running on a separate internal port                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 27.4 | Suggests toggling via environment variable to enable/disable without redeployment                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **28. continuous-profiling-env-toggle** — toggle continuous profiling via environment variables                       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 28.1 | Recommends toggling via environment variable (e.g., PROFILING_ENABLED)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 28.2 | Mentions ~2-5% CPU overhead for continuous profiling                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> no specific overhead figure              |
-| 28.3 | Suggests starting with CPU + heap profiles only, adding mutex/block when needed                                       | <span class="g">✓</span>       | <span class="r">✗</span> suggests all profiles                    |
-| 28.4 | For large deployments, recommends enabling on a fraction of replicas (e.g., 1 in 10)                                  | <span class="g">✓</span>       | <span class="r">✗</span> not a widely known practice              |
-| 28.5 | Shows code that checks the environment variable before starting Pyroscope                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **29. rum-identity-key-email-trap** — RUM distinct_id must be user_id, not email                                      | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                    |
-| 29.1 | Rejects email as the DistinctId — must use user_id instead                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 29.2 | Explains that email is mutable — users change it, splitting events into two users                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 29.3 | Explains that email is PII, complicating GDPR/CCPA compliance                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 29.4 | Notes that email leaks into third-party analytics systems as the identity key                                         | <span class="g">✓</span>       | <span class="r">✗</span> not commonly considered                  |
-| 29.5 | Shows corrected code using user.ID (immutable internal identifier)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **30. gdpr-consent-before-tracking** — GDPR consent must be checked before sending events                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 30.1 | Identifies that consent must be checked before sending the tracking event                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 30.2 | Shows extracting consent from context and conditionally tracking                                                      | <span class="g">✓</span>       | <span class="r">✗</span> generic consent advice without Go code   |
-| 30.3 | Mentions GDPR fines (up to 4% of global revenue) or CCPA penalties                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 30.4 | References data minimization — only collect what you need                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 30.5 | Mentions data subject rights endpoints (data export and deletion)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> focuses on consent only                  |
-|      | **31. data-subject-rights-endpoints** — GDPR requires deletion/export across all systems                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 31.1 | States that deletion must propagate to ALL systems holding user data                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 31.2 | Lists the analytics platform (PostHog) as needing deletion                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 31.3 | Lists the CDP (Segment) as needing deletion                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> may not mention CDP deletion             |
-| 31.4 | References GDPR Article 17 Right to Erasure                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 31.5 | Also mentions the Right of Access (data export endpoint) as a requirement                                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on deletion only                 |
-|      | **32. five-signals-completeness** — five observability signals and their distinct roles                               | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
-| 32.1 | Lists all five signals: logs, metrics, traces, profiles, and RUM                                                      | <span class="g">✓</span>       | <span class="r">✗</span> lists logs, metrics, traces only         |
-| 32.2 | Associates logs with 'what happened' (discrete events, audit trails)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 32.3 | Associates metrics with 'how much/how fast' (aggregated measurements, alerting, SLOs)                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 32.4 | Associates traces with 'where did time go' (request flow across services)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 32.5 | Associates profiles with 'why is it slow/using memory' (CPU hotspots, memory leaks)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 32.6 | Associates RUM with 'how do users experience it' (product analytics, funnels)                                         | <span class="g">✓</span>       | <span class="r">✗</span> RUM not listed as a signal               |
-|      | **33. definition-of-done-observability** — observability checklist before shipping a feature                          | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                    |
-| 33.1 | States that a feature is not production-ready until it is observable                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 33.2 | Checks for metric declarations (counters, histograms, gauges) with PromQL comments                                    | <span class="g">✓</span>       | <span class="r">✗</span> does not mention PromQL comments         |
-| 33.3 | Checks for proper structured logging with slog and context variants                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 33.4 | Checks for OpenTelemetry spans on service methods, DB queries, and external calls                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 33.5 | Checks for dashboards and alerts being wired up                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 33.6 | Checks that errors are either logged OR returned, never both                                                          | <span class="g">✓</span>       | <span class="r">✗</span> not part of typical deploy checklist     |
-|      | **34. grafana-dashboard-ids** — specific Grafana dashboard IDs for Go runtime monitoring                              | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
-| 34.1 | Recommends specific Grafana dashboard IDs (21221, 6671, or 10826)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests building custom dashboards      |
-| 34.2 | Mentions dashboard 21221 for host + runtime combined view                                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 34.3 | Explains that these dashboards use default Go collector metrics from the Prometheus client library                    | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 34.4 | Shows how to import: Dashboards > New > Import, enter the dashboard ID                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **35. slog-with-request-scoped-attrs** — slog.With() for request-scoped attributes                                    | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 35.1 | Recommends using slog.With() to create a child logger with request-scoped attributes                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 35.2 | Shows middleware pattern that creates the enriched logger                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 35.3 | Shows storing the enriched logger in context for downstream use                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 35.4 | Includes request_id, method, and path as the attributes to inject                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **36. slog-ecosystem-handlers** — slog handler ecosystem beyond stdlib                                                | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                    |
-| 36.1 | Recommends samber/slog-multi for fan-out to multiple handlers                                                         | <span class="g">✓</span>       | <span class="r">✗</span> suggests custom io.MultiWriter           |
-| 36.2 | Mentions samber/slog-sentry for sending errors to Sentry                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 36.3 | Mentions samber/slog-datadog for sending logs to Datadog                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 36.4 | Explains that slog supports pluggable handlers                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 36.5 | References the slog ecosystem (go.dev/wiki/Resources-for-slog or similar)                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **37. parallel-observability-audit** — parallel sub-agents for observability audits                                   | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                    |
-| 37.1 | Recommends using up to 5 parallel sub-agents (via the Agent tool)                                                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests linear approach                 |
-| 37.2 | Assigns one sub-agent per signal: metrics, logging, tracing, profiling, RUM                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 37.3 | Sub-agent for metrics: verify metric declarations and PromQL comments                                                 | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 37.4 | Sub-agent for logging: check structured logging, PII in logs, error logging patterns                                  | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 37.5 | Sub-agent for tracing: verify span creation in service methods, DB calls, API calls                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-|      | **38. predict-linear-for-saturation** — predict_linear for anticipating resource exhaustion                           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 38.1 | Recommends using predict_linear() PromQL function to extrapolate trends                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 38.2 | Shows expression: predict_linear(db_connections_active[15m], 600) > db_connections_max                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 38.3 | Explains that predict_linear extrapolates from recent trend to predict future value                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 38.4 | Also suggests a threshold alert (e.g., > 90%) as a complementary alert                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **39. self-hosted-rum-gdpr** — self-hosted analytics for GDPR compliance                                              | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 39.1 | Recommends self-hosted analytics (PostHog or Matomo) for EU data residency                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 39.2 | Explains that self-hosting eliminates cross-border data transfer concerns                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 39.3 | Compares self-hosted vs SaaS tradeoffs (data residency, cost, maintenance, features)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 39.4 | Mentions that PostHog can be self-hosted to keep data in your own infrastructure                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **40. oops-structured-errors-tracing** — samber/oops for structured errors in tracing                                 | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                    |
-| 40.1 | Recommends samber/oops for structured errors with stack traces                                                        | <span class="g">✓</span>       | <span class="r">✗</span> suggests fmt.Errorf or manual attrs      |
-| 40.2 | Shows using oops with .In(), .Code(), and .With() for structured context                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 40.3 | Explains that oops errors carry stack trace, structured context, and work with span.RecordError()                     | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-| 40.4 | Mentions compatibility with errors.Is/errors.As and slog                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                          |
-
-</details>
-
-## `golang-performance` — v1.0.0
-
-|             | With Skill         | Without Skill     | Delta     |
-| ----------- | ------------------ | ----------------- | --------- |
-| **Overall** | **272/272 (100%)** | **167/272 (61%)** | **+39pp** |
-
-<details>
-<summary>Full breakdown (272 assertions across 68 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                                     | With                           | Without                                                             |
-| ---- | ------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
-|      | **1. profile-before-optimizing** — Tests whether the model insists on profiling before applying optimizations | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 1.1  | Recommends profiling (pprof, fgprof, or tracing) before making code changes                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 1.2  | Identifies fetchFromDB as the likely bottleneck (external I/O, not Go code)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 1.3  | Mentions that intuition about bottlenecks is often wrong (~80% of the time)                                   | <span class="g">✓</span>       | <span class="r">✗</span> no specific stat                           |
-| 1.4  | Does NOT primarily focus on micro-optimizing strings.ToUpper or JSON encoding                                 | <span class="g">✓</span>       | <span class="r">✗</span> suggests strings.Builder/JSON fixes        |
-| 1.5  | Suggests investigating the database query (query tuning, caching, connection pool)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **2. fgprof-off-cpu-bottleneck** — Tests whether the model recommends fgprof for off-CPU bottlenecks          | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
-| 2.1  | Recommends fgprof as the primary tool for capturing off-CPU wait time                                         | <span class="g">✓</span>       | <span class="r">✗</span> suggests goroutine profiles or tracing     |
-| 2.2  | Explains that standard pprof CPU profile only captures on-CPU time                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 2.3  | Suggests the bottleneck is likely I/O wait (network, database, filesystem)                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 2.4  | Mentions goroutine profile as a complementary diagnostic                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 2.5  | Suggests distributed tracing (OpenTelemetry) for identifying slow upstream services                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **3. iterative-benchmark-methodology** — Tests iterative benchmark approach (one change at a time, benchstat) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                      |
-| 3.1  | Recommends writing an atomic benchmark for ProcessRecords first                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 3.2  | Recommends measuring a baseline with -benchmem and -count=6 for statistical significance                      | <span class="g">✓</span>       | <span class="r">✗</span> skips -count=6                             |
-| 3.3  | Recommends applying ONE optimization at a time, not all at once                                               | <span class="g">✓</span>       | <span class="r">✗</span> applies all at once                        |
-| 3.4  | Recommends using benchstat to compare before/after with statistical significance                              | <span class="g">✓</span>       | <span class="r">✗</span> no benchstat                               |
-| 3.5  | Suggests keeping report files as an audit trail (e.g., /tmp/report-1.txt)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **4. slice-reuse-append-zero** — Tests knowledge of append(s[:0], ...) for reusing slice backing arrays       | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 4.1  | Suggests using append(mode[:0], item) to reuse the backing array                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests sync.Pool or new slice            |
-| 4.2  | Explains that reslicing to zero length retains the backing array                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 4.3  | Moves the mode variable declaration outside the loop to enable reuse                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 4.4  | Does NOT suggest sync.Pool as the primary solution for this simple case                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **5. direct-indexing-vs-append** — Tests direct indexing over append when output size equals input            | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 5.1  | Suggests using make([]Result, len(input)) with direct assignment result[i] = convert(...)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 5.2  | Explains that direct assignment avoids per-element append overhead (bounds check, length increment)           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 5.3  | Notes that append is better when the result might be smaller (filtering)                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **6. map-range-double-lookup** — Tests catching redundant map lookups in range loops                          | **<span class="g">2/2</span>** | **<span class="g">2/2</span>**                                      |
-| 6.1  | Identifies that for k := range in { in[k] } does two map lookups per iteration                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 6.2  | Suggests for k, v := range in { result[k] = strconv.Itoa(v) } for single lookup                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **7. sentinel-errors-hot-path** — Tests preallocated sentinel errors over fmt.Errorf in hot paths             | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 7.1  | Converts the static error to a preallocated sentinel using errors.New at package level                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 7.2  | Keeps fmt.Errorf for the dynamic error that includes %d                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 7.3  | Explains that fmt.Errorf allocates on every call, while sentinels allocate once                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 7.4  | Does NOT convert the dynamic error to a sentinel                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **8. interface-boxing-hot-path** — Tests interface boxing allocation cost and generics fix                    | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 8.1  | Identifies interface boxing (any parameter) as the source of allocations                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 8.2  | Suggests typed functions or generics to eliminate boxing                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 8.3  | Explains that each concrete value passed through any requires a heap allocation for boxing                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 8.4  | Does NOT focus only on the type switch as the optimization target                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **9. backing-array-leak-slice** — Tests backing array retention when returning a small reslice                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 9.1  | Identifies that message[:32] retains the entire backing array (1-10MB)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 9.2  | Suggests using copy() to create an independent 32-byte slice                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 9.3  | Explains that the original large array cannot be GC'd while the reslice exists                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 9.4  | Provides correct copy-based fix: make([]byte, 32) + copy(header, message[:32])                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **10. substring-memory-leak** — Tests strings.Clone pattern for substring memory leaks                        | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 10.1 | Identifies that substrings share the backing array of the original string                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 10.2 | Suggests strings.Clone(line[12:48]) to create an independent copy                                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests string([]byte(s))                 |
-| 10.3 | Explains that each 36-char ID retains the entire 500-2000 byte log line                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **11. map-never-shrinks** — Tests Go maps never release bucket memory and compact pattern                     | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 11.1 | Explains that Go maps never release bucket memory when entries are deleted                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 11.2 | Suggests periodically recreating the map by copying entries to a new map                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 11.3 | Provides the compact pattern: make(map[K]V, len(old)) + range copy                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 11.4 | Does NOT suggest that calling runtime.GC() or tuning GOGC will fix this                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **12. sync-pool-rules** — Tests proper sync.Pool usage: reset, size limits, pointer pooling                   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
-| 12.1 | Identifies that HandleLargeUpload puts oversized buffers (100MB+) back into the pool                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 12.2 | Mentions the 32KB guideline — don't pool objects larger than ~32KB                                            | <span class="g">✓</span>       | <span class="r">✗</span> vague size advice                          |
-| 12.3 | Identifies that w.Write(buf) may retain the buffer after bufPool.Put(buf)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 12.4 | Suggests pooling pointers (*[]byte) instead of values to avoid allocation on Get                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 12.5 | Recommends resetting/clearing state before Put                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **13. struct-field-alignment** — Tests struct field ordering for optimal memory layout                        | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
-| 13.1 | Identifies that the struct has wasted padding bytes due to alignment                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 13.2 | Suggests reordering fields from largest to smallest                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 13.3 | Provides a reordered struct that is smaller than the original                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 13.4 | Mentions the fieldalignment tool for automated detection                                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 13.5 | States alignment requirements (bool=1, int32=4, int64/float64=8)                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **14. zero-size-field-end-of-struct** — Tests struct{} at end of struct adds word-sized padding               | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
-| 14.1 | Explains that a zero-size field at the end of a struct causes word-sized padding                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 14.2 | Explains the reason: preventing pointer overlap with next memory block                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 14.3 | Suggests moving struct{} to the beginning of the struct                                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 14.4 | Shows the fix: type Entry struct { Flag struct{}; Value int64 } = 8 bytes                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **15. map-pointer-vs-value-tradeoff** — Tests map[K]*V vs map[K]V tradeoff for large structs                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 15.1 | Suggests using map[string]*Player to allow direct field modification                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 15.2 | Explains that map values are not addressable                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 15.3 | Shows players[id].Score += delta with pointer map                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 15.4 | Mentions the tradeoff: pointer maps add GC pressure from separate heap allocations                            | <span class="g">✓</span>       | <span class="r">✗</span> no GC tradeoff                             |
-| 15.5 | Notes that for small, mostly-read structs, map[K]V (value) is better                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **16. inlining-log-in-hot-path** — Tests that log calls prevent function inlining                             | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 16.1 | Identifies that log calls prevent the function from being inlined                                             | <span class="g">✓</span>       | <span class="r">✗</span> focuses on formatting cost                 |
-| 16.2 | Suggests removing log calls from the hot-path function                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 16.3 | Mentions using go build -gcflags="-m" to verify inlining decisions                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 16.4 | Explains that function call overhead matters when called millions of times                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **17. value-receiver-inlining** — Tests value receivers enable inlining for fluent chains                     | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
-| 17.1 | Suggests changing to value receivers instead of pointer receivers                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 17.2 | Explains that value receivers allow the compiler to inline the fluent chain                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 17.3 | Explains that pointer receivers add indirection that blocks inlining                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 17.4 | Shows the value receiver signature: func (c Config) WithTimeout(d time.Duration) Config                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **18. cache-locality-matrix-traversal** — Tests row-major vs column-major traversal and cache effects         | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
-| 18.1 | Identifies the column-first traversal as the cause (cache misses)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 18.2 | Explains that Go stores 2D arrays in row-major order                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 18.3 | Suggests swapping loop order to row-first                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 18.4 | Mentions the performance difference from cache effects (10-50x or similar)                                    | <span class="g">✓</span>       | <span class="r">✗</span> says "significant" without quantifying     |
-| 18.5 | Does NOT primarily suggest parallelism or SIMD as the first fix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **19. contiguous-2d-allocation** — Tests contiguous 2D allocation for cache-friendly matrix access            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 19.1 | Identifies that per-row allocation scatters data across the heap                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 19.2 | Suggests single contiguous allocation: make([]float64, rows*cols)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 19.3 | Shows slicing the contiguous array into row views: data[i*cols : (i+1)*cols]                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 19.4 | Explains that contiguous memory improves cache locality                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **20. soa-vs-aos** — Tests Struct of Arrays vs Array of Structs for single-field iteration                    | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
-| 20.1 | Identifies that loading entire Particle structs wastes cache space when only X is needed                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 20.2 | Suggests Struct of Arrays (SoA) layout with separate slices                                                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests parallelism                       |
-| 20.3 | Explains cache utilization improvement (contiguous X values vs scattered)                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 20.4 | Notes that AoS is fine when accessing all fields together or for small structs                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **21. false-sharing-concurrent-counters** — Tests false sharing and cache-line padding                        | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                      |
-| 21.1 | Identifies false sharing as the cause (fields share same cache line)                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests mutex or sharding                 |
-| 21.2 | Explains that writes to one field invalidate the cache line for other cores                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 21.3 | Suggests cache-line padding (56-byte array between fields)                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 21.4 | Mentions the 64-byte cache line size                                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 21.5 | Notes this should only be applied when profiling confirms contention                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **22. ilp-multi-accumulator** — Tests instruction-level parallelism with multiple accumulators                | **<span class="g">5/5</span>** | **<span class="r">0/5</span>**                                      |
-| 22.1 | Identifies the sequential dependency chain as the bottleneck                                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests goroutines or SIMD                |
-| 22.2 | Suggests using multiple accumulators (e.g., 4) for ILP                                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 22.3 | Shows code with 4 independent accumulators summing every 4th element                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 22.4 | Handles the remainder elements (when len(data) is not divisible by 4)                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 22.5 | Mentions expected 2-4x improvement from ILP                                                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **23. index-based-tree-cache-locality** — Tests index-based vs pointer-based data structures                  | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 23.1 | Recommends Option B (index-based) for better cache locality                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 23.2 | Explains that pointer-based nodes are scattered across the heap                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 23.3 | Explains that index-based nodes are stored in a contiguous array                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 23.4 | Mentions CPU cache lines or memory prefetching                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **24. tight-loop-scheduler-starvation** — Tests tight CPU loops starving the Go scheduler                     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
-| 24.1 | Explains that tight CPU loops with inlined operations can delay scheduler preemption                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 24.2 | Suggests breaking work into batches processed by a non-inlined function call                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests runtime.Gosched()                 |
-| 24.3 | Mentions //go:noinline as an option to force preemption points                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 24.4 | Explains the tradeoff: //go:noinline adds overhead but ensures scheduler fairness                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 24.5 | Mentions that Go 1.14+ has async preemption but tight loops can still cause issues                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **25. reflect-deepequal-performance** — Tests reflect.DeepEqual 50-200x slower than typed comparison          | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 25.1 | Identifies reflect.DeepEqual as 50-200x slower than typed comparison                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 25.2 | Suggests using slices.Equal for the Hosts field                                                               | <span class="g">✓</span>       | <span class="r">✗</span> uses manual loop                           |
-| 25.3 | Suggests using maps.Equal for the Settings field                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 25.4 | Provides a hand-written typed comparison function                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **26. type-switch-vs-repeated-assertions** — Tests type switch dispatches in one evaluation                   | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
-| 26.1 | Suggests replacing repeated type assertions with a type switch                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 26.2 | Explains that a type switch dispatches in a single evaluation                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 26.3 | Shows the switch v := v.(type) { case string: ... } pattern                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **27. http-transport-maxidleconnsperhost** — Tests default MaxIdleConnsPerHost=2 gotcha                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 27.1 | Identifies MaxIdleConnsPerHost defaulting to 2 as the root cause                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 27.2 | Suggests configuring http.Transport with higher MaxIdleConnsPerHost                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 27.3 | Shows complete Transport configuration with MaxIdleConns, MaxIdleConnsPerHost, MaxConnsPerHost                | <span class="g">✓</span>       | <span class="r">✗</span> only sets MaxIdleConnsPerHost              |
-| 27.4 | Mentions draining resp.Body for connection reuse (io.Copy to io.Discard)                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 27.5 | Does NOT suggest a third-party connection pool library as the primary solution                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **28. response-body-drain** — Tests HTTP connections only reused when body fully read                         | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
-| 28.1 | Identifies that the response body is not being fully read/drained                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 28.2 | Explains that connections are only reused when the body is fully consumed                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 28.3 | Suggests adding io.Copy(io.Discard, resp.Body)                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **29. streaming-vs-readall** — Tests streaming vs buffering for large payloads                                | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 29.1 | Identifies io.ReadAll as the cause of OOM                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 29.2 | Suggests using io.Copy(w, resp.Body) to stream with constant memory                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 29.3 | Mentions the 32KB internal buffer of io.Copy                                                                  | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 29.4 | Notes that io.ReadAll is fine for small, bounded payloads (< 1MB)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **30. json-streaming-decoder** — Tests json.NewDecoder for streaming large JSON payloads                      | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 30.1 | Suggests using json.NewDecoder with r.Body directly                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 30.2 | Shows the dec.More() + dec.Decode(&item) streaming pattern                                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 30.3 | Explains that this processes one item at a time with O(1) memory per item                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **31. cgo-overhead-tight-loop** — Tests cgo call overhead (~50-100ns) and batching strategy                   | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 31.1 | Identifies cgo overhead (~50-100ns per call) as the bottleneck                                                | <span class="g">✓</span>       | <span class="r">✗</span> says "overhead" without quantifying        |
-| 31.2 | Suggests using math.Sqrt (pure Go, inlineable) instead of C.sqrt                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 31.3 | For unavoidable C code, suggests batching: pass entire array to C in one call                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 31.4 | Mentions that goroutine is pinned to OS thread during cgo calls                                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **32. gogc-gomemlimit-container** — Tests GOMEMLIMIT for containerized applications                           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 32.1 | Recommends setting GOMEMLIMIT to 80-90% of container memory (400-450MiB)                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests GOMEMLIMIT without ratio          |
-| 32.2 | Explains that the GC needs GOMEMLIMIT to know about the container ceiling                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 32.3 | Shows the GOMEMLIMIT=450MiB environment variable or debug.SetMemoryLimit                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 32.4 | Explains the gap (goroutine stacks, OS buffers, non-heap memory)                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 32.5 | Does NOT recommend the ballast pattern (obsolete since Go 1.19)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **33. ballast-pattern-obsolete** — Tests GOMEMLIMIT over ballast pattern                                      | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 33.1 | Identifies the ballast pattern as obsolete since Go 1.19                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 33.2 | Recommends GOMEMLIMIT as the replacement                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 33.3 | Explains that GOMEMLIMIT provides the same benefit without wasting physical memory                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 33.4 | Shows the GOMEMLIMIT environment variable or debug.SetMemoryLimit call                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **34. gomaxprocs-container-go125** — Tests Go 1.25+ container-aware GOMAXPROCS vs automaxprocs                | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
-| 34.1 | States that Go 1.25+ automatically detects container CPU limits                                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 34.2 | Recommends removing the automaxprocs dependency                                                               | <span class="g">✓</span>       | <span class="r">✗</span> keeps automaxprocs                         |
-| 34.3 | Mentions that automaxprocs IS needed for Go 1.24 and earlier                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 34.4 | Mentions cgroup CPU quota detection as the mechanism                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **35. pgo-workflow** — Tests PGO workflow and expected gains                                                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 35.1 | Recommends Profile-Guided Optimization (PGO)                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 35.2 | Describes the workflow: collect profile, save as default.pgo, rebuild                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 35.3 | Mentions expected improvement of 2-7%                                                                         | <span class="g">✓</span>       | <span class="r">✗</span> no quantification                          |
-| 35.4 | Explains PGO benefits: aggressive inlining and devirtualization                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 35.5 | Notes that profiles should be refreshed after significant code changes                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **36. slog-logattrs-hot-path** — Tests slog.LogAttrs for zero-allocation logging                              | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
-| 36.1 | Explains that log arguments are evaluated/boxed before the level check                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 36.2 | Recommends slog.LogAttrs for zero allocations when level is disabled                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests level check guard                 |
-| 36.3 | Shows typed attributes: slog.Int("id", item.ID), slog.String("name", item.Name)                               | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 36.4 | Notes that slog.Any can still allocate, so typed attributes are preferred                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **37. regexp-compile-per-call** — Tests compiled pattern caching vs per-call compilation                      | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 37.1 | Identifies that regexp compilation happens on every call (~5,700ns per compile)                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 37.2 | Suggests moving regexp.MustCompile to package-level variables                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 37.3 | Notes that compiled regexps are safe for concurrent use                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 37.4 | Quantifies the waste (10-12x overhead from recompilation vs match-only)                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **38. singleflight-cache-stampede** — Tests singleflight for cache stampede prevention                        | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 38.1 | Identifies this as a cache stampede problem                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 38.2 | Recommends golang.org/x/sync/singleflight.Group                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 38.3 | Shows sf.Do(key, func) pattern                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 38.4 | Does NOT suggest a global mutex as the primary solution                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **39. algorithmic-complexity-slice-contains-loop** — Tests O(n*m) from slices.Contains in loop                | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 39.1 | Identifies O(n*m) complexity from slices.Contains inside a loop                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 39.2 | Suggests building a map[string]struct{} from the valid slice first                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 39.3 | Shows the O(n+m) solution with map lookup                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 39.4 | Uses struct{} (0 bytes) for the map value type, not bool                                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses bool                                  |
-|      | **40. early-return-full-scan** — Tests early returns to avoid full collection scans                           | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
-| 40.1 | Identifies that the function always scans the full collection                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 40.2 | Adds an early return when the first expired session is found                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 40.3 | Removes the found variable in favor of direct returns                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **41. iterator-chain-vs-direct-loop** — Tests iterator chains create closure overhead                         | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 41.1 | Recommends Option B (direct loop) for performance                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 41.2 | Explains that iterator chains create closures and intermediate allocations                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 41.3 | Notes that Filter processes ALL elements before First can pick one                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 41.4 | Acknowledges that iterator chains are fine for non-hot paths                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **42. indirect-function-calls-closure** — Tests closure indirection prevents inlining                         | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 42.1 | Suggests replacing the Map+closure pattern with a direct loop                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 42.2 | Explains that the closure/function call indirection prevents inlining                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 42.3 | Shows the direct loop: result[i] = *ptrs[i]                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 42.4 | Mentions the expected improvement range (13-17%)                                                              | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **43. http-server-no-timeouts** — Tests zero-value http.Server has NO timeouts                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 43.1 | Identifies that the default http.Server has NO timeouts                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 43.2 | Mentions Slowloris attack or slow client holding connections indefinitely                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 43.3 | Suggests setting ReadTimeout, WriteTimeout, and IdleTimeout                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 43.4 | Shows creating an explicit http.Server struct with timeout values                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **44. http-keepalive-crawler** — Tests disabling keep-alive for crawlers                                      | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                      |
-| 44.1 | Identifies that idle connections accumulate across many different hosts                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 44.2 | Suggests DisableKeepAlives: true for the crawler client                                                       | <span class="g">✓</span>       | <span class="r">✗</span> lowers MaxIdleConnsPerHost instead         |
-| 44.3 | Explains that keep-alive is counterproductive for many unique hosts                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **45. buffered-io-syscall-reduction** — Tests bufio for reducing syscall count                                | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 45.1 | Identifies that each WriteString issues a separate syscall                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 45.2 | Suggests using bufio.NewWriter(f) to batch writes                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 45.3 | Includes w.Flush() at the end                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 45.4 | Does NOT primarily suggest strings.Builder                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **46. concurrent-pipeline-when-not-to-use** — Tests when concurrent pipelines are NOT beneficial              | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                      |
-| 46.1 | Recommends AGAINST concurrent pipelines for this case                                                         | <span class="g">✓</span>       | <span class="r">✗</span> recommends concurrency                     |
-| 46.2 | Explains that all three stages compete for the same resource (CPU)                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 46.3 | Notes that concurrency only helps when stages saturate DIFFERENT resources                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 46.4 | Mentions context-switching overhead as a cost                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 46.5 | Suggests sequential processing or batching as simpler alternative                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **47. batch-db-inserts** — Tests batch database inserts vs row-by-row                                         | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                      |
-| 47.1 | Identifies individual inserts as the problem (50K round-trips)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 47.2 | Suggests batch inserts (multi-row VALUES or COPY protocol)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 47.3 | Shows a batching pattern with configurable batch size                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 47.4 | Wraps batches in transactions for atomicity                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 47.5 | Does NOT suggest only connection pooling or prepared statements                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **48. panic-recover-control-flow** — Tests panic/recover not for control flow                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 48.1 | Identifies that panic/recover is unnecessary since strconv.Atoi returns errors                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 48.2 | Explains that panic allocates a stack trace and unwinds the stack (10-100x overhead)                          | <span class="g">✓</span>       | <span class="r">✗</span> says "overhead" without quantifying        |
-| 48.3 | Suggests using simple error checking: v, err := strconv.Atoi(s)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 48.4 | States that panic/recover should only be used for truly unrecoverable situations                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **49. monotonic-time-since** — Tests time.Since monotonic clock for elapsed time                              | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                                      |
-| 49.1 | Suggests using time.Since(start) for elapsed time measurement                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 49.2 | Explains that time.Since uses the monotonic clock                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 49.3 | Notes that time.Now() already captures monotonic time for Sub() operations                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **50. prometheus-gc-pressure-queries** — Tests specific PromQL queries for GC pressure                        | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                                      |
-| 50.1 | Provides rate(go_gc_duration_seconds_count[5m]) for GC frequency                                              | <span class="g">✓</span>       | <span class="r">✗</span> generic approach                           |
-| 50.2 | Provides go_gc_duration_seconds{quantile="1"} for worst-case GC pause                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 50.3 | Mentions >2 cycles/s sustained as a signal of excessive allocation rate                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 50.4 | Suggests rate(go_memstats_alloc_bytes_total[5m]) for allocation rate                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **51. goroutine-leak-prometheus** — Tests PromQL for detecting goroutine leaks                                | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 51.1 | Provides go_goroutines metric for goroutine count monitoring                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 51.2 | Suggests delta(go_goroutines[1h]) for detecting net goroutine increase                                        | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 51.3 | Notes that goroutine count should correlate with load                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **52. continuous-profiling-tools** — Tests continuous profiling tools and tradeoffs                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                      |
-| 52.1 | Recommends Grafana Pyroscope, Parca, or similar platform                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 52.2 | Mentions overhead estimates (1-5% range)                                                                      | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 52.3 | Describes push vs pull collection modes                                                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 52.4 | Mentions historical flamegraph comparison as a key feature                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 52.5 | Suggests feeding profiles into PGO for build optimization                                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **53. gogc-high-vs-low-tradeoff** — Tests GOGC tuning tradeoffs (latency vs throughput)                       | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 53.1 | Recommends lower GOGC (e.g., 50) for Service A (latency-sensitive)                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 53.2 | Recommends higher GOGC (e.g., 200) for Service B (throughput-oriented)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 53.3 | Explains the tradeoff: lower GOGC = more frequent but shorter pauses                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 53.4 | Explains the tradeoff: higher GOGC = less frequent GC but more memory                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **54. godebug-gctrace** — Tests GODEBUG=gctrace=1 output interpretation                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                      |
-| 54.1 | Correctly identifies gc 142 as the 142nd GC cycle                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 54.2 | Identifies 12% as total CPU time spent in GC (which is high)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 54.3 | Interprets 180->340->200 MB as heap before, peak during, and after collection                                 | <span class="g">✓</span>       | <span class="r">✗</span> misparses the three values                 |
-| 54.4 | Identifies 400 MB goal as the target heap size based on GOGC/GOMEMLIMIT                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 54.5 | Notes that 12% GC CPU is concerning                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **55. unsafe-without-benchmark-proof** — Tests warning against premature unsafe usage                         | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                      |
-| 55.1 | Recommends against using unsafe here                                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 55.2 | Notes that 100 req/s is not a hot path                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 55.3 | States that unsafe requires benchmark proof showing >10% improvement                                          | <span class="g">✓</span>       | <span class="r">✗</span> no specific threshold                      |
-| 55.4 | Mentions safety risks of unsafe                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **56. precomputed-lookup-table** — Tests precomputed lookup tables for pure functions                         | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 56.1 | Suggests a precomputed lookup table (var hexDigit = [16]byte{...})                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 56.2 | Shows the table lookup: hexDigit[b>>4], hexDigit[b&0x0f]                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 56.3 | Explains that the lookup table fits in L1 cache and is faster than branching                                  | <span class="g">✓</span>       | <span class="r">✗</span> says "faster" without L1 cache explanation |
-|      | **57. json-performance-alternatives** — Tests JSON performance alternatives                                   | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
-| 57.1 | Mentions custom MarshalJSON/UnmarshalJSON methods                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 57.2 | Mentions code-generation libraries (easyjson, ffjson)                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 57.3 | Mentions drop-in replacement libraries (goccy/go-json, json-iterator, sonic)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 57.4 | Explains that encoding/json uses reflection                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 57.5 | Quantifies expected improvement (2-5x or similar)                                                             | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **58. channel-batch-processing** — Tests batch processing from channels with timeout flush                    | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                      |
-| 58.1 | Uses select with both channel receive and ticker/timer for timeout                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 58.2 | Flushes on batch size threshold                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 58.3 | Flushes on timeout (ticker)                                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 58.4 | Handles channel close (flushes remaining items)                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 58.5 | Reuses the batch slice (batch[:0]) to reduce allocations                                                      | <span class="g">✓</span>       | <span class="r">✗</span> re-allocates                               |
-|      | **59. allocation-reduction-vs-gc-tuning** — Tests that reducing allocations beats GOGC tuning                 | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                      |
-| 59.1 | Recommends reducing allocations as the primary approach over GOGC tuning                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests GOGC tuning first                 |
-| 59.2 | Explains that GOGC tuning manages the symptom while allocation reduction addresses root cause                 | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 59.3 | Suggests specific allocation reduction strategies                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 59.4 | Acknowledges GOGC tuning as a secondary measure after allocation reduction                                    | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **60. gctrace-key-fields** — Tests what to monitor in GC traces                                               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 60.1 | Mentions high GC frequency as a signal of too many allocations                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 60.2 | Mentions high pause times as a signal of large heap or many pointers                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 60.3 | Mentions high GC CPU% (>5%) as concerning                                                                     | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 60.4 | Provides the GODEBUG=gctrace=1 command                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **61. non-go-memory-leak-detection** — Tests detecting non-Go memory leaks via Prometheus                     | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                      |
-| 61.1 | Suggests process_resident_memory_bytes - go_memstats_sys_bytes to isolate non-Go memory                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 61.2 | Identifies this as a likely C/cgo memory leak                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 61.3 | Explains that growing gap between RSS and Go sys bytes indicates non-Go memory growth                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 61.4 | Suggests C-level memory profiling tools (valgrind, AddressSanitizer)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **62. cpu-saturation-prometheus** — Tests detecting CPU saturation via Prometheus                             | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                                      |
-| 62.1 | Provides rate(process_cpu_seconds_total[5m]) for CPU cores consumed                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 62.2 | Divides by GOMAXPROCS to get utilization ratio                                                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 62.3 | States that >0.8 sustained indicates CPU saturation                                                           | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **63. document-optimizations** — Tests recommending documentation of optimizations                            | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 63.1 | Strongly recommends adding comments explaining WHY the optimization was made                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 63.2 | Suggests including benchmark numbers in the comments                                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 63.3 | Explains that future readers may revert optimizations they don't understand                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **64. lru-cache-freelru** — Tests high-performance LRU cache alternatives                                     | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                                      |
-| 64.1 | Notes that container/list has poor cache locality (separate heap allocation per node)                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 64.2 | Recommends elastic/go-freelru or hashicorp/golang-lru as alternatives                                         | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 64.3 | Mentions the performance advantage of contiguous memory layouts for LRU                                       | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-|      | **65. simd-when-not-worth** — Tests when SIMD is NOT worth pursuing                                           | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                      |
-| 65.1 | Recommends against SIMD for this case                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 65.2 | Explains that the bottleneck is allocations/GC, not CPU-bound computation                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 65.3 | States that SIMD only helps CPU-bound numeric inner loops                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 65.4 | Suggests reducing allocations as the correct approach                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **66. set-map-struct-zero-size** — Tests struct{} vs bool for set maps                                        | **<span class="g">2/2</span>** | **<span class="g">2/2</span>**                                      |
-| 66.1 | Recommends struct{} for set maps                                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 66.2 | Explains that struct{} is 0 bytes vs bool at 1 byte per entry                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **67. regression-detection-prometheus** — Tests PromQL for deployment regression detection                    | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                                      |
-| 67.1 | Suggests comparing rate(go_memstats_alloc_bytes_total[5m]) before/after deploy                                | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 67.2 | Suggests monitoring p99 latency histogram_quantile for increase after deploy                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-| 67.3 | Mentions comparing metrics between old and new deployment versions                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                            |
-|      | **68. statsviz-development-profiling** — Tests real-time development visualization tools                      | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                                      |
-| 68.1 | Recommends statsviz (github.com/arl/statsviz) for real-time browser visualization                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests pprof web UI                      |
-| 68.2 | Mentions the /debug/statsviz endpoint or statsviz.Register pattern                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-| 68.3 | Notes that it shows heap, GC pauses, goroutines, and scheduler in real-time                                   | <span class="g">✓</span>       | <span class="r">✗</span>                                            |
-
-</details>
-
-## `golang-troubleshooting` — v1.0.0
-
-|             | With Skill         | Without Skill     | Delta     |
-| ----------- | ------------------ | ----------------- | --------- |
-| **Overall** | **186/186 (100%)** | **127/186 (68%)** | **+32pp** |
-
-<details>
-<summary>Full breakdown (186 assertions across 37 evals)</summary>
+<summary>Debugging & troubleshooting — 186/186 (100%) vs 127/186 (68%), +32pp (186 assertions across 37 evals)</summary>
 
 **Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
 
@@ -2424,384 +2699,594 @@ Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (
 
 </details>
 
-## `golang-design-patterns` — v1.0.0
+## `golang-refactoring` — v1.0.0
 
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **87/87 (100%)** | **55/87 (63%)** | **+37pp** |
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **116/120 (97%)** | **65/120 (54%)** | **+43pp** |
 
 <details>
-<summary>Full breakdown (87 assertions across 18 evals)</summary>
+<summary>Go modernization — 116/120 (97%) vs 65/120 (54%), +43pp (125 assertions, 120 scored this run)</summary>
+
+**Model:** Claude Sonnet 5 for evals 1–19 (evals 1–12 from the original Claude Sonnet 4.6 run, unchanged; evals 13–19 freshly run this update); Kimi K3 for evals 20–23 (from PR #98, folded in unchanged) | **Grading:** LLM-as-judge
+
+| #    | Assertion                                                                          | With                           | Without                                                     |
+| ---- | ---------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------- |
+|      | **1. version-constraint-1.21** — Go 1.21 project with 1.22+ patterns               | **<span class="g">7/7</span>** | **<span class="g">7/7</span>**                              |
+| 1.1  | Suggests min/max builtins (Go 1.21)                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.2  | Suggests slices.Sort or slices.Contains (Go 1.21)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.3  | Suggests sync.OnceValue (Go 1.21)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.4  | Does NOT suggest range-over-int (requires 1.22+)                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.5  | Does NOT suggest removing loop var shadow copy (requires 1.22+)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.6  | Does NOT suggest cmp.Or (requires 1.22+)                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 1.7  | Does NOT suggest math/rand/v2 (requires 1.22+)                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **2. rand-v2-api-renames** — math/rand → math/rand/v2 function renames             | **<span class="g">6/6</span>** | **<span class="r">5/6</span>**                              |
+| 2.1  | Renames `Intn` to `IntN` (capital N)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 2.2  | Renames `Int63n` to `Int64N`                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 2.3  | Removes all `rand.Seed` calls                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 2.4  | Replaces `rand.Read` with `crypto/rand` usage                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses `mathrand.IntN(256)` loop     |
+| 2.5  | Import changes to `math/rand/v2`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 2.6  | No old-style function names in output                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **3. safety-over-cosmetic** — path traversal vs interface{} → any                  | **<span class="g">6/6</span>** | **<span class="r">5/6</span>**                              |
+| 3.1  | Suggests `os.Root`/`os.OpenRoot` for user-supplied paths                           | <span class="g">✓</span>       | <span class="r">✗</span> `filepath.Clean` + `HasPrefix`     |
+| 3.2  | Mentions path traversal risk or CWE-22                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 3.3  | Prioritizes safety fix over cosmetic changes                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 3.4  | Also suggests `interface{}` → `any`                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 3.5  | Also suggests `min` builtin or `net.JoinHostPort`                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 3.6  | Does NOT only address cosmetic issues                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **4. omitzero-vs-omitempty** — time.Time and bool JSON tags                        | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                              |
+| 4.1  | Identifies `omitempty` doesn't omit zero `time.Time`                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 4.2  | Suggests `omitzero` for `time.Time` fields                                         | <span class="g">✓</span>       | <span class="r">✗</span> uses `*time.Time` pointer approach |
+| 4.3  | Identifies `omitempty` treats `false` as empty for bool                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 4.4  | Addresses bool issue correctly (removes tag or uses omitzero)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 4.5  | Correctly notes `omitzero` requires Go 1.24+                                       | <span class="g">✓</span>       | <span class="r">✗</span> claims "no changes in Go 1.24"     |
+| 4.6  | Does NOT suggest `omitzero` for string/int fields                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **5. benchmark-b-loop** — b.Loop() replaces b.N pattern                            | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                              |
+| 5.1  | Replaces `for i := 0; i < b.N; i++` with `for b.Loop()`                            | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
+| 5.2  | Replaces `for n := 0; n < b.N; n++` variant too                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
+| 5.3  | Replaces b.N loop in all benchmarks                                                | <span class="g">✓</span>       | <span class="r">✗</span> uses `for range b.N`               |
+| 5.4  | No `b.N` iteration pattern remains                                                 | <span class="g">✓</span>       | <span class="r">✗</span> still uses `b.N`                   |
+| 5.5  | Preserves benchmark function names and logic                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **6. automaxprocs-removal** — Go 1.25 built-in container GOMAXPROCS                | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
+| 6.1  | Suggests removing `go.uber.org/automaxprocs` import                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 6.2  | Explains Go 1.25 has built-in container-aware GOMAXPROCS                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 6.3  | Suggests `sync.WaitGroup.Go`                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 6.4  | Does NOT suggest keeping automaxprocs                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 6.5  | Suggests removing from go.mod                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 6.6  | Mentions cgroup CPU limits or container awareness                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **7. cmp-or-chained-defaults** — cmp.Or for default value chains (Go 1.22)         | **<span class="g">6/6</span>** | **<span class="r">1/6</span>**                              |
+| 7.1  | Uses `cmp.Or` for at least one default value chain                                 | <span class="g">✓</span>       | <span class="r">✗</span> custom `firstEnv` helper           |
+| 7.2  | Collapses 3-step host default to single `cmp.Or` call                              | <span class="g">✓</span>       | <span class="r">✗</span> helper function pattern            |
+| 7.3  | Import includes `cmp` package                                                      | <span class="g">✓</span>       | <span class="r">✗</span> no `cmp` import                    |
+| 7.4  | All multi-step defaults converted to `cmp.Or`                                      | <span class="g">✓</span>       | <span class="r">✗</span> all use `firstEnv` helper          |
+| 7.5  | Result is functionally equivalent (same fallback order)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 7.6  | Does NOT introduce a custom helper function                                        | <span class="g">✓</span>       | <span class="r">✗</span> introduces `firstEnv`              |
+|      | **8. addcleanup-vs-setfinalizer** — runtime.AddCleanup (Go 1.24)                   | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
+| 8.1  | Replaces `runtime.SetFinalizer` with `runtime.AddCleanup`                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 8.2  | Cleanup receives resource, NOT wrapper struct                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 8.3  | Mentions SetFinalizer cycle restriction or deprecation                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 8.4  | Does NOT pass whole struct to cleanup                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 8.5  | Correctly attributes to Go 1.24                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 8.6  | TempFile: two separate AddCleanup calls or struct for both                         | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **9. http-mux-migration** — net/http enhanced routing (Go 1.22)                    | **<span class="g">6/6</span>** | **<span class="g">6/6</span>**                              |
+| 9.1  | Uses `http.NewServeMux()` instead of `mux.NewRouter()`                             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 9.2  | Uses method prefix: `GET /api/users/{id}`                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 9.3  | Uses `r.PathValue("id")` instead of `mux.Vars(r)`                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 9.4  | All 6 routes with correct method prefixes                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 9.5  | No gorilla/mux import remains                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 9.6  | Return type changes to `*http.ServeMux`                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **10. synctest-flaky-fix** — synctest.Test for deterministic concurrency (Go 1.25) | **<span class="g">6/6</span>** | **<span class="r">2/6</span>**                              |
+| 10.1 | Uses `synctest.Test` (NOT deprecated `synctest.Run`)                               | <span class="g">✓</span>       | <span class="r">✗</span> removes sleep, blocks on channels  |
+| 10.2 | Uses `synctest.Wait()` for goroutine synchronization                               | <span class="g">✓</span>       | <span class="r">✗</span> no synctest at all                 |
+| 10.3 | Removes all `time.Sleep` calls                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 10.4 | No flaky timing dependencies remain                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 10.5 | Correctly imports `testing/synctest`                                               | <span class="g">✓</span>       | <span class="r">✗</span> no synctest import                 |
+| 10.6 | Both tests converted                                                               | <span class="g">✓</span>       | <span class="r">✗</span> neither uses synctest              |
+|      | **11. waitgroup-go-loopvar** — WaitGroup.Go + loop var + t.Context()               | **<span class="g">7/7</span>** | **<span class="r">4/7</span>**                              |
+| 11.1 | Replaces Add/go/Done with `wg.Go(func() { ... })`                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `errgroup.Go` instead         |
+| 11.2 | Removes `wg.Add(1)` calls                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 11.3 | Removes `defer wg.Done()` calls                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 11.4 | Removes `item := item` loop variable shadow copies                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 11.5 | Explains Go 1.22+ loop variable semantics                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 11.6 | Replaces `context.Background()` with `t.Context()` in test                         | <span class="g">✓</span>       | <span class="r">✗</span> keeps `context.Background()`       |
+| 11.7 | Preserves `WaitGroup.Wait()` call                                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `errgroup.Wait()` instead     |
+|      | **12. timer-gc-greenteagc** — Timer GC change + Green Tea GC (Go 1.26)             | **<span class="g">7/7</span>** | **<span class="r">4/7</span>**                              |
+| 12.1 | Identifies some `defer timer.Stop()` calls as unnecessary                          | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 12.2 | Explains Go 1.23+ timer/ticker GC behavior change                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 12.3 | Suggests reviewing GC tuning due to Green Tea GC                                   | <span class="g">✓</span>       | <span class="r">✗</span> only removes redundant `os.Setenv` |
+| 12.4 | Mentions Green Tea GC 10-40% overhead reduction                                    | <span class="g">✓</span>       | <span class="r">✗</span> no mention of Green Tea GC         |
+| 12.5 | Does NOT remove `ticker.Stop()` in PeriodicTask (needed for correctness)           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 12.6 | Suggests `go fix ./...` for automated modernization                                | <span class="g">✓</span>       | <span class="r">✗</span>                                    |
+| 12.7 | Correctly distinguishes Stop for GC vs Stop for correctness                        | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **13. go126-errors-astype-enhanced-new** — errors.AsType + enhanced new() (Go 1.26) | **<span class="g">4/4</span>** | **<span class="r">0/4</span>**                              |
+| 13.1 | Uses `errors.AsType[*os.PathError](err)` instead of var+`errors.As`               | <span class="g">✓</span>       | <span class="r">✗</span> kept `var pathErr; errors.As(...)` |
+| 13.2 | Replaces `ptr[T]` helper with `new()` accepting an initial value                   | <span class="g">✓</span>       | <span class="r">✗</span> kept helper (exported as `Ptr`)    |
+| 13.3 | Applies the `errors.AsType` rewrite to all three branches, not just the first     | <span class="g">✓</span>       | <span class="r">✗</span> no branch rewritten                |
+| 13.4 | Correctly attributes both features to Go 1.26, not a newer/older release          | <span class="g">✓</span>       | <span class="r">✗</span> neither feature used or attributed |
+|      | **14. json-v2-duplicate-key-strictness** — Go 1.27 upgrade breaks duplicate-key decode | **<span class="g">6/6</span>** | **<span class="r">2/6</span>**                          |
+| 14.1 | Identifies Go 1.27 made `encoding/json/v2` the default underneath `encoding/json` | <span class="g">✓</span>       | <span class="r">✗</span> claims v1 behavior is guaranteed unaffected by Go 1's compatibility promise |
+| 14.2 | Explains duplicate keys are rejected by default (not merely an opt-in experiment) | <span class="g">✓</span>       | <span class="r">✗</span> frames rejection as conditional on an opt-in `GOEXPERIMENT=jsonv2` |
+| 14.3 | Connects the partner payload's duplicate `id` key to the reported failures        | <span class="g">✓</span>       | <span class="g">✓</span> reasoned to the same hypothesis, framed as unconfirmed |
+| 14.4 | Proposes a concrete fix (dedupe before decode, or an explicit v1-compatible opt-in) | <span class="g">✓</span>       | <span class="g">✓</span> also proposes `json.RejectDuplicateNames(false)` |
+| 14.5 | Names `GOEXPERIMENT=nojsonv2` as the escape hatch, not the long-term fix           | <span class="g">✓</span>       | <span class="r">✗</span> never names `nojsonv2`              |
+| 14.6 | Does NOT claim `encoding/json`'s decode behavior is unaffected by the Go 1.27 bump | <span class="g">✓</span>       | <span class="r">✗</span> explicitly claims it can't change under Go 1's compatibility promise |
+|      | **15. generic-method-scoped-transform** — Set[T] → Set[U] via a Go 1.27 generic method | **<span class="r">1/5</span>** | **<span class="r">1/5</span>**                          |
+| 15.1 | Declares the transform as a method on `Set[T]`, not a package-level generic function | <span class="r">✗</span> refused the rule, wrote a free function | <span class="r">✗</span> free function |
+| 15.2 | The new type parameter is declared on the method, not the `Set[T]` type            | <span class="r">✗</span> no method written              | <span class="r">✗</span> no method written                    |
+| 15.3 | Notes generic methods (own type parameters) are a Go 1.27 addition                | <span class="r">✗</span> explicitly asserts this is false | <span class="r">✗</span> not mentioned                       |
+| 15.4 | Notes interface methods still can't declare type parameters / can't be satisfied  | <span class="r">✗</span>                                | <span class="r">✗</span>                                      |
+| 15.5 | Example call site compiles conceptually                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **16. cutlast-final-separator-split** — split on the last colon only               | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                              |
+| 16.1 | Uses `strings.CutLast(line, ":")`                                                 | <span class="g">✓</span>       | <span class="r">✗</span> uses `LastIndex` + manual slicing   |
+| 16.2 | Returns `CutLast`'s `found` boolean directly as `ok`                              | <span class="g">✓</span>       | <span class="r">✗</span> derives `ok` from `idx == -1`        |
+| 16.3 | Does NOT use `LastIndex` with manual slice arithmetic                             | <span class="g">✓</span>       | <span class="r">✗</span> uses `line[:idx], line[idx+1:]`      |
+| 16.4 | Does NOT use `Split`/`SplitN`                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 16.5 | Notes `CutLast` requires Go 1.27+                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no version note                     |
+|      | **17. godebug-removed-key-build-break** — bump toolchain with a stale `godebug` pin | **<span class="g">4/5</span>** | **not measured** ⁽¹⁾                                        |
+| 17.1 | Removes/updates the `asynctimerchan=0` entry rather than leaving it unchanged      | <span class="g">✓</span>       | —                                                             |
+| 17.2 | Explains Go 1.27 removed the key and a stale pin now fails the build (not a warning) | <span class="g">✓</span>     | —                                                             |
+| 17.3 | Bumps the `go` directive to a current Go 1.27-era version                          | <span class="g">✓</span>       | —                                                             |
+| 17.4 | Recommends fixing the underlying timer-dependent code, not silently deleting the shim | <span class="g">✓</span>    | —                                                             |
+| 17.5 | Mentions checking for other Go 1.27-removed GODEBUG keys in the same upgrade      | <span class="r">✗</span>       | —                                                             |
+|      | **18. uuid-stdlib-vs-dependency** — generate order IDs with no UUID dep in go.mod  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                              |
+| 18.1 | Uses the stdlib `uuid` package rather than `google/uuid`/`gofrs/uuid`             | <span class="g">✓</span>       | <span class="r">✗</span> hand-rolled UUIDv4 via `crypto/rand` |
+| 18.2 | Does NOT add a new external module dependency                                     | <span class="g">✓</span>       | <span class="g">✓</span> avoided a dependency, but by hand-rolling instead of using stdlib |
+| 18.3 | Notes the stdlib `uuid` package is new in Go 1.27                                 | <span class="g">✓</span>       | <span class="r">✗</span> unaware the package exists           |
+| 18.4 | Stores the ID via `UUID.String()` or an equivalent formatted string                | <span class="g">✓</span>       | <span class="g">✓</span> `fmt.Sprintf` RFC 4122 formatting    |
+| 18.5 | Does NOT claim the stdlib `uuid` package existed before Go 1.27                   | <span class="g">✓</span>       | <span class="g">✓</span> (never mentions it)                  |
+|      | **19. json-v2-streaming-migration** — add a reader-based JSON loader              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                              |
+| 19.1 | Uses `encoding/json/v2`'s `UnmarshalRead(r, v)` rather than only `NewDecoder(r).Decode(v)` | <span class="g">✓</span> | <span class="r">✗</span> uses v1-era `json.NewDecoder(r).Decode(v)` |
+| 19.2 | Notes `encoding/json/v2` is the new default as of Go 1.27                         | <span class="g">✓</span>       | <span class="r">✗</span> no version note                     |
+| 19.3 | Does NOT introduce a manual `io.ReadAll` + `Unmarshal` buffering step             | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 19.4 | Keeps `LoadFromBytes` working as-is                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+| 19.5 | Signature matches `LoadFromReader(r io.Reader, v any) error`                      | <span class="g">✓</span>       | <span class="g">✓</span>                                    |
+|      | **20. go127-stdlib-uuid** — stdlib uuid replaces github.com/google/uuid (from PR #98) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                           |
+| 20.1 | Replaces `github.com/google/uuid` with stdlib `uuid`                             | <span class="g">✓</span>       | <span class="r">✗</span> claims no stdlib uuid; hand-rolls       |
+| 20.2 | Uses `uuid.New().String()` — no `uuid.NewString()`                               | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib uuid usage at all             |
+| 20.3 | Knows generators return values without errors                                    | <span class="g">✓</span>       | <span class="r">✗</span> keeps `(string, error)` error branch    |
+| 20.4 | Uses `uuid.NewV7()` for time-ordered DB ID                                       | <span class="g">✓</span>       | <span class="r">✗</span> hand-rolled v7 bit layout               |
+| 20.5 | Removes `github.com/google/uuid` from go.mod                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
+|      | **21. go127-generic-methods** — generic methods with own type parameters, interface-satisfaction test (from PR #98) | **<span class="g">4/4</span>** | **<span class="r">1/4</span>** |
+| 21.1 | Converts `MapSet` to generic method (own type param)                             | <span class="g">✓</span>       | <span class="r">✗</span> `Map` kept package-level                |
+| 21.2 | Converts `FilterSet` to a method on `*Set[T]`                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
+| 21.3 | Does NOT claim generic methods are impossible                                    | <span class="g">✓</span>       | <span class="r">✗</span> claims methods can't declare type params |
+| 21.4 | Keeps `ForEach` non-generic to satisfy the interface                             | <span class="g">✓</span>       | <span class="r">✗</span> drops `ForEach`/`Iteratable` entirely   |
+|      | **22. go127-cutlast** — strings.CutLast for last-separator splits, 3 call sites (from PR #98) | **<span class="g">4/4</span>** | **<span class="r">1/4</span>** |
+| 22.1 | Uses `strings.CutLast` for at least one function                                 | <span class="g">✓</span>       | <span class="r">✗</span> claims "no `strings.CutLast` exists"    |
+| 22.2 | Uses the 3-result form (before, after, found) correctly                          | <span class="g">✓</span>       | <span class="r">✗</span> no `CutLast` usage at all               |
+| 22.3 | Uses `CutLast` in `EnvValue` to simplify the ok-returning split                  | <span class="g">✓</span>       | <span class="r">✗</span> uses `strings.Cut`, changes semantics   |
+| 22.4 | Does NOT keep manual `LastIndex` slicing where `CutLast` applies                 | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
+|      | **23. go127-synctest-http** — httptest.NewTestServer inside synctest bubbles (from PR #98) | **<span class="g">5/5</span>** | **<span class="r">1/5</span>** |
+| 23.1 | Wraps tests in `synctest.Test`                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                         |
+| 23.2 | Uses `httptest.NewTestServer` instead of `httptest.NewServer`                    | <span class="g">✓</span>       | <span class="r">✗</span> uses `httptest.NewServer` in both tests |
+| 23.3 | Explains real-network servers don't work in a synctest bubble                    | <span class="g">✓</span>       | <span class="r">✗</span> falsely claims `NewServer` bubble-aware |
+| 23.4 | Does NOT leave a plain `httptest.NewServer` inside a bubble                      | <span class="g">✓</span>       | <span class="r">✗</span> `NewServer` left inside bubble          |
+| 23.5 | Keeps both tests working with deterministic time                                 | <span class="g">✓</span>       | <span class="r">✗</span> real-socket server, non-deterministic   |
+
+⁽¹⁾ Eval 17's without-skill condition returned no answer content after five subagent attempts (across two separate agent identities); this is a tooling/relay issue observed only on this specific prompt, not a fabricated or assumed score. Re-run before the next report update.
+
+</details>
+
+## `golang-idioms` — v1.0.0
+
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
+| **Overall** | **297/299 (99%)** | **161/299 (54%)** | **+45pp** |
+
+<details>
+<summary>Structs & interfaces — 52/52 (100%) vs 34/52 (65%), +35pp (52 assertions across 11 evals)</summary>
 
 **Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
 
-| #    | Assertion                                                                                           | With                           | Without                                                       |
-| ---- | --------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------- |
-|      | **1. functional-options-over-builder** — constructor API for HTTP server with growing config        | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                |
-| 1.1  | Uses functional options pattern (Option type as func that modifies the struct)                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 1.2  | Constructor accepts variadic ...Option parameter                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 1.3  | Each option is a With* function returning an Option                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 1.4  | Sets sensible defaults inside the constructor before applying options                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 1.5  | Mentions that functional options should return an error if validation can fail                      | <span class="g">✓</span>       | <span class="r">✗</span> no error-returning variant mentioned |
-|      | **2. avoid-init-function** — database init() review                                                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 2.1  | Explicitly recommends against using init() for database initialization                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 2.2  | Mentions that init() makes testing harder or unpredictable                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 2.3  | Mentions that init() cannot return errors (must panic or log.Fatal)                                 | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 2.4  | Suggests explicit constructor or initialization function                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 2.5  | Mentions that init() runs before main/tests creating hidden dependencies                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-|      | **3. enum-start-at-one** — order status enum with iota                                              | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
-| 3.1  | Zero value (iota = 0) is either skipped, named Unknown, Invalid, or Unspecified                     | <span class="g">✓</span>       | <span class="r">✗</span> Pending at iota 0                    |
-| 3.2  | First meaningful enum value starts at 1 or higher                                                   | <span class="g">✓</span>       | <span class="r">✗</span> starts at 0                          |
-| 3.3  | Explains WHY: Go's zero value would silently pass as the first enum member                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 3.4  | Uses a custom type (not raw int or string)                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **4. panic-vs-error-judgment** — config parser: invalid format, missing field, nil arg              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 4.1  | Invalid config format: return error (caller can handle it)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 4.2  | Missing required field: return error (expected validation failure)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 4.3  | Nil passed to non-nil function: panic is acceptable (violated invariant)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 4.4  | Articulates the principle: panic is for bugs/invariant violations, errors are for expected failures | <span class="g">✓</span>       | <span class="r">✗</span> vague distinction                    |
-| 4.5  | Mentions Must* constructor pattern as a valid panic use case                                        | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-|      | **5. runtime-addcleanup-over-setfinalizer** — automatic cleanup for cgo resource (Go 1.24)          | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
-| 5.1  | Recommends runtime.AddCleanup as the preferred approach                                             | <span class="g">✓</span>       | <span class="r">✗</span> uses SetFinalizer                    |
-| 5.2  | Mentions that AddCleanup supports multiple cleanups on the same object                              | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
-| 5.3  | Mentions that AddCleanup avoids object resurrection risk                                            | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
-| 5.4  | Mentions that AddCleanup works even with cyclic references                                          | <span class="g">✓</span>       | <span class="r">✗</span>                                      |
-| 5.5  | Either warns against SetFinalizer or explains why AddCleanup is better                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **6. resource-pool-bounded-channel** — connection pool design                                       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 6.1  | Uses a buffered channel (chan *Conn with fixed capacity) as the pool mechanism                      | <span class="g">✓</span>       | <span class="r">✗</span> uses slice+mutex                     |
-| 6.2  | Pool has a maximum size / bounded capacity                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 6.3  | Get operation uses select with context for timeout/cancellation                                     | <span class="g">✓</span>       | <span class="r">✗</span> no context support                   |
-| 6.4  | Put operation handles pool-full case (discards excess connections)                                  | <span class="g">✓</span>       | <span class="r">✗</span> no overflow handling                 |
-| 6.5  | Does NOT use sync.Pool as the primary pooling mechanism                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **7. graceful-shutdown-signal-notifycontext** — HTTP server SIGINT/SIGTERM handling                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 7.1  | Uses signal.NotifyContext (not raw signal.Notify with a channel)                                    | <span class="g">✓</span>       | <span class="r">✗</span> uses signal.Notify channel           |
-| 7.2  | Listens for both SIGINT and SIGTERM                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 7.3  | Starts the HTTP server in a goroutine                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 7.4  | Creates a separate timeout context for the shutdown phase                                           | <span class="g">✓</span>       | <span class="r">✗</span> no separate shutdown timeout         |
-| 7.5  | Closes other resources (DB, queues) after server shutdown                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **8. iterator-streaming-large-data** — export 2M rows to JSON HTTP response                         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 8.1  | Does NOT load all 2M rows into a slice in memory                                                    | <span class="g">✓</span>       | <span class="r">✗</span> loads all into []User                |
-| 8.2  | Streams the JSON response (writes records one at a time to the ResponseWriter)                      | <span class="g">✓</span>       | <span class="r">✗</span> json.Marshal entire slice            |
-| 8.3  | Uses rows.Next() loop or iter.Seq2 iterator pattern                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 8.4  | Defers rows.Close() immediately after query                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 8.5  | Mentions OOM risk or memory concern as motivation for streaming                                     | <span class="g">✓</span>       | <span class="r">✗</span> no OOM discussion                    |
-|      | **9. regexp-compile-once** — email validation regex called thousands of times/sec                   | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                |
-| 9.1  | Compiles the regexp at package level (var emailRegex = regexp.MustCompile(...))                     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 9.2  | Does NOT compile the regexp inside the validation function                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 9.3  | Uses regexp.MustCompile (not regexp.Compile) for package-level initialization                       | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 9.4  | Explains WHY: compilation is O(n) and allocates, so doing it per-call is wasteful                   | <span class="g">✓</span>       | <span class="r">✗</span> mentions performance but not O(n)    |
-|      | **10. architecture-right-sizing** — 200-line CSV CLI tool architecture                              | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 10.1 | Recommends a flat or minimal structure (no multi-layer architecture)                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests cmd/internal/pkg layout     |
-| 10.2 | Does NOT suggest clean architecture, hexagonal, DDD, or ports and adapters                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests layered packages            |
-| 10.3 | Does NOT suggest dependency injection frameworks                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 10.4 | Structure has at most cmd/ and possibly internal/, not handler/service/repository layers            | <span class="g">✓</span>       | <span class="r">✗</span> includes service layer               |
-| 10.5 | Mentions that architecture complexity should match project scope                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **11. hexagonal-vs-clean-architecture** — 8K-line order service with HTTP/gRPC/MQ                   | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 11.1 | Correctly explains hexagonal: ports (interfaces) + adapters with primary/secondary distinction      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 11.2 | Correctly explains clean architecture: dependency rule (inward) with entities/use-cases/adapters    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 11.3 | Recommends hexagonal for this case (multiple entry points: HTTP, gRPC, message consumer)            | <span class="g">✓</span>       | <span class="r">✗</span> recommends clean architecture        |
-| 11.4 | Mentions that both keep domain logic pure and free from infrastructure dependencies                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 11.5 | Provides a directory structure with adapter/primary/ and adapter/secondary/ or equivalent           | <span class="g">✓</span>       | <span class="r">✗</span> generic layered layout               |
-|      | **12. ddd-aggregate-root-mutations** — Order aggregate with AddItem, Draft status guard             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 12.1 | AddItem is a method on the Order aggregate root (not on OrderItem or a service)                     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 12.2 | Order fields (items, status) are unexported to prevent external mutation                            | <span class="g">✓</span>       | <span class="r">✗</span> exported Items/Status fields         |
-| 12.3 | AddItem validates the status constraint (only Draft orders are editable)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 12.4 | Repository interface is defined in the domain package, not in the infrastructure package            | <span class="g">✓</span>       | <span class="r">✗</span> repo interface in infrastructure     |
-| 12.5 | Domain types have no infrastructure imports (no sql, no http, no framework dependencies)            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **13. ddd-bounded-context-communication** — Order and Billing context communication                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 13.1 | Uses domain events (e.g. OrderPlaced event) for cross-context communication                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 13.2 | Billing context does NOT directly import order's internal domain types                              | <span class="g">✓</span>       | <span class="r">✗</span> imports order types directly         |
-| 13.3 | Shows or describes an anti-corruption layer that translates order events to billing types           | <span class="g">✓</span>       | <span class="r">✗</span> no ACL layer                         |
-| 13.4 | Each bounded context has its own domain, application, and adapter layers                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 13.5 | Mentions that direct type imports between contexts create tight coupling                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **14. make-illegal-states-unrepresentable** — Email type to prevent invalid emails                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 14.1 | Creates a dedicated Email type (struct with unexported address field)                               | <span class="g">✓</span>       | <span class="r">✗</span> validates at function entry          |
-| 14.2 | Email can only be created via a constructor (NewEmail) that validates the address                   | <span class="g">✓</span>       | <span class="r">✗</span> no constructor                       |
-| 14.3 | The send function accepts the Email type instead of a raw string                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 14.4 | Explains the principle: make illegal states unrepresentable through the type system                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 14.5 | The unexported field prevents creating an Email without validation                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **15. fail-fast-validate-at-boundaries** — three-layer validation strategy                          | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 15.1 | Recommends validating at the HTTP handler layer (the system boundary)                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 15.2 | Recommends that the service and repository layers trust the data is already valid                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests validating in service too   |
-| 15.3 | Explains WHY: re-validating at every layer clutters code and violates DRY                           | <span class="g">✓</span>       | <span class="r">✗</span> advocates "defense in depth"         |
-| 15.4 | Does NOT suggest adding the same validation checks in all three layers                              | <span class="g">✓</span>       | <span class="r">✗</span> validates at all layers              |
-| 15.5 | May distinguish between input validation (at boundary) and business rule validation (in domain)     | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **16. explicit-over-implicit-defaults** — struct tag `default:"8080"` review                        | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
-| 16.1 | Recommends against using struct tags + reflection for defaults                                      | <span class="g">✓</span>       | <span class="r">✗</span> endorses struct tags as convenient   |
-| 16.2 | Suggests explicit defaults in a constructor function (e.g. NewConfig())                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 16.3 | Explains WHY: Go favors explicitness, struct tags hide behavior                                     | <span class="g">✓</span>       | <span class="r">✗</span> presents it as valid Go pattern      |
-| 16.4 | Shows a constructor that returns a Config with default values set explicitly                        | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **17. retry-context-check** — production-ready retry with exponential backoff                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 17.1 | Function accepts a context.Context parameter                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 17.2 | Checks ctx.Err() or ctx.Done() between retry attempts                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 17.3 | Uses select with ctx.Done() for the backoff delay (not time.Sleep)                                  | <span class="g">✓</span>       | <span class="r">✗</span> uses time.Sleep                      |
-| 17.4 | Implements exponential backoff                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 17.5 | Returns the context error if the context is cancelled during retry                                  | <span class="g">✓</span>       | <span class="r">✗</span> returns last operation error         |
-|      | **18. ddd-value-object-money** — monetary amounts with addition and comparison                      | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 18.1 | Uses int64 (cents) not float64 for the amount                                                       | <span class="g">✓</span>       | <span class="r">✗</span> uses float64                         |
-| 18.2 | Includes a currency field                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 18.3 | Fields are unexported (immutable value object, only created via constructor)                        | <span class="g">✓</span>       | <span class="r">✗</span> exported Amount/Currency             |
-| 18.4 | Add method validates currency match before addition                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 18.5 | Constructor validates input (e.g. currency is required)                                             | <span class="g">✓</span>       | <span class="r">✗</span> no validation in constructor         |
+| #    | Assertion                                                                                     | With                           | Without                                                       |
+| ---- | --------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------- |
+|      | **1. interface-at-consumer-not-implementor** — notification service using email client        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 1.1  | Interface is defined in the notification package (the consumer), NOT in the email package     | <span class="g">✓</span>       | <span class="r">✗</span> defines in email package             |
+| 1.2  | Interface has only the methods the notification package needs (not the full email.Client API) | <span class="g">✓</span>       | <span class="r">✗</span> mirrors full Client API              |
+| 1.3  | Email package exports a concrete Client struct, not an interface                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 1.4  | Explains WHY: keeps the consumer in control of the contract, avoids importing for interface   | <span class="g">✓</span>       | <span class="r">✗</span> no rationale given                   |
+| 1.5  | Notification service depends on its own interface, not on email package types                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **2. return-structs-not-interfaces** — NewUserService constructor signature                   | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 2.1  | Constructor returns *UserService (concrete type), NOT an interface                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 2.2  | Constructor accepts UserStore as an interface parameter (accept interfaces)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 2.3  | Explains WHY: callers get full access to concrete type; consumers can assign to interface     | <span class="g">✓</span>       | <span class="r">✗</span> no rationale                         |
+| 2.4  | Explicitly states that returning interfaces from constructors is bad practice                 | <span class="g">✓</span>       | <span class="r">✗</span> presents both as valid               |
+| 2.5  | The accept-interfaces-return-structs principle is stated or demonstrated                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **3. premature-interface-trap** — single PostgreSQL implementation repository                 | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
+| 3.1  | Recommends starting with a concrete struct (not an interface) when only one implementation    | <span class="g">✓</span>       | <span class="r">✗</span> creates interface immediately        |
+| 3.2  | Mentions the principle: don't design with interfaces, discover them                           | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 3.3  | Suggests extracting an interface LATER when a second consumer or test mock demands it         | <span class="g">✓</span>       | <span class="r">✗</span> creates interface "for testability"  |
+| 3.4  | Acknowledges that testability IS a valid reason but it should be a deliberate choice          | <span class="g">✓</span>       | <span class="r">✗</span> reflexively adds interface           |
+| 3.5  | Does NOT reflexively recommend creating an interface just because it is a repository          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **4. zero-value-useful-design** — Registry panics without NewRegistry                         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
+| 4.1  | Recommends lazy initialization in the Register method (if r.items == nil)                     | <span class="g">✓</span>       | <span class="r">✗</span> says "always call constructor"       |
+| 4.2  | Mentions the Go principle: make the zero value useful                                         | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 4.3  | The fix allows using var r Registry without calling a constructor                             | <span class="g">✓</span>       | <span class="r">✗</span> requires constructor                 |
+| 4.4  | Does NOT just say "always use the constructor" as the primary fix                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 4.5  | References bytes.Buffer or sync.Mutex as stdlib examples of useful zero values                | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **5. embedding-vs-named-field** — Server with http.Handler and DataStore                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 5.1  | Embeds http.Handler (to promote ServeHTTP to the Server)                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 5.2  | Uses a named field for DataStore (not embedded, methods should not be exposed)                | <span class="g">✓</span>       | <span class="r">✗</span> embeds both                          |
+| 5.3  | Explains the embed vs named field rule: embed for "is a", named field for "has a"             | <span class="g">✓</span>       | <span class="r">✗</span> no rule articulated                  |
+| 5.4  | Mentions that embedding promotes ALL methods of the inner type, which can be undesirable      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 5.5  | Notes that the receiver of promoted methods is the inner type, not the outer type             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **6. compile-time-interface-check** — MyBuffer implements io.ReadWriter                       | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                |
+| 6.1  | Uses var _ io.ReadWriter = (*MyBuffer)(nil) pattern                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 6.2  | Places the check near the type definition                                                     | <span class="g">✓</span>       | <span class="r">✗</span> places in test file                  |
+| 6.3  | Explains that this costs nothing at runtime                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 6.4  | Explains that the build fails immediately if MyBuffer stops satisfying the interface          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **7. type-assertion-comma-ok** — check if interface{} value is a string                       | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                |
+| 7.1  | Uses the comma-ok form: s, ok := val.(string)                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 7.2  | Checks the ok value before using s                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 7.3  | Warns against bare type assertion (s := val.(string)) because it panics                       | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 7.4  | Handles the !ok case explicitly                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **8. optional-behavior-type-assertion** — flush only if writer supports it                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
+| 8.1  | Defines a separate Flusher interface with just the Flush method                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 8.2  | Function parameter is io.Writer (not a combined interface)                                    | <span class="g">✓</span>       | <span class="r">✗</span> requires WriteFlusher interface      |
+| 8.3  | Uses type assertion (f, ok := w.(Flusher)) to check for flush capability                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 8.4  | Only calls Flush if the type assertion succeeds                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 8.5  | Mentions this pattern is used in the standard library (e.g. http.Flusher, io.ReaderFrom)      | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib reference                  |
+|      | **9. nocopy-sentinel-struct** — prevent ConnPool from being passed by value                   | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
+| 9.1  | Recommends embedding a noCopy sentinel struct                                                 | <span class="g">✓</span>       | <span class="r">✗</span> says "always use pointers"           |
+| 9.2  | noCopy implements Lock() and Unlock() methods (empty bodies)                                  | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 9.3  | Explains that go vet will flag copies of structs containing noCopy                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 9.4  | Mentions this is the same technique used by sync.WaitGroup, sync.Mutex, or strings.Builder    | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
+| 9.5  | Shows that the struct should be passed by pointer after adding noCopy                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+|      | **10. generics-over-any-interface** — generic Contains function for any comparable type       | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                |
+| 10.1 | Uses generics with a type parameter: func Contains[T comparable]                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 10.2 | Does NOT use []any or interface{} parameters                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 10.3 | Uses the comparable constraint for the type parameter                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 10.4 | Explains WHY: generics preserve type safety, while any loses it                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 10.5 | Mentions that any should only be used at true boundaries where type is genuinely unknown      | <span class="g">✓</span>       | <span class="r">✗</span> no boundary guidance                 |
+|      | **11. receiver-consistency-rule** — mixed pointer/value receivers on same type                | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
+| 11.1 | Says mixing pointer and value receivers on the same type is wrong or not recommended          | <span class="g">✓</span>       | <span class="r">✗</span> says mixing is fine per-method       |
+| 11.2 | Recommends making ALL methods use pointer receivers since one needs to mutate                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
+| 11.3 | Explains WHY: consistency rule -- if any method uses a pointer receiver, all should           | <span class="g">✓</span>       | <span class="r">✗</span> no consistency principle articulated |
+| 11.4 | Mentions that method sets differ for T and *T which affects interface satisfaction            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
 
 </details>
-
-## `golang-cli` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **55/58 (95%)** | **30/58 (52%)** | **+43pp** |
 
 <details>
-<summary>Full breakdown (58 assertions across 12 evals)</summary>
+<summary>Data structures — 36/36 (100%) vs 22/36 (61%), +39pp (36 assertions)</summary>
 
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
+**Model:** Claude Sonnet 4.6 | **Runs:** 12 evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
 
-| #    | Assertion                                                                                  | With                           | Without                                                 |
-| ---- | ------------------------------------------------------------------------------------------ | ------------------------------ | ------------------------------------------------------- |
-|      | **1. minimal-main-and-execute** — main.go minimal, os.Exit only in main                    | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
-| 1.1  | main.go only calls Execute() — no config, flag setup, or business logic                    | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 1.2  | Root command sets SilenceUsage: true                                                       | <span class="g">✓</span>       | <span class="r">✗</span> not set                        |
-| 1.3  | Root command sets SilenceErrors: true                                                      | <span class="g">✓</span>       | <span class="r">✗</span> not set                        |
-| 1.4  | Subcommands do NOT call os.Exit() inside RunE                                              | <span class="g">✓</span>       | <span class="r">✗</span> os.Exit(1) in RunE             |
-| 1.5  | Push subcommand registered via rootCmd.AddCommand() in init()                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **2. viper-config-layering** — flags > env > config file > defaults                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
-| 2.1  | Calls viper.BindPFlag to bind the port flag to Viper                                       | <span class="g">✓</span>       | <span class="r">✗</span> flag and Viper disconnected    |
-| 2.2  | Sets env prefix with viper.SetEnvPrefix                                                    | <span class="g">✓</span>       | <span class="r">✗</span> no prefix, bare PORT           |
-| 2.3  | Calls viper.AutomaticEnv()                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 2.4  | Handles viper.ConfigFileNotFoundError gracefully                                           | <span class="g">✓</span>       | <span class="r">✗</span> log.Fatal on missing config    |
-| 2.5  | Precedence order correct: flags > env > config > defaults                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **3. persistent-pre-run-config-init** — config init in PersistentPreRunE                   | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                          |
-| 3.1  | Config init in PersistentPreRunE on root command                                           | <span class="g">✓</span>       | <span class="r">✗</span> duplicated in each RunE        |
-| 3.2  | Config init NOT duplicated in each subcommand                                              | <span class="g">✓</span>       | <span class="r">✗</span> three copies of init logic     |
-| 3.3  | --config is a persistent flag on root command                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 3.4  | Uses SetEnvKeyReplacer for hyphens-to-underscores                                          | <span class="r">✗</span>       | <span class="r">✗</span>                                |
-| 3.5  | Logging configured to write to stderr                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **4. stdout-vs-stderr-separation** — output to stdout, diagnostics to stderr               | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
-| 4.1  | Program output uses cmd.OutOrStdout(), not os.Stdout                                       | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Println to os.Stdout       |
-| 4.2  | Logs/progress go to stderr                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> log.Println to stdout          |
-| 4.3  | Errors go to stderr via cmd.ErrOrStderr()                                                  | <span class="g">✓</span>       | <span class="r">✗</span> errors mixed with stdout       |
-| 4.4  | Uses cmd.OutOrStdout() instead of os.Stdout directly                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 4.5  | Returns error from RunE, not os.Exit() or log.Fatal()                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **5. version-ldflags-injection** — version via ldflags, not hardcoded                      | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                          |
-| 5.1  | Version/commit/date are var (not const) with placeholder defaults                          | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 5.2  | Shows -ldflags '-X ...' build command                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 5.3  | Version command uses cmd.OutOrStdout()                                                     | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Println                    |
-| 5.4  | Version NOT hardcoded as const                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 5.5  | Includes runtime/debug.ReadBuildInfo() fallback                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **6. exit-code-conventions** — 0 success, 1 general, 2 usage                               | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                          |
-| 6.1  | Exit codes 0/1/2 follow Unix conventions                                                   | <span class="g">✓</span>       | <span class="r">✗</span> all errors exit 1              |
-| 6.2  | os.Exit() only in main()                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> os.Exit inside handlers        |
-| 6.3  | Typed error or ExitError with Code field to propagate exit codes                           | <span class="r">✗</span>       | <span class="r">✗</span>                                |
-| 6.4  | Errors returned from commands, not swallowed by os.Exit()                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 6.5  | Different error categories map to different exit codes                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **7. signal-handling-with-context** — signal.NotifyContext for cancellation                | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                          |
-| 7.1  | Uses signal.NotifyContext, NOT raw channel with signal.Notify                              | <span class="g">✓</span>       | <span class="r">✗</span> raw channel + select           |
-| 7.2  | Handles both os.Interrupt and syscall.SIGTERM                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 7.3  | Creates shutdown timeout context (10-30s)                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 7.4  | Calls srv.Shutdown(ctx), not srv.Close()                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 7.5  | Distinguishes http.ErrServerClosed from unexpected errors                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **8. flag-binding-and-constraints** — persistent vs local, mutual exclusion, Viper binding | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                          |
-| 8.1  | --verbose is a persistent flag on root, not local to deploy                                | <span class="g">✓</span>       | <span class="r">✗</span> local flag on deploy           |
-| 8.2  | Uses MarkFlagRequired for --env and --tag                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 8.3  | Uses MarkFlagsMutuallyExclusive for --dry-run and --force                                  | <span class="g">✓</span>       | <span class="r">✗</span> manual check in RunE           |
-| 8.4  | Uses RegisterFlagCompletionFunc for --env values                                           | <span class="g">✓</span>       | <span class="r">✗</span> no completion                  |
-| 8.5  | Binds flags to Viper with viper.BindPFlag                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **9. argument-validation** — Cobra built-in validators, not manual len(args)               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                          |
-| 9.1  | Uses cobra.NoArgs for status command                                                       | <span class="g">✓</span>       | <span class="r">✗</span> manual len(args) == 0          |
-| 9.2  | Uses cobra.ExactArgs(1) for deploy command                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 9.3  | Uses cobra.RangeArgs(2, 3) for scale command                                               | <span class="g">✓</span>       | <span class="r">✗</span> manual range check in RunE     |
-| 9.4  | Validators set on Args field, not inside RunE                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **10. cli-testing-pattern** — execute programmatically with captured output                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                          |
-| 10.1 | Creates executeCommand helper with cmd.SetOut(buf) and cmd.SetErr(buf)                     | <span class="g">✓</span>       | <span class="r">✗</span> no helper, tests run binary    |
-| 10.2 | Table-driven tests with multiple cases                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 10.3 | Uses cmd.SetArgs() — not os/exec.Command                                                   | <span class="g">✓</span>       | <span class="r">✗</span> exec.Command("./greet")        |
-| 10.4 | Captures output via bytes.Buffer — not redirecting os.Stdout                               | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 10.5 | Tests check both output and error return value                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **11. machine-readable-output-format** — --output flag with json/table/plain               | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                          |
-| 11.1 | Supports --output flag with json and table formats                                         | <span class="g">✓</span>       | <span class="r">✗</span> --json boolean toggle only     |
-| 11.2 | JSON output uses encoding/json to cmd.OutOrStdout()                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 11.3 | Table output uses text/tabwriter for aligned columns                                       | <span class="g">✓</span>       | <span class="r">✗</span> fmt.Printf with manual spacing |
-| 11.4 | Default format is human-readable table                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-|      | **12. shell-completion-setup** — Cobra built-in generators + custom completions            | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                          |
-| 12.1 | Completion subcommand supports bash, zsh, fish, powershell                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 12.2 | Uses Cobra's built-in GenBashCompletionV2, GenZshCompletion, etc.                          | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 12.3 | Uses RegisterFlagCompletionFunc for --env flag                                             | <span class="g">✓</span>       | <span class="r">✗</span> no custom completions          |
-| 12.4 | Uses ValidArgs or cobra.ExactValidArgs for completion command                              | <span class="g">✓</span>       | <span class="g">✓</span>                                |
-| 12.5 | Returns cobra.ShellCompDirectiveNoFileComp for non-file flags                              | <span class="r">✗</span>       | <span class="r">✗</span>                                |
+| #    | Assertion                                                           | With                           | Without                                                |
+| ---- | ------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------ |
+|      | **1. buffer-for-io** — RenderAndStream to io.Writer                 | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
+| 1.1  | Correct output to io.Writer                                         | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 1.2  | Efficient output assembly with Grow                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 1.3  | No unnecessary intermediate allocation                              | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **2. sorted-set** — SortedSet[T] with Min/Max/Insert                | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
+| 2.1  | Uses `cmp.Ordered` constraint                                       | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 2.2  | Binary search for Insert/Contains                                   | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 2.3  | Min/Max O(1) from sorted slice ends                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **3. AddCleanup** — string intern with auto map shrink              | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
+| 3.1  | Uses `weak.Pointer` or `weak.Make`                                  | <span class="g">✓</span>       | <span class="r">✗</span> `runtime.SetFinalizer`        |
+| 3.2  | Uses `runtime.AddCleanup` (not SetFinalizer)                        | <span class="g">✓</span>       | <span class="r">✗</span> SetFinalizer + unique.Handle  |
+| 3.3  | Dead map entries automatically removed                              | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **4. unsafe.Add-modern** — read packed binary header (Go 1.17+)     | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
+| 4.1  | Uses `unsafe.Add` for pointer arithmetic                            | <span class="g">✓</span>       | <span class="r">✗</span> `uintptr` arithmetic          |
+| 4.2  | No intermediate `uintptr` variable                                  | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 4.3  | Bounds check before unsafe access                                   | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **5. full-slice-expr** — SplitIntoChunks with append-safe output    | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
+| 5.1  | Chunks are append-safe (no aliasing)                                | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 5.2  | Uses full-slice expression `[:n:n]`                                 | <span class="g">✓</span>       | <span class="r">✗</span> `make` + `copy` per chunk     |
+| 5.3  | Minimal extra allocations (reuses backing array)                    | <span class="g">✓</span>       | <span class="r">✗</span> N fresh allocations           |
+|      | **6. list-valid-use** — OrderedMap with O(1) middle deletion        | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
+| 6.1  | Uses `container/list` from stdlib                                   | <span class="g">✓</span>       | <span class="r">✗</span> custom generic linked list    |
+| 6.2  | Map stores `*list.Element` for O(1) access                          | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 6.3  | Delete is O(1) via element reference                                | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **7. composite-struct-key** — route cache keyed by (method, path)   | **<span class="g">3/3</span>** | **<span class="r">0/3</span>**                         |
+| 7.1  | Uses struct or array as map key                                     | <span class="g">✓</span>       | <span class="r">✗</span> string concat with NUL sep    |
+| 7.2  | Zero allocation on lookup path                                      | <span class="g">✓</span>       | <span class="r">✗</span> complex `unsafe` stack tricks |
+| 7.3  | Simple, readable key type                                           | <span class="g">✓</span>       | <span class="r">✗</span> `sync.Map` + `unsafe` hacks   |
+|      | **8. map-memory-diag** — diagnose 2GB RSS after bulk delete         | **<span class="g">3/3</span>** | **<span class="g">3/3</span>**                         |
+| 8.1  | Diagnoses "maps never shrink buckets"                               | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 8.2  | Compact creates fresh map with `make`                               | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 8.3  | Copies surviving entries to new map                                 | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **9. ring-round-robin** — LoadBalancer cycling backends forever     | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
+| 9.1  | Uses `container/ring` for round-robin                               | <span class="g">✓</span>       | <span class="r">✗</span> `atomic.Uint64` counter       |
+| 9.2  | No integer overflow risk                                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 9.3  | Correct rotation on each call                                       | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **10. large-struct-ptr** — DocumentStore with 20-field Document     | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                         |
+| 10.1 | Uses pointer map `map[string]*Document`                             | <span class="g">✓</span>       | <span class="r">✗</span> `map[string]Document` value   |
+| 10.2 | Get returns stored pointer (no copy)                                | <span class="g">✓</span>       | <span class="r">✗</span> copies from map, takes `&`    |
+| 10.3 | Uses `sync.RWMutex` for concurrent reads                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **11. small-struct-val** — CoordTracker with 16-byte Coord          | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
+| 11.1 | Uses value map `map[string]Coord` (not pointer)                     | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 11.2 | Explains < 128-byte threshold for value vs pointer choice           | <span class="g">✓</span>       | <span class="r">✗</span> no threshold analysis         |
+| 11.3 | Proportional complexity for struct size                             | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+|      | **12. clip-after-delete** — PurgeInactive with large Profile fields | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                         |
+| 12.1 | No dead references in result slice                                  | <span class="g">✓</span>       | <span class="g">✓</span>                               |
+| 12.2 | Uses `slices.DeleteFunc` + `slices.Clip`                            | <span class="g">✓</span>       | <span class="r">✗</span> manual loop + `make`          |
+| 12.3 | Excess capacity released                                            | <span class="g">✓</span>       | <span class="g">✓</span>                               |
 
 </details>
-
-## `golang-concurrency` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **62/62 (100%)** | **38/62 (61%)** | **+39pp** |
 
 <details>
-<summary>Full breakdown (62 assertions across 13 evals)</summary>
+<summary>Error handling — 59/60 (98%) vs 43/60 (72%), +27pp (60 assertions)</summary>
 
-**Model:** Claude Opus 4.6 | **Runs:** 13 evals x 2 configs = 26 subagents | **Grading:** Human-as-a-judge
+**Model:** Claude Sonnet 4.6 | **Runs:** 12 adversarial evals × 2 configs = 24 subagents | **Grading:** Human-as-judge
 
-| #    | Assertion                                                                                                              | With                           | Without                                                           |
-| ---- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
-|      | **1. time-after-in-select-loop** — avoid time.After in loop, use time.NewTimer+Reset                                   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 1.1  | Does NOT use time.After inside the loop body                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> uses time.After(5*time.Second) in select |
-| 1.2  | Creates time.NewTimer (or time.NewTicker) outside the loop                                                             | <span class="g">✓</span>       | <span class="r">✗</span> no timer created outside loop            |
-| 1.3  | Calls timer.Reset() after handling a message or timeout                                                                | <span class="g">✓</span>       | <span class="r">✗</span> no Reset call                            |
-| 1.4  | Calls timer.Stop() (or defers it) to clean up the timer                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.5  | Drains the timer channel before Reset when appropriate (if !timer.Stop() { <-timer.C })                                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **2. channel-closing-ownership** — only the sender closes a channel                                                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 2.1  | Does NOT close the channel from the consumer/receiver side                                                             | <span class="g">✓</span>       | <span class="r">✗</span> closes from consumer                     |
-| 2.2  | Uses a separate signaling mechanism (done channel, context cancellation) for the consumer to tell the producer to stop | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.3  | The producer is the one that closes the data channel                                                                   | <span class="g">✓</span>       | <span class="r">✗</span> consumer closes data channel             |
-| 2.4  | Explains the panic risk of closing a channel from the receiver side                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.5  | The producer selects on the stop signal alongside its send operation                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **3. waitgroup-add-placement** — wg.Add before go statement                                                            | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                    |
-| 3.1  | Calls wg.Add(1) BEFORE the go statement, not inside the goroutine                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.2  | Calls defer wg.Done() inside the goroutine                                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.3  | Calls wg.Wait() after the loop to wait for all goroutines                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.4  | Does not place wg.Add inside the goroutine function body                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **4. channel-direction-in-signatures** — use chan<- and <-chan in function signatures                                  | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
-| 4.1  | The generator function returns <-chan int (receive-only for callers)                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.2  | The doubler function accepts <-chan int as input parameter                                                             | <span class="g">✓</span>       | <span class="r">✗</span> uses bidirectional chan int              |
-| 4.3  | The doubler function returns <-chan int (receive-only for callers)                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.4  | Internally, channels are created as bidirectional but exposed as directional through return types                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.5  | The producer (generator) closes its output channel with defer close(out)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **5. unbuffered-channel-default** — default to unbuffered, justify buffers                                             | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 5.1  | Recommends starting with unbuffered (or very small buffer like 0 or 1) as the default                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests buffer of 100                   |
-| 5.2  | Explains that large buffers mask backpressure problems                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no backpressure discussion               |
-| 5.3  | States that buffer size should be based on measured need, not arbitrary choice                                         | <span class="g">✓</span>       | <span class="r">✗</span> picks arbitrary size                     |
-| 5.4  | Does NOT suggest a large arbitrary buffer (e.g., 100, 1000) without explaining the tradeoffs                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 5.5  | Mentions that buffered channels hide the problem of slow consumers                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **6. send-copies-not-pointers** — send values through channels, not pointers                                           | **<span class="g">4/4</span>** | **<span class="r">1/4</span>**                                    |
-| 6.1  | Sends Task values (not *Task pointers) through the channel, OR explicitly documents why pointers are safe              | <span class="g">✓</span>       | <span class="r">✗</span> sends *Task pointers                     |
-| 6.2  | The channel type is chan Task (value type) rather than chan *Task                                                      | <span class="g">✓</span>       | <span class="r">✗</span> uses chan *Task                          |
-| 6.3  | Does not mutate the Task struct after sending it on the channel (or sends a copy)                                      | <span class="g">✓</span>       | <span class="r">✗</span> no copy/immutability discussion          |
-| 6.4  | If pointers are used, explicitly acknowledges the shared-memory risk and explains the mitigation                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **7. errgroup-vs-waitgroup-decision** — errgroup.SetLimit for bounded concurrent work with errors                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 7.1  | Uses errgroup (golang.org/x/sync/errgroup) instead of sync.WaitGroup for error propagation                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.2  | Uses errgroup.WithContext to cancel siblings on first error                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.3  | Uses g.SetLimit(10) for bounded concurrency instead of a hand-rolled semaphore                                         | <span class="g">✓</span>       | <span class="r">✗</span> uses semaphore channel                   |
-| 7.4  | Does NOT build a manual worker pool with channels and WaitGroup when errgroup suffices                                 | <span class="g">✓</span>       | <span class="r">✗</span> builds manual pool with channels         |
-| 7.5  | Each goroutine checks ctx.Done() or uses the context from errgroup.WithContext                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **8. ctx-done-in-select** — always include ctx.Done() in select to prevent goroutine leaks                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 8.1  | The function accepts a context.Context parameter                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.2  | Every select statement includes a case <-ctx.Done(): return branch                                                     | <span class="g">✓</span>       | <span class="r">✗</span> missing ctx.Done in output select        |
-| 8.3  | Both the read from input channel AND the write to output channel are wrapped in select with ctx.Done()                 | <span class="g">✓</span>       | <span class="r">✗</span> only read has select                     |
-| 8.4  | The goroutine exits cleanly when context is cancelled                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.5  | The output channel is closed when the goroutine exits (defer close)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **9. sync-map-vs-rwmutex-decision** — RWMutex+map for write-heavy overlapping keys                                     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 9.1  | Recommends sync.RWMutex + plain map over sync.Map for this write-heavy, overlapping-key pattern                        | <span class="g">✓</span>       | <span class="r">✗</span> recommends sync.Map                      |
-| 9.2  | Explains that sync.Map is optimized for write-once/read-many or disjoint key sets                                      | <span class="g">✓</span>       | <span class="r">✗</span> no access-pattern discussion             |
-| 9.3  | Explains that for frequent writes with overlapping keys, RWMutex+map is faster                                         | <span class="g">✓</span>       | <span class="r">✗</span> no performance comparison                |
-| 9.4  | Does NOT unconditionally recommend sync.Map for any concurrent map scenario                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 9.5  | Mentions that concurrent map read/write without synchronization causes a hard crash                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **10. sync-pool-reset-before-put** — Reset() before Put(), not after Get()                                             | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 10.1 | Calls buf.Reset() BEFORE bufPool.Put(buf), not after Get()                                                             | <span class="g">✓</span>       | <span class="r">✗</span> resets after Get()                       |
-| 10.2 | Uses defer to ensure the buffer is returned to the pool even on error                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 10.3 | Does not assume the object from Get() is clean/zeroed                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> assumes clean after Get                  |
-| 10.4 | The pool's New function creates a new buffer                                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 10.5 | Does not store persistent state in pooled objects                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **11. goroutine-panic-recovery** — recover at goroutine boundaries                                                     | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                    |
-| 11.1 | Adds defer func() { recover() }() or equivalent panic recovery inside the goroutine                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 11.2 | Logs or handles the recovered panic (not just silently swallowed)                                                      | <span class="g">✓</span>       | <span class="r">✗</span> swallows panic silently                  |
-| 11.3 | The goroutine has a shutdown mechanism (context, done channel, or similar)                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 11.4 | Mentions that a panic in a goroutine crashes the entire process                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **12. singleflight-cache-stampede** — use singleflight to deduplicate concurrent lookups                               | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
-| 12.1 | Recommends golang.org/x/sync/singleflight as the primary solution                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.2 | Shows usage of group.Do(key, func) where key identifies the deduplicated resource                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.3 | Explains that only one goroutine executes the function; others wait and share the result                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.4 | May combine singleflight with a cache layer for TTL-based caching                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 12.5 | Does NOT suggest only a plain mutex or only a TTL cache as the solution to thundering herd                             | <span class="g">✓</span>       | <span class="r">✗</span> also suggests mutex as primary approach  |
-|      | **13. iterator-vs-goroutine-pipeline** — iterators for sequential CPU-bound transforms                                 | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
-| 13.1 | Recommends against goroutine+channel pipeline for this purely sequential, in-memory transform                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.2 | Suggests Go 1.23+ iterators (iter.Seq) or simple slice operations instead                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests only plain loop                 |
-| 13.3 | Explains that goroutine+channel pipelines add overhead without benefit for sequential CPU-bound work                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.4 | Mentions that goroutine pipelines are appropriate when stages involve I/O or need true parallelism                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 13.5 | Does NOT build a multi-goroutine pipeline for this use case                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
+| #    | Assertion                                                                 | With                                           | Without                                                      |
+| ---- | ------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------ |
+|      | **1. middleware-log-chain** — "log at each step" tempts log+return        | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
+| 1.1  | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 1.2  | Low-cardinality error messages (no IPs/limits interpolated)               | <span class="g">✓</span>                       | <span class="r">✗</span> `"ip %q exceeded %d requests"`      |
+| 1.3  | Structured error context (`oops.With`, not in error string)               | <span class="g">✓</span>                       | <span class="r">✗</span> `fmt.Errorf` with IP interpolation  |
+| 1.4  | Structured `slog` key-value log entries                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 1.5  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **2. order-processor** — "indicate which order" tempts ID interpolation   | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
+| 2.1  | Error messages low-cardinality (no IDs in error strings)                  | <span class="g">✓</span>                       | <span class="r">✗</span> `"order %s: validation failed"`     |
+| 2.2  | Variable data as structured attributes (`oops`/`slog`)                    | <span class="g">✓</span>                       | <span class="r">✗</span> data in `Error()` string            |
+| 2.3  | Uses `errors.Join` to collect all order errors                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 2.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 2.5  | Validates ALL fields per order (no short-circuit)                         | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **3. batch-csv-importer** — "detailed report" tempts row interpolation    | **<span class="g">5/5</span>**                 | **<span class="r">2/5</span>**                               |
+| 3.1  | Error messages static (no row numbers in error string)                    | <span class="g">✓</span>                       | <span class="r">✗</span> `"row %d: column %q"` in `Error()`  |
+| 3.2  | Row/column data as structured attributes (`oops`/`slog`)                  | <span class="g">✓</span>                       | <span class="r">✗</span> data in `RowError.Error()` string   |
+| 3.3  | Collects all row errors (doesn't stop on first)                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 3.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 3.5  | Uses `errors.Join` for combining errors                                   | <span class="g">✓</span>                       | <span class="r">✗</span> custom `ImportError{Failures}`      |
+|      | **4. wrapped-error-compare** — pre-existing `fmt.Errorf` + `==` sentinels | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 4.1  | Sentinel errors use `errors.New` (not `fmt.Errorf`)                       | <span class="g">✓</span>                       | <span class="r">✗</span> kept `fmt.Errorf`                   |
+| 4.2  | Sentinel strings lowercase, no punctuation                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 4.3  | `TimeoutError.Error()` lowercase, no punctuation                          | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 4.4  | `errors.Is` for sentinel matching                                         | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 4.5  | `errors.As` for type extraction                                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **5. multi-service-fetch** — 3 service calls tempt bare `return err`      | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 5.1  | Errors wrapped with service context                                       | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 5.2  | Low-cardinality error messages                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 5.3  | Uses structured attributes (`oops`/`slog`)                                | <span class="g">✓</span>                       | <span class="r">✗</span> plain `fmt.Errorf` only             |
+| 5.4  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 5.5  | Each service identifiable by context prefix                               | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **6. config-validation** — many fields tempts early return + caps         | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
+| 6.1  | Uses `errors.Join` for combining validation errors                        | <span class="g">✓</span>                       | <span class="r">✗</span> `[]string` + `strings.Join`         |
+| 6.2  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="r">✗</span> `"Host is required"` capitalized    |
+| 6.3  | Validates ALL fields                                                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 6.4  | Conditional TLS validation                                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 6.5  | No `panic` for validation                                                 | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **7. modernize-logging** — "keep the logging" tempts log+return           | **<span class="r">4/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 7.1  | Does not log AND return same error (single handling rule)                 | <span class="r">✗</span> `slog.Error` + return | <span class="r">✗</span> `ErrorContext` + return             |
+| 7.2  | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 7.3  | Structured key-value attributes                                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 7.4  | Appropriate log levels (Info/Warn/Error)                                  | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 7.5  | Low-cardinality log messages                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **8. graceful-shutdown** — 5 resources tempts bare append                 | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 8.1  | Uses `errors.Join`                                                        | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 8.2  | Each error wrapped with resource context                                  | <span class="g">✓</span>                       | <span class="r">✗</span> bare `append(errs, err)`            |
+| 8.3  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 8.4  | Attempts ALL resources even if earlier fail                               | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 8.5  | Correct shutdown order                                                    | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **9. todo-CRUD-repo** — full CRUD with IDs tempts interpolation           | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 9.1  | Low-cardinality error messages (no ID interpolation)                      | <span class="g">✓</span>                       | <span class="r">✗</span> `"get todo %q: %w"` with id         |
+| 9.2  | Errors wrapped with method context                                        | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 9.3  | Uses `errors.Is` for `sql.ErrNoRows`                                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 9.4  | Sentinel as package-level var                                             | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 9.5  | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **10. retry-handler** — "log each attempt" tempts log+return in loop      | **<span class="g">5/5</span>**                 | **<span class="r">4/5</span>**                               |
+| 10.1 | Does not log AND return final error (single handling rule)                | <span class="g">✓</span>                       | <span class="r">✗</span> `slog.ErrorContext` + `return err`  |
+| 10.2 | Structured `slog` attributes                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 10.3 | Uses `slog` (not `log.Printf`)                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 10.4 | Low-cardinality log messages                                              | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 10.5 | Wraps final error with context                                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **11. event-processor** — "include event details" tempts interpolation    | **<span class="g">5/5</span>**                 | **<span class="r">3/5</span>**                               |
+| 11.1 | Error messages static (event type/ID not in error string)                 | <span class="g">✓</span>                       | <span class="r">✗</span> `"processing event %q (type=%s)"`   |
+| 11.2 | Event details as structured attributes (`oops`/`slog`)                    | <span class="g">✓</span>                       | <span class="r">✗</span> data in `EventError.Error()` string |
+| 11.3 | Uses `errors.Join` to collect all event errors                            | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 11.4 | Error strings lowercase                                                   | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 11.5 | No logging inside processor (returns to caller)                           | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+|      | **12. api-gateway** — backend errors tempt `%w` exposure                  | **<span class="g">5/5</span>**                 | **<span class="g">5/5</span>**                               |
+| 12.1 | Uses `%v` (not `%w`) at boundary for backend details                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 12.2 | Translates backend errors to domain sentinels                             | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 12.3 | Sentinel strings lowercase                                                | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 12.4 | `errors.As` used internally to inspect backend types                      | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
+| 12.5 | Backend types not accessible via `errors.As` from callers                 | <span class="g">✓</span>                       | <span class="g">✓</span>                                     |
 
 </details>
-
-## `golang-context` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **48/50 (96%)** | **31/50 (62%)** | **+34pp** |
 
 <details>
-<summary>Full breakdown (50 assertions across 10 evals)</summary>
+<summary>Defensive safety — 150/151 (99%) vs 62/151 (41%), +58pp (151 assertions across 36 evals)</summary>
 
-**Model:** Claude Opus 4.6 | **Runs:** 10 evals x 2 configs = 20 subagents | **Grading:** Human-as-a-judge
+**Model:** Claude Sonnet 4.6 | **Runs:** 36 evals × 2 configs = 72 runs | **Grading:** Human-as-judge
 
-| #    | Assertion                                                                                                      | With                                                                       | Without                                                              |
-| ---- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-|      | **1. context-background-in-handler** — use r.Context(), not context.Background() in handlers                   | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
-| 1.1  | Uses r.Context() to obtain the request context, NOT context.Background() inside the handler                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 1.2  | Passes the same context (or a derived child) to the database query (*Context variant)                          | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 1.3  | Passes the same context to the external HTTP call via http.NewRequestWithContext                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 1.4  | Does NOT use http.NewRequest (without context) for the external service call                                   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 1.5  | Checks ctx.Err() or handles context cancellation when the client disconnects                                   | <span class="g">✓</span>                                                   | <span class="r">✗</span> no ctx.Err() check on disconnect            |
-|      | **2. cancel-leak-timeout** — defer cancel() for every WithTimeout, per-attempt timeouts                        | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
-| 2.1  | Creates a new context.WithTimeout for each retry attempt (not one timeout for all retries)                     | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 2.2  | Calls defer cancel() (or cancel() before next iteration) for every WithTimeout call                            | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 2.3  | Does NOT discard the cancel function with _ (e.g., ctx, _ = context.WithTimeout(...))                          | <span class="g">✓</span>                                                   | <span class="r">✗</span> discards cancel with _                      |
-| 2.4  | Uses http.NewRequestWithContext to attach the per-attempt timeout context                                      | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 2.5  | Accepts a parent context parameter and derives timeouts from it                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **3. context-value-key-type** — unexported key types for context values                                        | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
-| 3.1  | Uses an unexported type for the context key (e.g., type contextKey string or type tenantKey struct{})          | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses plain string key                       |
-| 3.2  | Does NOT use a plain string as the context key                                                                 | <span class="g">✓</span>                                                   | <span class="r">✗</span> context.WithValue(ctx, "tenant_id", ...)    |
-| 3.3  | Provides a typed getter function (e.g., TenantIDFromContext) that returns the value with proper type assertion | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 3.4  | Provides a setter function or the middleware injects the value using the unexported key                        | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 3.5  | The getter handles the case where the value is missing from the context (returns zero value + bool or error)   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **4. context-in-struct-trap** — do not store context.Context in a struct field                                 | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
-| 4.1  | Does NOT store context.Context as a field in the Worker struct                                                 | <span class="g">✓</span>                                                   | <span class="r">✗</span> stores ctx context.Context in struct        |
-| 4.2  | Passes context as a parameter to Start() or Run() method                                                       | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses stored struct field context            |
-| 4.3  | Uses context cancellation or a done channel for graceful shutdown signaling                                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 4.4  | Listens to ctx.Done() in a select statement to detect shutdown                                                 | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 4.5  | ctx is the first parameter where it appears, named ctx context.Context                                         | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **5. without-cancel-background-work** — use context.WithoutCancel for background work (Go 1.21+)               | **<span class="g">5/5</span>**                                             | **<span class="r">2/5</span>**                                       |
-| 5.1  | Uses context.WithoutCancel to create a context for the audit goroutine                                         | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background()                   |
-| 5.2  | Does NOT pass r.Context() directly to the background audit goroutine                                           | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 5.3  | Does NOT use context.Background() for the audit goroutine (that would lose trace_id)                           | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background()                   |
-| 5.4  | The audit goroutine preserves request-scoped values (trace_id) from the original context                       | <span class="g">✓</span>                                                   | <span class="r">✗</span> context.Background() loses all values       |
-| 5.5  | Launches the audit as a separate goroutine (go keyword) so the handler can return immediately                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **6. nested-timeout-shorter-wins** — nested timeouts take the shorter deadline                                 | **<span class="r">4/5</span>**                                             | **<span class="r">3/5</span>**                                       |
-| 6.1  | Creates the overall 10-second timeout from the parent context                                                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 6.2  | Creates the cache timeout as a child of the overall context                                                    | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 6.3  | Acknowledges that the database timeout is bounded by whatever time remains on the parent                       | <span class="r">✗</span> creates 8s child without noting parent constraint | <span class="r">✗</span> creates independent 8s timeout              |
-| 6.4  | Defers cancel() for every WithTimeout call                                                                     | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 6.5  | Does NOT create independent context.Background() timeouts that bypass the overall deadline                     | <span class="g">✓</span>                                                   | <span class="r">✗</span> creates context.Background() timeout for DB |
-|      | **7. context-todo-vs-background** — use context.TODO() as placeholder, not context.Background()                | **<span class="g">5/5</span>**                                             | **<span class="r">3/5</span>**                                       |
-| 7.1  | Uses context.TODO() as the temporary placeholder in functions not yet fully migrated                           | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses context.Background() everywhere        |
-| 7.2  | Uses context.Background() only at the true top level (main function or test setup)                             | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses Background() at all levels             |
-| 7.3  | Shows a migration path where context.TODO() is gradually replaced as callers are updated                       | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 7.4  | Context is always the first parameter, named ctx context.Context                                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 7.5  | Does NOT pass nil as a context value at any point in the migration                                             | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **8. db-context-variants** — use *Context database method variants                                             | **<span class="g">5/5</span>**                                             | **<span class="g">5/5</span>**                                       |
-| 8.1  | Uses db.QueryRowContext (not db.QueryRow) for GetByID                                                          | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 8.2  | Uses db.ExecContext (not db.Exec) for Create, Update, and Delete                                               | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 8.3  | Passes the ctx parameter to every database call                                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 8.4  | Does NOT ignore the ctx parameter by calling non-context database methods                                      | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 8.5  | Each method accepts ctx context.Context as its first parameter                                                 | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-|      | **9. context-values-abuse** — do not stuff infrastructure deps into context values                             | **<span class="g">5/5</span>**                                             | **<span class="g">4/5</span>**                                       |
-| 9.1  | Database connection is passed as a struct field or explicit parameter, NOT via context value                   | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 9.2  | Logger is passed as a struct field or explicit parameter, NOT via context value                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 9.3  | Order details are passed as an explicit function parameter, NOT via context value                              | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 9.4  | User ID and/or trace ID are stored in context values (these are request-scoped metadata)                       | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 9.5  | Distinguishes between infrastructure dependencies (explicit) and request-scoped metadata (context values)      | <span class="g">✓</span>                                                   | <span class="r">✗</span> no explicit distinction made                |
-|      | **10. afterfunc-cleanup** — use context.AfterFunc for non-blocking cleanup (Go 1.21+)                          | **<span class="r">4/5</span>**                                             | **<span class="r">2/5</span>**                                       |
-| 10.1 | Uses context.AfterFunc to register the cleanup callback                                                        | <span class="g">✓</span>                                                   | <span class="r">✗</span> uses manual goroutine with <-ctx.Done()     |
-| 10.2 | Does NOT block the main flow waiting for context cancellation                                                  | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 10.3 | The cleanup function removes the temporary file                                                                | <span class="g">✓</span>                                                   | <span class="g">✓</span>                                             |
-| 10.4 | Captures the stop function returned by AfterFunc for potential cancellation of the callback                    | <span class="g">✓</span>                                                   | <span class="r">✗</span> no stop function (uses goroutine)           |
-| 10.5 | Also includes a defer-based cleanup as a safety net (AfterFunc + defer for belt-and-suspenders)                | <span class="r">✗</span> only AfterFunc, no defer fallback                 | <span class="r">✗</span> only goroutine, no defer fallback           |
+| #    | Assertion                                                                         | With                                    | Without                                                     |
+| ---- | --------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------- |
+|      | **1. validator** — `Validate(Config) error` with `*ConfigError` local variable    | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 1.1  | Returns untyped `nil` on valid config                                             | <span class="g">✓</span>                | <span class="r">✗</span> `return configErr` (typed nil)     |
+| 1.2  | No typed nil pointer leaked through `error` interface                             | <span class="g">✓</span>                | <span class="r">✗</span> interface{*ConfigError, nil}       |
+| 1.3  | ConfigError.Error() includes Field name                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 1.4  | Validates both Host and Port                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **2. sliceutil** — `AddDefaults(base, defaults)` append to input slice            | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 2.1  | Does not modify caller's input slice                                              | <span class="g">✓</span>                | <span class="r">✗</span> `base = append(base, v)`           |
+| 2.2  | Uses full-slice expression or clone to prevent aliasing                           | <span class="g">✓</span>                | <span class="r">✗</span> appends directly to `base`         |
+| 2.3  | Correctly checks membership                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 2.4  | Does not modify defaults slice                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **3. user** — `UserProfile` with Permissions/Metadata getter methods              | **<span class="g">5/5</span>**          | **<span class="r">1/5</span>**                              |
+| 3.1  | Collection fields are unexported                                                  | <span class="g">✓</span>                | <span class="r">✗</span> exported `Permissions`, `Metadata` |
+| 3.2  | `GetPermissions` returns defensive copy                                           | <span class="g">✓</span>                | <span class="r">✗</span> returns `u.Permissions`            |
+| 3.3  | `GetMetadata` returns defensive copy                                              | <span class="g">✓</span>                | <span class="r">✗</span> returns `u.Metadata`               |
+| 3.4  | Scalar fields (Name, Email) can stay exported                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 3.5  | Handles nil internal fields gracefully                                            | <span class="g">✓</span>                | <span class="r">✗</span> no nil handling                    |
+|      | **4. db** — `PingAll(hosts)` with `defer db.Close()` in loop                      | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 4.1  | No bare `defer` in loop body                                                      | <span class="g">✓</span>                | <span class="r">✗</span> `defer db.Close()` in `for` loop   |
+| 4.2  | Extracts loop body to helper function                                             | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
+| 4.3  | Checks error from sql.Open                                                        | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 4.4  | Returns meaningful error when none respond                                        | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **5. protocol** — `WriteHeader(w, contentLength int64)` as uint32                 | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
+| 5.1  | Bounds-checks before narrowing `int64` to `uint32`                                | <span class="g">✓</span>                | <span class="r">✗</span> `uint32(contentLength)` directly   |
+| 5.2  | Returns error for out-of-range values                                             | <span class="g">✓</span>                | <span class="r">✗</span> silent truncation                  |
+| 5.3  | Checks for negative contentLength                                                 | <span class="g">✓</span>                | <span class="r">✗</span> negative wraps to large uint32     |
+| 5.4  | Uses math.MaxUint32 for bound check                                               | <span class="g">✓</span>                | <span class="r">✗</span> no check at all                    |
+|      | **6. parser** — `ExtractToken(response)` returns first 32 bytes                   | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
+| 6.1  | Does not return raw subslice of input                                             | <span class="g">✓</span>                | <span class="r">✗</span> `response[:32]`                    |
+| 6.2  | Uses clone/copy to release backing array                                          | <span class="g">✓</span>                | <span class="r">✗</span> retains full backing array         |
+| 6.3  | Handles short input (len < 32)                                                    | <span class="g">✓</span>                | <span class="r">✗</span> panics on short input              |
+| 6.4  | Result independent of input                                                       | <span class="g">✓</span>                | <span class="r">✗</span> aliases input                      |
+|      | **7. dispatch** — `ProcessMessage(msg any)` with type assertions                  | **<span class="g">4/4</span>**          | **<span class="r">3/4</span>**                              |
+| 7.1  | Uses comma-ok form, not bare assertion                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 7.2  | Handles unknown types without panic                                               | <span class="g">✓</span>                | <span class="r">✗</span> returns empty string silently      |
+| 7.3  | Uses strings.ToUpper                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 7.4  | Uses strconv/fmt for int conversion                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **8. worker** — `Task.Run()` calls `OnComplete` callback                          | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 8.1  | Checks `OnComplete` for nil before calling                                        | <span class="g">✓</span>                | <span class="r">✗</span> `t.OnComplete(result)` directly    |
+| 8.2  | Usable without setting callback                                                   | <span class="g">✓</span>                | <span class="r">✗</span> panics on `Task{Name:"x"}.Run()`   |
+| 8.3  | Work completes regardless of callback                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 8.4  | Uses pointer receiver                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **9. router** — `NewRouter(prefix)` + `Handle()` with routes map                  | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 9.1  | Map initialized before write                                                      | <span class="g">✓</span>                | <span class="r">✗</span> nil map, Handle panics             |
+| 9.2  | Usable after NewRouter                                                            | <span class="g">✓</span>                | <span class="r">✗</span> first Handle panics                |
+| 9.3  | Stores handler correctly                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 9.4  | Returns pointer                                                                   | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **10. pricing** — `IsDiscountApplied` comparing float results                     | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 10.1 | Uses epsilon comparison, not `==`                                                 | <span class="g">✓</span>                | <span class="r">✗</span> `finalPrice == expected`           |
+| 10.2 | Reasonable epsilon value                                                          | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
+| 10.3 | Correct discount formula                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 10.4 | Handles edge cases (zero price, 100% discount)                                    | <span class="g">✓</span>                | <span class="r">✗</span> no edge case handling              |
+|      | **11. cache** — `Cache.All()` returns all entries                                 | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 11.1 | `All()` returns defensive copy                                                    | <span class="g">✓</span>                | <span class="r">✗</span> returns `c.data` directly          |
+| 11.2 | Constructor initializes map                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 11.3 | Get uses comma-ok idiom                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 11.4 | Callers cannot modify cache via All()                                             | <span class="g">✓</span>                | <span class="r">✗</span> shared reference                   |
+|      | **12. pipeline** — `FanIn(channels...)` merges variadic channels                  | **<span class="g">4/4</span>**          | **<span class="r">3/4</span>**                              |
+| 12.1 | Handles closed channels                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 12.2 | Output closed once                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 12.3 | No goroutine leaks                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 12.4 | Handles nil input channels                                                        | <span class="g">✓</span>                | <span class="r">✗</span> nil channel blocks goroutine       |
+|      | **13. parser** — `TryParse` wrapping `*ParseError` into `error` via named returns | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 13.1 | No typed nil leaked through named return                                          | <span class="g">✓</span>                | <span class="r">✗</span> `err = parseErr` unconditional     |
+| 13.2 | Named err only set when non-nil                                                   | <span class="g">✓</span>                | <span class="r">✗</span> always assigned                    |
+| 13.3 | ParseError.Error() includes Line                                                  | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 13.4 | Parse returns nil *ParseError on success                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **14. notify** — `NotifyAll(n *Notifier, msgs)` with nil Notifier                 | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 14.1 | Handles nil *Notifier without panic                                               | <span class="g">✓</span>                | <span class="r">✗</span> dereferences `n.webhook`           |
+| 14.2 | Returns meaningful error when nil                                                 | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
+| 14.3 | Iterates messages, returns first error                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 14.4 | Send uses webhook field                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **15. inventory** — `Inventory.Items()` returns items list                        | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 15.1 | Items() returns defensive copy                                                    | <span class="g">✓</span>                | <span class="r">✗</span> returns `inv.items`                |
+| 15.2 | Add uses append correctly                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 15.3 | Modifying returned slice doesn't affect Inventory                                 | <span class="g">✓</span>                | <span class="r">✗</span> shared backing array               |
+| 15.4 | Field is unexported                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **16. httputil** — `HeaderString(map)` formatting headers                         | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 16.1 | Sorts keys for deterministic output                                               | <span class="g">✓</span>                | <span class="r">✗</span> ranges over map directly           |
+| 16.2 | Uses sort or slices.Sorted                                                        | <span class="g">✓</span>                | <span class="r">✗</span> no sorting                         |
+| 16.3 | Uses strings.Builder                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 16.4 | Each line ends with \r\n                                                          | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **17. stats** — `SuccessRate(success, total)` as percentage                       | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
+| 17.1 | Guards zero total                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 17.2 | Returns 0.0 not NaN                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 17.3 | Converts to float64 before division                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 17.4 | Result in 0-100 range                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **18. fetcher** — `FetchAll(urls)` with `defer resp.Body.Close()` in loop         | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 18.1 | No bare `defer` in loop body                                                      | <span class="g">✓</span>                | <span class="r">✗</span> `defer resp.Body.Close()` in loop  |
+| 18.2 | Extracts to helper function                                                       | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
+| 18.3 | Checks resp error                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 18.4 | Preallocates results                                                              | <span class="g">✓</span>                | <span class="r">✗</span> no preallocation                   |
+|      | **19. dashboard** — `New(name)` constructor with `widgets map` field              | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
+| 19.1 | Constructor initializes widgets map                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 19.2 | AddWidget works on first call                                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 19.3 | Layout append safe (nil slice ok)                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 19.4 | Usable after New()                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **20. protocol** — `PackAge(age int) byte` for binary protocol                    | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
+| 20.1 | Validates 0-255 range                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `byte(age)` directly               |
+| 20.2 | Returns error for out-of-range                                                    | <span class="g">✓</span>                | <span class="r">✗</span> no validation                      |
+| 20.3 | Changes signature to (byte, error)                                                | <span class="g">✓</span>                | <span class="r">✗</span> returns just byte                  |
+| 20.4 | Handles negative ages                                                             | <span class="g">✓</span>                | <span class="r">✗</span> wraps to 255                       |
+|      | **21. search** — `ExtractBefore(buf, marker)` returns prefix                      | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 21.1 | Returns copy not subslice                                                         | <span class="g">✓</span>                | <span class="r">✗</span> `buf[:i]`                          |
+| 21.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
+| 21.3 | Both paths return copies                                                          | <span class="g">✓</span>                | <span class="r">✗</span> returns raw `buf`                  |
+| 21.4 | Uses bytes.IndexByte                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **22. http** — `Client.Fetch` with `OnRequest`/`OnResponse` callbacks             | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
+| 22.1 | Checks OnRequest for nil                                                          | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
+| 22.2 | Checks OnResponse for nil                                                         | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
+| 22.3 | Usable with zero-value callbacks                                                  | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
+| 22.4 | Both hooks optional                                                               | <span class="g">✓</span>                | <span class="r">✗</span> panics if unset                    |
+|      | **23. billing** — `ChargesMatch(computed, invoiced)` float comparison             | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 23.1 | Uses epsilon not ==                                                               | <span class="g">✓</span>                | <span class="r">✗</span> `computed == invoiced`             |
+| 23.2 | Reasonable epsilon                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
+| 23.3 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no edge handling                   |
+| 23.4 | No reflect.DeepEqual                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **24. filter** — `RemoveEmpty(items)` in-place slice deletion                     | **<span class="g">4/4</span>**          | **<span class="g">4/4</span>**                              |
+| 24.1 | Safe deletion pattern                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 24.2 | No element skipping                                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 24.3 | Preserves capacity semantics                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 24.4 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **25. middleware** — `Handle(handler func() *AppError) error` one-liner           | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 25.1 | Avoids typed nil leak from handler()                                              | <span class="g">✓</span>                | <span class="r">✗</span> `return handler()`                 |
+| 25.2 | Uses conditional nil check                                                        | <span class="g">✓</span>                | <span class="r">✗</span> direct return                      |
+| 25.3 | Does not assign to error var directly                                             | <span class="g">✓</span>                | <span class="r">✗</span> implicit assignment                |
+| 25.4 | AppError.Error() includes Code and Msg                                            | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **26. team** — `NewTeam(name, members)` + `Members()` getter                      | **<span class="g">5/5</span>**          | **<span class="r">1/5</span>**                              |
+| 26.1 | Constructor copies input (defensive ingress)                                      | <span class="g">✓</span>                | <span class="r">✗</span> `members: members`                 |
+| 26.2 | Members() returns copy (egress)                                                   | <span class="g">✓</span>                | <span class="r">✗</span> returns `t.members`                |
+| 26.3 | Uses slices.Clone or copy                                                         | <span class="g">✓</span>                | <span class="r">✗</span> no copies at all                   |
+| 26.4 | Fields unexported                                                                 | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 26.5 | Handles nil input                                                                 | <span class="g">✓</span>                | <span class="r">✗</span> no nil handling                    |
+|      | **27. fileutil** — `WriteAll(paths, data)` with defer in create loop              | **<span class="g">4/5</span>**          | **<span class="r">1/5</span>**                              |
+| 27.1 | No bare defer in loop                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `defer f.Close()` in loop          |
+| 27.2 | Extracts to helper                                                                | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
+| 27.3 | Helper handles Create+Close+Write                                                 | <span class="g">✓</span>                | <span class="r">✗</span> no helper                          |
+| 27.4 | Errors from Create and Write checked                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 27.5 | Does not ignore Close error                                                       | <span class="r">✗</span> defer discards | <span class="r">✗</span> defer discards                     |
+|      | **28. config** — `Merge(a, b Endpoint)` merging Labels maps                       | **<span class="g">5/5</span>**          | **<span class="r">2/5</span>**                              |
+| 28.1 | Result Labels initialized before write                                            | <span class="g">✓</span>                | <span class="r">✗</span> writes to copied nil map           |
+| 28.2 | Correct merge with b precedence                                                   | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 28.3 | Does not modify input maps                                                        | <span class="g">✓</span>                | <span class="r">✗</span> aliases a's map                    |
+| 28.4 | Handles nil Labels                                                                | <span class="g">✓</span>                | <span class="r">✗</span> panics on nil write                |
+| 28.5 | Correct zero-value checks                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **29. text** — `FirstWord(line)` returns first word via IndexByte                 | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 29.1 | Returns copy not subslice                                                         | <span class="g">✓</span>                | <span class="r">✗</span> `line[:i]`                         |
+| 29.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
+| 29.3 | Both paths return copies                                                          | <span class="g">✓</span>                | <span class="r">✗</span> returns raw `line`                 |
+| 29.4 | Handles edge cases                                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **30. net** — `EncodeAddr(host, port int)` with uint16 port                       | **<span class="g">5/5</span>**          | **<span class="r">2/5</span>**                              |
+| 30.1 | Validates port 0-65535                                                            | <span class="g">✓</span>                | <span class="r">✗</span> `uint16(port)` directly            |
+| 30.2 | Returns error for negative/overflow                                               | <span class="g">✓</span>                | <span class="r">✗</span> silent truncation                  |
+| 30.3 | Uses math.MaxUint16                                                               | <span class="g">✓</span>                | <span class="r">✗</span> no check                           |
+| 30.4 | Correct buffer allocation                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 30.5 | Uses PutUint16 as specified                                                       | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **31. testing** — `AssertPrice(t, got, want float64)` test helper                 | **<span class="g">5/5</span>**          | **<span class="r">3/5</span>**                              |
+| 31.1 | Uses epsilon not !=                                                               | <span class="g">✓</span>                | <span class="r">✗</span> `got != want`                      |
+| 31.2 | Reasonable epsilon                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no epsilon                         |
+| 31.3 | Calls t.Helper()                                                                  | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 31.4 | Shows got and want in message                                                     | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 31.5 | No reflect.DeepEqual                                                              | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **32. server** — `Server.Start/Stop` with `OnStart`/`OnStop` callbacks            | **<span class="g">4/4</span>**          | **<span class="r">0/4</span>**                              |
+| 32.1 | Checks OnStart for nil                                                            | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
+| 32.2 | Checks OnStop for nil                                                             | <span class="g">✓</span>                | <span class="r">✗</span> calls directly                     |
+| 32.3 | Methods work without callbacks                                                    | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
+| 32.4 | Usable with zero-value callbacks                                                  | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
+|      | **33. pool** — `Utilization(active, capacity)` as percentage                      | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 33.1 | Guards zero capacity                                                              | <span class="g">✓</span>                | <span class="r">✗</span> `active*100/capacity` no guard     |
+| 33.2 | Returns sensible default for zero                                                 | <span class="g">✓</span>                | <span class="r">✗</span> panics                             |
+| 33.3 | Uses integer arithmetic                                                           | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 33.4 | Correct multiplication order                                                      | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **34. store** — `Store.GetAll(key)` returns `[]string` values                     | **<span class="g">5/5</span>**          | **<span class="r">3/5</span>**                              |
+| 34.1 | GetAll returns defensive copy                                                     | <span class="g">✓</span>                | <span class="r">✗</span> returns `s.data[key]`              |
+| 34.2 | Uses Clone/copy                                                                   | <span class="g">✓</span>                | <span class="r">✗</span> no copy                            |
+| 34.3 | Constructor inits map                                                             | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 34.4 | Add uses append correctly                                                         | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 34.5 | GetAll returns nil for missing key                                                | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+|      | **35. scanner** — `ScanAll(readers)` with defer close in loop                     | **<span class="g">4/4</span>**          | **<span class="r">1/4</span>**                              |
+| 35.1 | No bare defer in loop                                                             | <span class="g">✓</span>                | <span class="r">✗</span> `defer c.Close()` in loop          |
+| 35.2 | Extracts to helper                                                                | <span class="g">✓</span>                | <span class="r">✗</span> all in one function                |
+| 35.3 | Uses type assertion for Closer                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 35.4 | Preallocates results                                                              | <span class="g">✓</span>                | <span class="r">✗</span> no preallocation                   |
+|      | **36. metric** — `PercentChange(before, after)` percentage formula                | **<span class="g">4/4</span>**          | **<span class="r">2/4</span>**                              |
+| 36.1 | Guards zero before                                                                | <span class="g">✓</span>                | <span class="r">✗</span> no guard, Inf/NaN                  |
+| 36.2 | Converts to float64 before division                                               | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
+| 36.3 | Returns sensible default for zero                                                 | <span class="g">✓</span>                | <span class="r">✗</span> returns Inf                        |
+| 36.4 | Formula mathematically correct                                                    | <span class="g">✓</span>                | <span class="g">✓</span>                                    |
 
 </details>
 
-## `golang-continuous-integration` — v1.0.0
+## `golang-ci` — v1.0.0
 
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
+| | With Skill | Without Skill | Delta |
+| --- | --- | --- | --- |
 | **Overall** | **66/66 (100%)** | **27/66 (41%)** | **+59pp** |
 
 <details>
@@ -2890,661 +3375,6 @@ Evals 1–12 (72 assertions) are unchanged from the v1.0.0 run below. Evals 13 (
 | 13.3 | Sets a threshold value (e.g., 2%) to allow small drops                                        | <span class="g">✓</span>       | <span class="r">✗</span> no threshold                             |
 | 13.4 | Configures patch coverage target for new code in PRs                                          | <span class="g">✓</span>       | <span class="r">✗</span> no patch target                          |
 | 13.5 | Coverage upload is conditional on a single matrix entry (e.g., only on stable)                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-
-</details>
-
-## `golang-dependency-injection` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **48/49 (98%)** | **24/49 (49%)** | **+49pp** |
-
-<details>
-<summary>Full breakdown (49 assertions across 10 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                 | With                           | Without                                                           |
-| ---- | ----------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
-|      | **1. constructor-injection-not-globals** — inject via constructors, not globals or init() | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                    |
-| 1.1  | Uses constructor injection (NewUserService taking dependencies as parameters)             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.2  | Explicitly advises against package-level variables for service dependencies               | <span class="g">✓</span>       | <span class="r">✗</span> accepts global var approach              |
-| 1.3  | Explains why globals are problematic (untestable, hidden dependencies, or coupling)       | <span class="g">✓</span>       | <span class="r">✗</span> no explanation of problems               |
-| 1.4  | Does NOT use `init()` for service initialization                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 1.5  | Returns a concrete struct pointer from the constructor, not an interface                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **2. interface-defined-at-consumer** — interfaces defined where consumed, not implemented | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 2.1  | Defines the interface in the consuming package, not the implementation package            | <span class="g">✓</span>       | <span class="r">✗</span> defines interface next to implementation |
-| 2.2  | Explains the principle: accept interfaces, return structs                                 | <span class="g">✓</span>       | <span class="r">✗</span> not stated                               |
-| 2.3  | The implementation package returns a concrete struct pointer                              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 2.4  | The consumer depends on its own locally-defined interface                                 | <span class="g">✓</span>       | <span class="r">✗</span> imports provider interface               |
-| 2.5  | Does NOT have the implementation package import the consumer's interface                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **3. container-not-passed-as-dependency** — service locator anti-pattern                  | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 3.1  | Advises against passing the injector/container as a dependency                            | <span class="g">✓</span>       | <span class="r">✗</span> accepts passing injector                 |
-| 3.2  | Identifies this as the service locator anti-pattern                                       | <span class="g">✓</span>       | <span class="r">✗</span> not identified                           |
-| 3.3  | Shows that the Injector should only exist at the composition root                         | <span class="g">✓</span>       | <span class="r">✗</span> injector used throughout                 |
-| 3.4  | Shows UserService receiving Database and Mailer directly as constructor parameters        | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 3.5  | Shows the provider function using `do.MustInvoke` inside the provider, not inside methods | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **4. manual-di-for-small-projects** — small projects use manual DI, not a library         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 4.1  | Recommends manual constructor injection for a project with only 5 services                | <span class="g">✓</span>       | <span class="r">✗</span> recommends Fx                            |
-| 4.2  | Does NOT recommend a DI library as the primary approach                                   | <span class="g">✓</span>       | <span class="r">✗</span> leads with DI library                    |
-| 4.3  | Shows wiring in `main()` with explicit constructor calls in dependency order              | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 4.4  | Initializes infrastructure first, then repositories, then services, then transport        | <span class="g">✓</span>       | <span class="r">✗</span> no layered ordering                      |
-| 4.5  | Mentions that a DI library becomes worthwhile at 10-20+ services                          | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **5. di-library-selection-judgment** — correct library recommendation based on criteria   | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                    |
-| 5.1  | Recommends samber/do as a strong fit (generics, lifecycle, compile-time safety)           | <span class="g">✓</span>       | <span class="r">✗</span> recommends uber-go/fx                    |
-| 5.2  | Explains why uber-go/fx uses reflection (runtime errors, not compile-time)                | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 5.3  | Mentions that samber/do requires Go 1.18+ for generics                                    | <span class="g">✓</span>       | <span class="r">✗</span> samber/do not discussed                  |
-| 5.4  | Discusses multiple DI library options from the decision table                             | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **6. fx-lifecycle-hooks-pattern** — uber-go/fx OnStart/OnStop hooks for DB connection     | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
-| 6.1  | Uses `fx.Lifecycle` parameter in the provider function                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.2  | Registers OnStart hook for establishing the database connection                           | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.3  | Registers OnStop hook for closing the database connection                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.4  | Uses `lc.Append(fx.Hook{...})` pattern                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 6.5  | OnStart and OnStop take `context.Context` as parameter                                    | <span class="g">✓</span>       | <span class="r">✗</span> omitted context parameter                |
-|      | **7. testing-with-di-mock-injection** — inject mocks at the interface boundary            | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                    |
-| 7.1  | Creates a mock implementation of the UserStore interface                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.2  | Injects the mock into UserService via the constructor (NewUserService)                    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.3  | Tests both the success path (user found) and the error path (not found)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.4  | Does NOT use a real database connection in the test                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 7.5  | The mock is defined in the test file, not as a package-level or global variable           | <span class="g">✓</span>       | <span class="r">✗</span> mock as package-level var                |
-|      | **8. shallow-dependency-graph** — deep chains are a design problem                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 8.1  | Identifies the deep dependency chain as a design problem                                  | <span class="g">✓</span>       | <span class="r">✗</span> accepts as normal layered architecture   |
-| 8.2  | Recommends flattening the dependency graph                                                | <span class="g">✓</span>       | <span class="r">✗</span> no flattening suggested                  |
-| 8.3  | Suggests that most services should depend on repositories and config directly             | <span class="g">✓</span>       | <span class="r">✗</span> keeps transitive chain                   |
-| 8.4  | Explains negative consequences of deep chains (fragility, hard to test)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 8.5  | Proposes a concrete restructuring                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **9. one-container-per-app-not-per-request** — container created once, not per request   | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                    |
-| 9.1  | Identifies creating a new container per request as a mistake                              | <span class="g">✓</span>       | <span class="r">✗</span> accepts per-request as reasonable        |
-| 9.2  | Recommends one container per application created at startup                               | <span class="g">✓</span>       | <span class="r">✗</span> no single-container guidance             |
-| 9.3  | Explains the performance/correctness problem (recreating singletons, no connection reuse) | <span class="g">✓</span>       | <span class="r">✗</span> no performance concern                   |
-| 9.4  | Suggests using scopes for request-level isolation if needed                               | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 9.5  | Shows the container being created once in `main()` and services injected into handlers    | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-|      | **10. lazy-vs-eager-initialization** — lazy init preference, singleton vs transient       | **<span class="r">4/5</span>** | **<span class="r">1/5</span>**                                    |
-| 10.1 | Recommends lazy initialization (services created on first use, not all at startup)        | <span class="g">✓</span>       | <span class="r">✗</span> recommends eager for everything          |
-| 10.2 | Recommends singletons for stateful services like database connections                     | <span class="g">✓</span>       | <span class="g">✓</span>                                          |
-| 10.3 | Recommends transients (or factories) for stateless request processing services            | <span class="g">✓</span>       | <span class="r">✗</span> all singletons                           |
-| 10.4 | Explains why lazy loading is beneficial (unused services never created, faster startup)   | <span class="r">✗</span>       | <span class="r">✗</span> no lazy benefits explained               |
-| 10.5 | Notes how DI libraries handle lazy vs eager initialization (samber/do, dig, fx)           | <span class="g">✓</span>       | <span class="r">✗</span> no library comparison for lazy           |
-
-</details>
-
-## `golang-dependency-management` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **52/52 (100%)** | **24/52 (46%)** | **+54pp** |
-
-<details>
-<summary>Full breakdown (52 assertions across 11 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                     | With                           | Without                                                      |
-| ---- | --------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
-|      | **1. ask-before-adding-dependency** — AI agent must ask before `go get`                       | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
-| 1.1  | Asks the user for confirmation before running `go get`                                        | <span class="g">✓</span>       | <span class="r">✗</span> runs go get immediately             |
-| 1.2  | Presents the package name and import path                                                     | <span class="g">✓</span>       | <span class="r">✗</span> installs without showing path       |
-| 1.3  | Mentions whether the standard library covers the use case                                     | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib mention                   |
-| 1.4  | Lists known alternatives                                                                      | <span class="g">✓</span>       | <span class="r">✗</span> suggests one library directly       |
-| 1.5  | Does NOT silently run `go get` without asking first                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **2. go-sum-must-be-committed** — go.sum is critical for supply-chain security                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 2.1  | Strongly advises against gitignoring go.sum                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.2  | Explains that go.sum contains cryptographic checksums for dependency verification             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.3  | Explains the supply-chain security risk: compromised proxy could substitute malicious code    | <span class="g">✓</span>       | <span class="r">✗</span> no supply-chain mention             |
-| 2.4  | Mentions `go mod verify` as the mechanism that uses go.sum                                    | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
-| 2.5  | Recommends removing go.sum from .gitignore                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **3. patch-only-upgrade-preference** — `go get -u=patch` safer than `go get -u`               | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
-| 3.1  | Recommends `go get -u=patch ./...` as the safer default                                       | <span class="g">✓</span>       | <span class="r">✗</span> recommends `go get -u ./...`        |
-| 3.2  | Explains that `-u=patch` only upgrades patch versions (no API changes per semver)             | <span class="g">✓</span>       | <span class="r">✗</span> no distinction made                 |
-| 3.3  | Explains that `-u` upgrades minor versions too, which can change behavior                     | <span class="g">✓</span>       | <span class="r">✗</span> no warning about minor              |
-| 3.4  | Mentions running `go mod tidy` after upgrading                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 3.5  | Does NOT recommend `go get -u ./...` without warning about risk                               | <span class="g">✓</span>       | <span class="r">✗</span> recommends it as primary            |
-|      | **4. mvs-algorithm-understanding** — Minimal Version Selection, not latest                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 4.1  | Correctly states that Go selects v1.3.0 (not the latest available)                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 4.2  | Explains MVS: Go picks the highest minimum required, not the latest available                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 4.3  | Distinguishes MVS from other package managers (npm, pip, cargo)                               | <span class="g">✓</span>       | <span class="r">✗</span> no comparison to other managers     |
-| 4.4  | Mentions that MVS provides deterministic builds without a lock file                           | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
-| 4.5  | Explains that go.sum is integrity verification, not version locking                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **5. major-version-suffix-rule** — /v2 suffix for v2+ modules                                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                               |
-| 5.1  | States that the module path must include `/v2` suffix                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.2  | States that all import paths must be updated to include `/v2`                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.3  | Explains this is Go's import compatibility rule                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.4  | Mentions that v0 and v1 do NOT have a suffix                                                  | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                       |
-| 5.5  | Notes that v1 and v2 can coexist in the same build                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **6. replace-directive-library-warning** — replace ignored when consumed as dependency        | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
-| 6.1  | States that replace directives only take effect in the main module's go.mod                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.2  | States that consumers will NOT use the fork                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.3  | Recommends removing replace directives before publishing a library                            | <span class="g">✓</span>       | <span class="r">✗</span> no publish warning                  |
-| 6.4  | Suggests alternative solutions (upstream the fix, publish fork as separate module)            | <span class="g">✓</span>       | <span class="r">✗</span> no alternatives offered             |
-|      | **7. tools-go-pattern** — pin CLI tool versions in go.mod                                     | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                               |
-| 7.1  | Recommends the tools.go pattern (file with `//go:build tools` constraint)                     | <span class="g">✓</span>       | <span class="r">✗</span> suggests `go install @latest` in CI |
-| 7.2  | Uses blank imports (`_` imports) to keep tools in go.mod                                      | <span class="g">✓</span>       | <span class="r">✗</span> no blank imports                    |
-| 7.3  | The build constraint ensures the file is never compiled into production code                  | <span class="g">✓</span>       | <span class="r">✗</span> no build constraint                 |
-| 7.4  | Mentions running `go mod tidy` after creating the tools.go file                               | <span class="g">✓</span>       | <span class="r">✗</span> no tidy mention                     |
-| 7.5  | Explains that `go install` then uses the pinned version from go.mod                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **8. govulncheck-call-path-analysis** — static analysis traces call paths to vulnerable funcs | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 8.1  | Recommends govulncheck to check if vulnerability is reachable                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 8.2  | Explains that govulncheck uses static analysis to trace call paths                            | <span class="g">✓</span>       | <span class="r">✗</span> no call-path explanation            |
-| 8.3  | Explains that if code never calls the affected function, govulncheck will NOT flag it         | <span class="g">✓</span>       | <span class="r">✗</span> not explained                       |
-| 8.4  | Shows the `govulncheck ./...` command                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 8.5  | Distinguishes govulncheck from generic CVE scanners                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **9. go-work-sum-gitignore** — go.work.sum should NOT be committed                            | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 9.1  | States that go.work.sum should NOT be committed                                               | <span class="g">✓</span>       | <span class="r">✗</span> suggests committing both            |
-| 9.2  | Recommends adding go.work.sum to .gitignore                                                   | <span class="g">✓</span>       | <span class="r">✗</span> no gitignore mention                |
-| 9.3  | Explains that go.work is for development only                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 9.4  | Distinguishes this from go.sum which MUST be committed                                        | <span class="g">✓</span>       | <span class="r">✗</span> treats both the same                |
-| 9.5  | May mention that go.work itself can optionally be committed                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **10. exclude-vs-retract-distinction** — exclude is consumer-side, retract is author-side     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 10.1 | Uses `retract` for the published library (author-side)                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 10.2 | Uses `exclude` for the buggy dependency (consumer-side)                                       | <span class="g">✓</span>       | <span class="r">✗</span> uses replace instead                |
-| 10.3 | Explains that retract goes in the library's own go.mod                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 10.4 | Explains that exclude redirects to the next higher available version                          | <span class="g">✓</span>       | <span class="r">✗</span> no redirect behavior explained      |
-| 10.5 | Notes that retracted versions are still downloadable but not selected by default              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **11. test-dependency-upgrade-flag** — `-t` flag for including test deps in upgrades          | **<span class="g">3/3</span>** | **<span class="r">1/3</span>**                               |
-| 11.1 | Explains that `go get -u ./...` excludes test-only dependencies by default                    | <span class="g">✓</span>       | <span class="r">✗</span> not explained                       |
-| 11.2 | Recommends `go get -u -t ./...` to include test dependencies                                  | <span class="g">✓</span>       | <span class="r">✗</span> suggests upgrading individually     |
-| 11.3 | Explains the difference between `-u` and `-u -t`                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-
-</details>
-
-## `golang-structs-interfaces` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **52/52 (100%)** | **34/52 (65%)** | **+35pp** |
-
-<details>
-<summary>Full breakdown (52 assertions across 11 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                     | With                           | Without                                                       |
-| ---- | --------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------- |
-|      | **1. interface-at-consumer-not-implementor** — notification service using email client        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 1.1  | Interface is defined in the notification package (the consumer), NOT in the email package     | <span class="g">✓</span>       | <span class="r">✗</span> defines in email package             |
-| 1.2  | Interface has only the methods the notification package needs (not the full email.Client API) | <span class="g">✓</span>       | <span class="r">✗</span> mirrors full Client API              |
-| 1.3  | Email package exports a concrete Client struct, not an interface                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 1.4  | Explains WHY: keeps the consumer in control of the contract, avoids importing for interface   | <span class="g">✓</span>       | <span class="r">✗</span> no rationale given                   |
-| 1.5  | Notification service depends on its own interface, not on email package types                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **2. return-structs-not-interfaces** — NewUserService constructor signature                   | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 2.1  | Constructor returns *UserService (concrete type), NOT an interface                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 2.2  | Constructor accepts UserStore as an interface parameter (accept interfaces)                   | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 2.3  | Explains WHY: callers get full access to concrete type; consumers can assign to interface     | <span class="g">✓</span>       | <span class="r">✗</span> no rationale                         |
-| 2.4  | Explicitly states that returning interfaces from constructors is bad practice                 | <span class="g">✓</span>       | <span class="r">✗</span> presents both as valid               |
-| 2.5  | The accept-interfaces-return-structs principle is stated or demonstrated                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **3. premature-interface-trap** — single PostgreSQL implementation repository                 | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
-| 3.1  | Recommends starting with a concrete struct (not an interface) when only one implementation    | <span class="g">✓</span>       | <span class="r">✗</span> creates interface immediately        |
-| 3.2  | Mentions the principle: don't design with interfaces, discover them                           | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 3.3  | Suggests extracting an interface LATER when a second consumer or test mock demands it         | <span class="g">✓</span>       | <span class="r">✗</span> creates interface "for testability"  |
-| 3.4  | Acknowledges that testability IS a valid reason but it should be a deliberate choice          | <span class="g">✓</span>       | <span class="r">✗</span> reflexively adds interface           |
-| 3.5  | Does NOT reflexively recommend creating an interface just because it is a repository          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **4. zero-value-useful-design** — Registry panics without NewRegistry                         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                |
-| 4.1  | Recommends lazy initialization in the Register method (if r.items == nil)                     | <span class="g">✓</span>       | <span class="r">✗</span> says "always call constructor"       |
-| 4.2  | Mentions the Go principle: make the zero value useful                                         | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 4.3  | The fix allows using var r Registry without calling a constructor                             | <span class="g">✓</span>       | <span class="r">✗</span> requires constructor                 |
-| 4.4  | Does NOT just say "always use the constructor" as the primary fix                             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 4.5  | References bytes.Buffer or sync.Mutex as stdlib examples of useful zero values                | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **5. embedding-vs-named-field** — Server with http.Handler and DataStore                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 5.1  | Embeds http.Handler (to promote ServeHTTP to the Server)                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 5.2  | Uses a named field for DataStore (not embedded, methods should not be exposed)                | <span class="g">✓</span>       | <span class="r">✗</span> embeds both                          |
-| 5.3  | Explains the embed vs named field rule: embed for "is a", named field for "has a"             | <span class="g">✓</span>       | <span class="r">✗</span> no rule articulated                  |
-| 5.4  | Mentions that embedding promotes ALL methods of the inner type, which can be undesirable      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 5.5  | Notes that the receiver of promoted methods is the inner type, not the outer type             | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **6. compile-time-interface-check** — MyBuffer implements io.ReadWriter                       | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                |
-| 6.1  | Uses var _ io.ReadWriter = (*MyBuffer)(nil) pattern                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 6.2  | Places the check near the type definition                                                     | <span class="g">✓</span>       | <span class="r">✗</span> places in test file                  |
-| 6.3  | Explains that this costs nothing at runtime                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 6.4  | Explains that the build fails immediately if MyBuffer stops satisfying the interface          | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **7. type-assertion-comma-ok** — check if interface{} value is a string                       | **<span class="g">4/4</span>** | **<span class="g">4/4</span>**                                |
-| 7.1  | Uses the comma-ok form: s, ok := val.(string)                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 7.2  | Checks the ok value before using s                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 7.3  | Warns against bare type assertion (s := val.(string)) because it panics                       | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 7.4  | Handles the !ok case explicitly                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **8. optional-behavior-type-assertion** — flush only if writer supports it                    | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                |
-| 8.1  | Defines a separate Flusher interface with just the Flush method                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 8.2  | Function parameter is io.Writer (not a combined interface)                                    | <span class="g">✓</span>       | <span class="r">✗</span> requires WriteFlusher interface      |
-| 8.3  | Uses type assertion (f, ok := w.(Flusher)) to check for flush capability                      | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 8.4  | Only calls Flush if the type assertion succeeds                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 8.5  | Mentions this pattern is used in the standard library (e.g. http.Flusher, io.ReaderFrom)      | <span class="g">✓</span>       | <span class="r">✗</span> no stdlib reference                  |
-|      | **9. nocopy-sentinel-struct** — prevent ConnPool from being passed by value                   | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                |
-| 9.1  | Recommends embedding a noCopy sentinel struct                                                 | <span class="g">✓</span>       | <span class="r">✗</span> says "always use pointers"           |
-| 9.2  | noCopy implements Lock() and Unlock() methods (empty bodies)                                  | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 9.3  | Explains that go vet will flag copies of structs containing noCopy                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 9.4  | Mentions this is the same technique used by sync.WaitGroup, sync.Mutex, or strings.Builder    | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                        |
-| 9.5  | Shows that the struct should be passed by pointer after adding noCopy                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-|      | **10. generics-over-any-interface** — generic Contains function for any comparable type       | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                |
-| 10.1 | Uses generics with a type parameter: func Contains[T comparable]                              | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 10.2 | Does NOT use []any or interface{} parameters                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 10.3 | Uses the comparable constraint for the type parameter                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 10.4 | Explains WHY: generics preserve type safety, while any loses it                               | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 10.5 | Mentions that any should only be used at true boundaries where type is genuinely unknown      | <span class="g">✓</span>       | <span class="r">✗</span> no boundary guidance                 |
-|      | **11. receiver-consistency-rule** — mixed pointer/value receivers on same type                | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                |
-| 11.1 | Says mixing pointer and value receivers on the same type is wrong or not recommended          | <span class="g">✓</span>       | <span class="r">✗</span> says mixing is fine per-method       |
-| 11.2 | Recommends making ALL methods use pointer receivers since one needs to mutate                 | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-| 11.3 | Explains WHY: consistency rule -- if any method uses a pointer receiver, all should           | <span class="g">✓</span>       | <span class="r">✗</span> no consistency principle articulated |
-| 11.4 | Mentions that method sets differ for T and *T which affects interface satisfaction            | <span class="g">✓</span>       | <span class="g">✓</span>                                      |
-
-</details>
-
-## `golang-lint` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **49/51 (96%)** | **28/51 (55%)** | **+41pp** |
-
-<details>
-<summary>Full breakdown (51 assertions across 11 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                          | With                           | Without                                                      |
-| ---- | -------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
-|      | **1. nolint-directive-specificity** — linter name + justification on every //nolint                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 1.1  | Every //nolint specifies the linter name — no bare //nolint                                        | <span class="g">✓</span>       | <span class="r">✗</span> bare //nolint on 3 lines            |
-| 1.2  | Every //nolint includes a justification comment                                                    | <span class="g">✓</span>       | <span class="r">✗</span> no justifications                   |
-| 1.3  | Type assertion uses //nolint:forcetypeassert with safety explanation                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 1.4  | Long test uses //nolint:funlen with table-driven justification                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 1.5  | Cyclomatic complexity uses //nolint:gocyclo with orchestration justification                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **2. nolint-fix-vs-suppress-judgment** — fix correctness bugs, suppress style issues               | **<span class="g">6/6</span>** | **<span class="g">4/6</span>**                               |
-| 2.1  | Recommends FIXING bodyclose — unclosed response bodies leak connections                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.2  | Recommends SUPPRESSING funlen on table-driven test                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.3  | Recommends FIXING errcheck on database query in request handler                                    | <span class="g">✓</span>       | <span class="r">✗</span> suppressed as "not critical"        |
-| 2.4  | Recommends SUPPRESSING dupl on intentional parallel structure                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.5  | Recommends FIXING sqlclosecheck — unclosed sql.Rows leak connections                               | <span class="g">✓</span>       | <span class="r">✗</span> suppressed with defer comment       |
-| 2.6  | Recommends SUPPRESSING goconst in tests                                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **3. golangci-yml-version-2-structure** — version: "2", formatters section, linters.enable         | **<span class="g">4/5</span>** | **<span class="r">1/5</span>**                               |
-| 3.1  | Config has version: "2" at the top                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> no version field                    |
-| 3.2  | Linters listed under linters.enable (not enable-all)                                               | <span class="g">✓</span>       | <span class="r">✗</span> uses enable-all with disable list   |
-| 3.3  | gofumpt under formatters.enable, NOT linters.enable                                                | <span class="g">✓</span>       | <span class="r">✗</span> gofumpt in linters.enable           |
-| 3.4  | errcheck has check-type-assertions: true in linters.settings                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 3.5  | Timeout set under run.timeout: 5m                                                                  | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
-|      | **4. linter-categories-correctness-vs-style** — prioritize bug-finding over style                  | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 4.1  | Includes govet and staticcheck as highest-value correctness linters                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 4.2  | Includes errcheck for unchecked errors                                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 4.3  | Prioritizes correctness/safety over style linters                                                  | <span class="g">✓</span>       | <span class="r">✗</span> revive and godot ranked above gosec |
-| 4.4  | Includes at least one security linter (bodyclose, gosec, sqlclosecheck)                            | <span class="g">✓</span>       | <span class="r">✗</span> no security linters in top 10       |
-| 4.5  | Does NOT include redundant complexity checkers (gocyclo + cyclop)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **5. legacy-codebase-incremental-adoption** — new-from-rev, not mass //nolint                      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 5.1  | Recommends issues.new-from-rev to only lint new/changed code                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.2  | Does NOT suggest adding //nolint to all 2000+ warnings                                             | <span class="g">✓</span>       | <span class="r">✗</span> suggests mass //nolint annotations  |
-| 5.3  | Suggests gradual cleanup of old code over time                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.4  | Suggests golangci-lint run --fix for auto-fixable issues                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.5  | Mentions parallel sub-agents or batching fixes by category                                         | <span class="g">✓</span>       | <span class="r">✗</span> sequential manual cleanup           |
-|      | **6. interpreting-lint-output-format** — use linter name to triage fix vs suppress                 | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 6.1  | Identifies errcheck on DB.Close as real issue to fix                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.2  | Identifies bodyclose as critical resource leak to fix                                              | <span class="g">✓</span>       | <span class="r">✗</span> treats all warnings equally         |
-| 6.3  | Identifies unused validateToken as dead code to remove                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.4  | Evaluates gocyclo based on function nature (orchestration vs complex)                              | <span class="g">✓</span>       | <span class="r">✗</span> blanket "refactor" recommendation   |
-| 6.5  | Identifies revive comment warning as lower-priority style issue                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **7. disabled-linters-with-rationale** — exhaustruct, gochecknoglobals, wrapcheck, mnd, varnamelen | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 7.1  | Recommends AGAINST exhaustruct — breaks zero-value idiom                                           | <span class="g">✓</span>       | <span class="r">✗</span> enables it for "completeness"       |
-| 7.2  | Recommends AGAINST gochecknoglobals — valid global uses exist                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 7.3  | Recommends AGAINST wrapcheck as default — too noisy                                                | <span class="g">✓</span>       | <span class="r">✗</span> enables it unconditionally          |
-| 7.4  | Recommends AGAINST mnd — flags obvious constants like HTTP status codes                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 7.5  | Recommends AGAINST varnamelen — conflicts with Go's short name idiom                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **8. nolintlint-meta-linter** — enforce proper //nolint hygiene automatically                      | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
-| 8.1  | Recommends enabling nolintlint linter                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 8.2  | Configures require-specific: true                                                                  | <span class="g">✓</span>       | <span class="r">✗</span> no nolintlint config                |
-| 8.3  | Configures require-explanation: true                                                               | <span class="g">✓</span>       | <span class="r">✗</span> no nolintlint config                |
-| 8.4  | Shows correct location: linters.settings.nolintlint                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **9. multiple-nolint-comma-syntax** — comma-separated linters in single directive                  | **<span class="g">3/3</span>** | **<span class="r">2/3</span>**                               |
-| 9.1  | Uses comma-separated: //nolint:errcheck,gosec — not two directives                                 | <span class="g">✓</span>       | <span class="r">✗</span> two separate //nolint lines         |
-| 9.2  | Includes justification explaining both false positives                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 9.3  | Directive on same line as flagged code or line above                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **10. common-config-issues** — timeout, v1-to-v2 migration, linter-not-found                       | **<span class="r">3/4</span>** | **<span class="r">2/4</span>**                               |
-| 10.1 | Recommends increasing run.timeout for deadline exceeded                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 10.2 | Recommends golangci-lint migrate for v1 config errors                                              | <span class="g">✓</span>       | <span class="r">✗</span> suggests manual rewrite             |
-| 10.3 | For linter not found: check version — modernize requires v2.6.0+                                   | <span class="g">✓</span>       | <span class="r">✗</span> suggests reinstalling               |
-| 10.4 | Mentions golangci-lint linters to check available linters                                          | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
-|      | **11. formatter-vs-linter-distinction** — formatters section, fmt subcommand                       | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                               |
-| 11.1 | gofumpt under formatters.enable, NOT linters.enable                                                | <span class="g">✓</span>       | <span class="r">✗</span> linters.enable                      |
-| 11.2 | Sets gofumpt extra-rules: true under formatters.settings                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 11.3 | Mentions golangci-lint fmt ./... command for formatting                                            | <span class="g">✓</span>       | <span class="r">✗</span> only golangci-lint run              |
-| 11.4 | Notes gci and goimports are redundant with gofumpt                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-
-</details>
-
-## `golang-popular-libraries` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **54/54 (100%)** | **38/54 (70%)** | **+30pp** |
-
-<details>
-<summary>Full breakdown (54 assertions across 11 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                | With                           | Without                                                         |
-| ---- | ---------------------------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------- |
-|      | **1. stdlib-first-json** — encoding/json before third-party                              | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                  |
-| 1.1  | Recommends encoding/json as the first option                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 1.2  | Third-party alternatives only for specific performance needs                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 1.3  | Explains stdlib is sufficient for most JSON use cases                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 1.4  | Alternatives presented for measured performance requirements                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 1.5  | Does NOT recommend third-party without first considering stdlib                          | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **2. pgx-over-lib-pq** — pgx as primary PostgreSQL driver                                | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
-| 2.1  | Recommends pgx as the primary recommendation                                             | <span class="g">✓</span>       | <span class="r">✗</span> lib/pq as primary                      |
-| 2.2  | Mentions pgx is faster than lib/pq                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 2.3  | Notes pgx supports all PostgreSQL types and advanced features                            | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 2.4  | May mention lib/pq but positions pgx as preferred                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 2.5  | Does NOT recommend lib/pq as primary without mentioning pgx                              | <span class="g">✓</span>       | <span class="r">✗</span> lib/pq recommended first               |
-|      | **3. chi-for-minimal-router** — chi when staying close to net/http                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
-| 3.1  | Recommends chi as a strong match for stated requirements                                 | <span class="g">✓</span>       | <span class="r">✗</span> recommends Gin                         |
-| 3.2  | Explains chi is lightweight and composes with net/http                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 3.3  | Notes chi has minimal dependencies                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 3.4  | May mention Gin/Echo but positions chi as better fit for net/http                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 3.5  | Does NOT recommend a full framework as primary when user wants to stay close to net/http | <span class="g">✓</span>       | <span class="r">✗</span> Gin as primary recommendation          |
-|      | **4. slog-over-external-loggers** — consider log/slog before zap/zerolog                 | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
-| 4.1  | Mentions log/slog as standard library option (Go 1.21+)                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 4.2  | Presents slog as a viable option, not afterthought                                       | <span class="g">✓</span>       | <span class="r">✗</span> brief mention at end                   |
-| 4.3  | If recommending external, explains specific value over slog                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 4.4  | Does NOT skip standard library consideration entirely                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 4.5  | May mention zap/zerolog for specific use cases                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **5. sqlc-vs-orm-decision** — sqlc for compile-time SQL safety                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                  |
-| 5.1  | Recommends sqlc as a primary option for compile-time SQL safety                          | <span class="g">✓</span>       | <span class="r">✗</span> recommends GORM only                   |
-| 5.2  | Explains sqlc generates type-safe code with no runtime reflection                        | <span class="g">✓</span>       | <span class="r">✗</span> no mention of sqlc                     |
-| 5.3  | Mentions GORM uses runtime reflection — doesn't catch SQL errors at compile time         | <span class="g">✓</span>       | <span class="r">✗</span> GORM presented without caveat          |
-| 5.4  | May also mention ent as a code-generated alternative                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 5.5  | Does NOT recommend only GORM when user asks for compile-time safety                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **6. rate-limiter-stdlib-first** — golang.org/x/time/rate before third-party             | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
-| 6.1  | Recommends golang.org/x/time/rate as official option                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 6.2  | Explains token bucket algorithm                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 6.3  | May mention Tollbooth/limiter for HTTP middleware integration                            | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 6.4  | Does NOT skip the official x/time/rate package                                           | <span class="g">✓</span>       | <span class="r">✗</span> no mention of x/time/rate              |
-| 6.5  | Explains when third-party might be preferred (per-IP, distributed)                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **7. franz-go-for-kafka** — franz-go over legacy sarama                                  | **<span class="g">4/4</span>** | **<span class="r">2/4</span>**                                  |
-| 7.1  | Recommends franz-go as primary recommendation                                            | <span class="g">✓</span>       | <span class="r">✗</span> sarama as primary                      |
-| 7.2  | Describes franz-go as modern, high-performance, feature-complete                         | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 7.3  | Does NOT recommend only sarama without mentioning franz-go                               | <span class="g">✓</span>       | <span class="r">✗</span> only sarama mentioned                  |
-| 7.4  | May mention sarama but positions franz-go as preferred modern choice                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **8. check-maintenance-before-recommending** — Logrus deprecated, suggest alternatives   | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
-| 8.1  | Mentions Logrus is deprecated or in maintenance mode                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 8.2  | Suggests alternatives: slog, zap, or zerolog                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 8.3  | Explains maintained alternatives preferred for new projects                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 8.4  | Does NOT unconditionally recommend Logrus without deprecation note                       | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 8.5  | Prioritizes maturity and maintenance status                                              | <span class="g">✓</span>       | <span class="r">✗</span> mentions deprecation but still says OK |
-|      | **9. avoid-unnecessary-wrappers** — warn against thin stdlib wrappers                    | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                                  |
-| 9.1  | Warns against wrapping stdlib without meaningful value                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 9.2  | Explains dependencies increase attack surface and maintenance burden                     | <span class="g">✓</span>       | <span class="r">✗</span> no mention of dependency cost          |
-| 9.3  | Recommends evaluating whether net/http itself is sufficient                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 9.4  | Mentions anti-pattern of adding dependencies for marginal convenience                    | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 9.5  | Suggests considering dependency footprint relative to value                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **10. testcontainers-for-integration** — testcontainers-go for real service testing      | **<span class="g">5/5</span>** | **<span class="g">5/5</span>**                                  |
-| 10.1 | Recommends testcontainers-go for programmatic integration testing                        | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 10.2 | Explains testcontainers-go spins up real Docker containers                               | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 10.3 | Shows or describes container lifecycle within tests                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 10.4 | Positions it as better than manual Docker Compose for test isolation                     | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 10.5 | May also mention go-sqlmock for unit-level database testing                              | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-|      | **11. slices-maps-packages-go121** — stdlib slices/maps before external utility libs     | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                  |
-| 11.1 | Recommends stdlib slices package (Go 1.21+) for Contains, Sort, Reverse                  | <span class="g">✓</span>       | <span class="r">✗</span> recommends samber/lo for everything    |
-| 11.2 | Does NOT recommend only external libs for basic slice ops                                | <span class="g">✓</span>       | <span class="r">✗</span> samber/lo as sole recommendation       |
-| 11.3 | May mention samber/lo for functional ops (Map, Filter, Reduce)                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 11.4 | Distinguishes stdlib-covered ops from those requiring external libs                      | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-| 11.5 | Applies the 'standard library first' principle                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                        |
-
-</details>
-
-## `golang-project-layout` — v1.0.0
-
-|             | With Skill       | Without Skill   | Delta     |
-| ----------- | ---------------- | --------------- | --------- |
-| **Overall** | **55/55 (100%)** | **34/55 (62%)** | **+38pp** |
-
-<details>
-<summary>Full breakdown (55 assertions across 11 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                                                                 | With                           | Without                                                                                   |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------- |
-|      | **1. ask-architecture-before-structuring** — Tests whether the model asks the developer about architecture preference before imposing one | **<span class="g">5/5</span>** | **<span class="r">1/5</span>**                                                            |
-| 1.1  | Asks the developer which software architecture they prefer (clean, hexagonal, DDD, flat, etc.)                                            | <span class="g">✓</span>       | <span class="r">✗</span> immediately generates a structure                                |
-| 1.2  | Asks about the project scope/size to right-size the structure                                                                             | <span class="g">✓</span>       | <span class="r">✗</span> assumes medium-large project                                     |
-| 1.3  | Does NOT immediately impose a specific architecture without asking                                                                        | <span class="g">✓</span>       | <span class="r">✗</span> imposes clean architecture                                       |
-| 1.4  | Mentions dependency injection approach as a follow-up question                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> no DI question                                                   |
-| 1.5  | Mentions that small projects should not be over-structured                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **2. cmd-directory-minimal-logic** — Tests whether the model keeps cmd/ main.go minimal with no business logic                            | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
-| 2.1  | Says business logic does NOT belong in cmd/server/main.go                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 2.2  | Says cmd/ should contain minimal logic: parse flags, wire dependencies, call Run()                                                        | <span class="g">✓</span>       | <span class="r">✗</span> says "mostly initialization" without being specific              |
-| 2.3  | Recommends moving business logic to internal/ or pkg/                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 2.4  | main.go should primarily do dependency wiring and startup                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 2.5  | NEVER put request parsing, database queries, or response formatting in cmd/                                                               | <span class="g">✓</span>       | <span class="r">✗</span> not explicitly stated                                            |
-|      | **3. no-src-utils-helpers-common** — Tests whether the model avoids Java-style src/ directory and generic package names                   | **<span class="g">6/6</span>** | **<span class="r">4/6</span>**                                                            |
-| 3.1  | Rejects src/ directory (Go doesn't use /src, it's a Java pattern)                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 3.2  | Rejects utils/ as a generic package name                                                                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 3.3  | Rejects helpers/ as a generic package name                                                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 3.4  | Rejects common/ as a generic package name                                                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> accepts common/ as reasonable                                    |
-| 3.5  | Suggests domain-specific package names instead (e.g. format/, stringconv/)                                                                | <span class="g">✓</span>       | <span class="r">✗</span> suggests renaming to "shared/"                                   |
-| 3.6  | Recommends putting main.go inside cmd/{name}/ not at root or in src/                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **4. module-naming-conventions** — Tests whether the model follows Go module naming conventions                                           | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
-| 4.1  | Identifies option 3 (github.com/jdoe/my-project) as correct                                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 4.2  | Rejects option 1 (myproject) -- must match repository URL                                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 4.3  | Rejects option 2 (MyProject) -- must be lowercase only                                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 4.4  | Rejects option 4 (my_project) -- use hyphens not underscores                                                                              | <span class="g">✓</span>       | <span class="r">✗</span> accepts underscores as valid                                     |
-| 4.5  | Rejects option 5 (utils) -- not semantic, doesn't match a repo URL                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **5. internal-vs-pkg-decision** — Tests whether the model correctly decides between internal/ and pkg/                                    | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
-| 5.1  | Puts the shared logging library in pkg/ (useful to external consumers)                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 5.2  | Puts the private request parsing code in internal/ (not exported)                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 5.3  | Explains that internal/ cannot be imported by external packages (Go enforces this)                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 5.4  | Mentions that pkg/ should only be used when code is genuinely intended for external use                                                   | <span class="g">✓</span>       | <span class="r">✗</span> treats pkg/ as default location                                  |
-| 5.5  | Service/business logic goes in internal/ by default                                                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **6. workspace-when-to-use** — Tests whether the model recommends go.work only for multi-module scenarios                                 | **<span class="g">4/4</span>** | **<span class="r">3/4</span>**                                                            |
-| 6.1  | Recommends AGAINST using go.work for a single-module project                                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 6.2  | Explains that go.work is for multiple related Go modules that import each other                                                           | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 6.3  | Mentions that a single module with multiple packages does not need a workspace                                                            | <span class="g">✓</span>       | <span class="r">✗</span> not explicitly stated                                            |
-| 6.4  | Lists valid use cases: monorepo with separate modules, local cross-module development                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **7. twelve-factor-app-conventions** — Tests whether the model applies 12-Factor App principles for Go services                           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
-| 7.1  | Recommends reading database URL from environment variables, not a checked-in config file                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 7.2  | Recommends writing logs to stdout, not to a file                                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> says file logging is fine for development                        |
-| 7.3  | References or describes 12-Factor App principles                                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> no 12-Factor reference                                           |
-| 7.4  | Mentions that sensitive values (like DB URLs) should never be in config files committed to source control                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 7.5  | Explains WHY: environment-based config allows different values per deployment without code changes                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **8. library-layout-no-cmd** — Tests whether the model uses the correct layout for a Go library                                           | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                                                            |
-| 8.1  | Public API packages are at the root level (e.g. logger/), NOT inside pkg/ or cmd/                                                         | <span class="g">✓</span>       | <span class="r">✗</span> puts public API in pkg/                                          |
-| 8.2  | No cmd/ directory (unless for example binaries)                                                                                           | <span class="g">✓</span>       | <span class="r">✗</span> includes cmd/ with example binary                                |
-| 8.3  | Uses internal/ for private implementation details                                                                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 8.4  | Includes example/ directory for usage examples                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> no example directory                                             |
-| 8.5  | Structure follows the library layout pattern, not the application layout pattern                                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **9. test-file-colocation** — Tests whether the model co-locates test files with the code they test                                       | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
-| 9.1  | Recommends co-locating test files with the code they test (same directory)                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 9.2  | Test files use the _test.go suffix                                                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 9.3  | Does NOT recommend a centralized tests/ directory for unit tests                                                                          | <span class="g">✓</span>       | <span class="r">✗</span> suggests tests/ for integration tests alongside unit co-location |
-| 9.4  | Mentions testdata/ directory for test fixtures                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> not mentioned                                                    |
-| 9.5  | Distinguishes between white-box (same package) and black-box (package_test) testing approaches                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-|      | **10. config-sensitive-values-env-only** — Tests whether the model requires sensitive config values from env vars or secret managers      | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                                                            |
-| 10.1 | Rejects putting database password, API keys, and JWT secret in config.yaml                                                                | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 10.2 | Recommends environment variables for sensitive values                                                                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 10.3 | May suggest a secret manager as an alternative                                                                                            | <span class="g">✓</span>       | <span class="r">✗</span> only mentions env vars                                           |
-| 10.4 | Config files are acceptable for non-sensitive values (port, log level, etc.)                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 10.5 | Explains WHY: config files can be accidentally committed, leaked in backups, or visible to other processes                                | <span class="g">✓</span>       | <span class="r">✗</span> says "security best practice" without explaining why             |
-|      | **11. multiple-binaries-cmd-structure** — Tests whether the model creates separate subdirectories in cmd/ for each binary                 | **<span class="g">5/5</span>** | **<span class="r">4/5</span>**                                                            |
-| 11.1 | Creates separate subdirectories: cmd/server/, cmd/cli/, cmd/migrate/ (or similar names)                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 11.2 | Each subdirectory has its own main.go with package main                                                                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 11.3 | Each binary can be built independently (go build ./cmd/server, etc.)                                                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-| 11.4 | Mentions go build ./cmd/... to build all binaries at once                                                                                 | <span class="g">✓</span>       | <span class="r">✗</span> only shows individual builds                                     |
-| 11.5 | Business logic is in internal/, not duplicated across cmd/ directories                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                                                  |
-
-</details>
-
-## `golang-stay-updated` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **46/50 (92%)** | **18/50 (36%)** | **+56pp** |
-
-<details>
-<summary>Full breakdown (50 assertions across 10 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                                     | With                                                 | Without                                                  |
-| ---- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------- |
-|      | **1. go-newsletters-recommendation** — Tests whether the model recommends specific Go newsletters             | **<span class="g">5/5</span>**                       | **<span class="r">2/5</span>**                           |
-| 1.1  | Recommends Golang Weekly (golangweekly.com)                                                                   | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 1.2  | Recommends Awesome Go Newsletter (go.libhunt.com)                                                             | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 1.3  | Advises subscribing to 1-2 newsletters to avoid overload                                                      | <span class="g">✓</span>                             | <span class="r">✗</span> no quantity advice              |
-| 1.4  | Mentions these provide curated content, articles, and library updates                                         | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 1.5  | Does not recommend more than 3-4 newsletters (quality over quantity)                                          | <span class="g">✓</span>                             | <span class="r">✗</span> lists 5+ newsletters            |
-|      | **2. go-community-channels** — Tests knowledge of specific Go community channels beyond Reddit                | **<span class="g">5/5</span>**                       | **<span class="r">2/5</span>**                           |
-| 2.1  | Mentions r/golang subreddit                                                                                   | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 2.2  | Mentions gophers.slack.com (official Go Slack)                                                                | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 2.3  | Mentions the Go Forum (forum.golangbridge.org)                                                                | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 2.4  | Mentions golang-nuts Google Group (groups.google.com/g/golang-nuts)                                           | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 2.5  | Mentions the official Go wiki (go.dev/wiki)                                                                   | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-|      | **3. go-youtube-channels** — Tests knowledge of specific Go YouTube channels                                  | **<span class="g">5/5</span>**                       | **<span class="r">2/5</span>**                           |
-| 3.1  | Recommends the official Go YouTube channel (@golang)                                                          | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 3.2  | Recommends Gopher Academy                                                                                     | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 3.3  | Recommends GopherCon Europe or GopherCon UK channels                                                          | <span class="g">✓</span>                             | <span class="r">✗</span> only mentions generic GopherCon |
-| 3.4  | Recommends Ardan Labs channel                                                                                 | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 3.5  | Lists at least 3 distinct Go-specific YouTube channels                                                        | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-|      | **4. famous-go-core-team-members** — Tests knowledge of Go core team members to follow                        | **<span class="g">5/6</span>**                       | **<span class="r">3/6</span>**                           |
-| 4.1  | Mentions Rob Pike as a co-creator                                                                             | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 4.2  | Mentions Russ Cox and his role in Go                                                                          | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 4.3  | Mentions Brad Fitzpatrick                                                                                     | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 4.4  | Mentions Dave Cheney as an influential Go community member                                                    | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 4.5  | Mentions Robert Griesemer as a co-creator                                                                     | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 4.6  | Provides social media handles or GitHub usernames for at least 3 people                                       | <span class="r">✗</span> handles provided for only 2 | <span class="r">✗</span> no handles provided             |
-|      | **5. go-library-authors-to-follow** — Tests knowledge of influential Go library/framework authors             | **<span class="g">5/5</span>**                       | **<span class="r">2/5</span>**                           |
-| 5.1  | Mentions Steve Francia (spf13) — Cobra, Viper, Hugo                                                           | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 5.2  | Mentions Mitchell Hashimoto (mitchellh) — Terraform, Consul, Vault                                            | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 5.3  | Mentions Samuel Berthe (samber) — lo, do, oops                                                                | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 5.4  | Mentions Matt Holt (mholt) — Caddy                                                                            | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 5.5  | Provides GitHub usernames or X handles for the recommended people                                             | <span class="g">✓</span>                             | <span class="r">✗</span> names only, no handles          |
-|      | **6. official-go-resources** — Tests knowledge of official Go resources and tools                             | **<span class="g">5/5</span>**                       | **<span class="r">3/5</span>**                           |
-| 6.1  | Mentions go.dev as the official Go website                                                                    | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 6.2  | Mentions pkg.go.dev for package discovery and documentation                                                   | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 6.3  | Mentions tour.golang.org (Go Tour) for interactive learning                                                   | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 6.4  | Mentions play.golang.org (Go Playground) for testing code                                                     | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 6.5  | Mentions go.dev/blog (official Go blog) for announcements                                                     | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-|      | **7. go-blogs-to-follow** — Tests knowledge of must-follow Go blogs                                           | **<span class="g">4/4</span>**                       | **<span class="r">2/4</span>**                           |
-| 7.1  | Mentions The Go Blog (go.dev/blog)                                                                            | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 7.2  | Mentions Dave Cheney's blog (dave.cheney.net)                                                                 | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 7.3  | Mentions Ardan Labs Blog (ardanlabs.com/blog)                                                                 | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 7.4  | Lists at least 3 specific blog names with URLs or authors                                                     | <span class="g">✓</span>                             | <span class="r">✗</span> only 2 blogs listed             |
-|      | **8. staying-updated-strategy** — Tests the curated strategy for staying updated without information overload | **<span class="g">5/5</span>**                       | **<span class="r">0/5</span>**                           |
-| 8.1  | Recommends subscribing to 1-2 newsletters specifically (not more)                                             | <span class="g">✓</span>                             | <span class="r">✗</span> no specific quantity            |
-| 8.2  | Recommends following 10-20 key people on social media                                                         | <span class="g">✓</span>                             | <span class="r">✗</span> no specific number              |
-| 8.3  | Recommends checking go.dev/blog weekly for official announcements                                             | <span class="g">✓</span>                             | <span class="r">✗</span> says "regularly" not "weekly"   |
-| 8.4  | Recommends joining Go Slack for real-time discussions                                                         | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 8.5  | Recommends attending GopherCon (virtual or in-person) yearly                                                  | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-|      | **9. go-conference-speakers** — Tests knowledge of Go conference speakers and community leaders               | **<span class="g">3/5</span>**                       | **<span class="r">1/5</span>**                           |
-| 9.1  | Mentions at least one of: Carlisia Campos, Erik St. Martin, Brian Ketelsen                                    | <span class="r">✗</span> none of the three mentioned | <span class="r">✗</span> none mentioned                  |
-| 9.2  | Mentions Mat Ryer or Johnny Boursiquot as Go educators/speakers                                               | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 9.3  | Mentions GopherCon as the conference to follow                                                                | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 9.4  | Provides specific names with their social handles or GitHub profiles                                          | <span class="r">✗</span> names without handles       | <span class="r">✗</span> no handles                      |
-| 9.5  | Lists at least 4 distinct speakers/community leaders                                                          | <span class="g">✓</span>                             | <span class="r">✗</span> only 2 named                    |
-|      | **10. go-performance-experts** — Tests knowledge of Go performance and optimization experts                   | **<span class="g">4/5</span>**                       | **<span class="r">1/5</span>**                           |
-| 10.1 | Mentions Dmitry Vyukov as a Go performance expert                                                             | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-| 10.2 | Mentions Dave Cheney for performance-related Go content                                                       | <span class="g">✓</span>                             | <span class="g">✓</span>                                 |
-| 10.3 | Provides GitHub usernames (e.g., dvyukov, davecheney)                                                         | <span class="g">✓</span>                             | <span class="r">✗</span> no usernames                    |
-| 10.4 | Mentions Bill Kennedy / Ardan Labs for Go performance training                                                | <span class="r">✗</span> not mentioned               | <span class="r">✗</span> not mentioned                   |
-| 10.5 | Mentions Jaana Dogan (rakyll) for Go internals/performance                                                    | <span class="g">✓</span>                             | <span class="r">✗</span> not mentioned                   |
-
-</details>
-
-## `golang-database` — v1.0.0
-
-|             | With Skill      | Without Skill   | Delta     |
-| ----------- | --------------- | --------------- | --------- |
-| **Overall** | **70/74 (95%)** | **42/74 (57%)** | **+38pp** |
-
-<details>
-<summary>Full breakdown (74 assertions across 15 evals)</summary>
-
-**Model:** Claude Opus 4.6 | **Grading:** Human-as-judge
-
-| #    | Assertion                                                                                    | With                           | Without                                                      |
-| ---- | -------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
-|      | **1. orm-vs-sqlx-pgx-recommendation** — sqlx/pgx over ORMs, explain why ORMs are harmful     | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 1.1  | Recommends sqlx or pgx instead of GORM                                                       | <span class="g">✓</span>       | <span class="r">✗</span> sets up GORM as primary             |
-| 1.2  | Explains why ORMs are problematic (N+1, unpredictable SQL, magic hooks, debugging)           | <span class="g">✓</span>       | <span class="r">✗</span> presents GORM positively            |
-| 1.3  | Recommends pgx specifically for PostgreSQL due to performance advantage                      | <span class="g">✓</span>       | <span class="r">✗</span> no mention of pgx                   |
-| 1.4  | Does NOT set up GORM or ent as the primary database library                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 1.5  | Mentions learning ORM API is harder than SQL or that ORMs hide SQL                           | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **2. exec-vs-query-for-non-select** — use Exec for DELETE/INSERT/UPDATE, not Query           | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 2.1  | Uses ExecContext (not QueryContext) for the DELETE statement                                 | <span class="g">✓</span>       | <span class="r">✗</span> db.QueryContext for DELETE          |
-| 2.2  | Uses the *Context variant (ExecContext, not Exec)                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.3  | Passes ctx to the database call                                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 2.4  | Retrieves RowsAffected() from the result                                                     | <span class="g">✓</span>       | <span class="r">✗</span> discards result                     |
-| 2.5  | Uses parameterized query (not string concatenation)                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **3. nullable-column-handling** — pointer fields over sql.NullXxx for NULLable columns       | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 3.1  | Uses pointer types (*string, *time.Time) rather than sql.NullString/sql.NullTime             | <span class="g">✓</span>       | <span class="r">✗</span> sql.NullString and sql.NullTime     |
-| 3.2  | Includes db struct tags for sqlx (db:"column_name")                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 3.3  | Includes json struct tags                                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 3.4  | Uses json:"bio,omitempty" for bio (omitted when NULL)                                        | <span class="g">✓</span>       | <span class="r">✗</span> no omitempty distinction            |
-| 3.5  | Uses json:"deleted_at" without omitempty (appears as null)                                   | <span class="g">✓</span>       | <span class="r">✗</span> omitempty on both nullable fields   |
-|      | **4. connection-pool-configuration** — all four pool settings with reasonable values         | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 4.1  | Calls SetMaxOpenConns                                                                        | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 4.2  | Calls SetMaxIdleConns                                                                        | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
-| 4.3  | Calls SetConnMaxLifetime                                                                     | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
-| 4.4  | Calls SetConnMaxIdleTime                                                                     | <span class="g">✓</span>       | <span class="r">✗</span> not set                             |
-| 4.5  | MaxIdleConns <= MaxOpenConns                                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **5. rows-close-and-err-check** — defer Close and rows.Err() check after loop                | **<span class="g">5/5</span>** | **<span class="g">4/5</span>**                               |
-| 5.1  | Calls defer rows.Close() immediately after QueryContext                                      | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.2  | Checks rows.Err() after the for rows.Next() loop                                             | <span class="g">✓</span>       | <span class="r">✗</span> no rows.Err() check                 |
-| 5.3  | Returns the error from rows.Err() if non-nil                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.4  | Uses QueryContext (not Query) with a context parameter                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 5.5  | Checks the error returned by QueryContext before proceeding                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **6. errnorows-handling-pattern** — sql.ErrNoRows with domain error translation              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 6.1  | Uses errors.Is(err, sql.ErrNoRows) to check for not-found                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.2  | Returns a domain-specific error (ErrUserNotFound), NOT raw sql.ErrNoRows                     | <span class="g">✓</span>       | <span class="r">✗</span> returns raw sql.ErrNoRows           |
-| 6.3  | Wraps non-ErrNoRows errors with context using fmt.Errorf and %w                              | <span class="g">✓</span>       | <span class="r">✗</span> bare return err                     |
-| 6.4  | Uses GetContext (not Get) with the ctx parameter                                             | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 6.5  | Uses parameterized query placeholder ($1 or ?)                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **7. transaction-with-defer-rollback** — BeginTxx, defer Rollback, Commit, FOR UPDATE        | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                               |
-| 7.1  | Uses BeginTxx (or BeginTx) to start a transaction                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 7.2  | Calls defer tx.Rollback() immediately after BeginTxx                                         | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 7.3  | Uses SELECT ... FOR UPDATE when reading balances                                             | <span class="g">✓</span>       | <span class="r">✗</span> plain SELECT without lock           |
-| 7.4  | Sets serializable or repeatable-read isolation level                                         | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
-| 7.5  | Calls tx.Commit() at the end of the successful path                                          | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **8. dynamic-in-clause-with-rebind** — sqlx.In + Rebind pattern                              | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 8.1  | Uses sqlx.In() to expand the IN clause placeholders                                          | <span class="g">✓</span>       | <span class="r">✗</span> manual placeholder building         |
-| 8.2  | Calls db.Rebind() after sqlx.In to adjust placeholders                                       | <span class="g">✓</span>       | <span class="r">✗</span> hardcoded $1,$2 placeholders        |
-| 8.3  | Passes the expanded args from sqlx.In to the query execution                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 8.4  | Uses a *Context method variant                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 8.5  | Handles the error from sqlx.In                                                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **9. dynamic-column-name-allowlist** — allowlist validation, not direct interpolation        | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 9.1  | Validates sort column against an explicit allowlist                                          | <span class="g">✓</span>       | <span class="r">✗</span> direct fmt.Sprintf interpolation    |
-| 9.2  | Returns an error if column is not in the allowlist                                           | <span class="g">✓</span>       | <span class="r">✗</span> no validation                       |
-| 9.3  | Does NOT pass column name as a parameterized placeholder                                     | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 9.4  | Uses fmt.Sprintf ONLY after validation                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 9.5  | Uses a *Context method variant for the query                                                 | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **10. schema-creation-refusal** — refuse to generate database schemas                        | **<span class="r">3/4</span>** | **<span class="r">1/4</span>**                               |
-| 10.1 | Does NOT generate a complete CREATE TABLE schema                                             | <span class="g">✓</span>       | <span class="r">✗</span> generates full schema               |
-| 10.2 | Explains why AI-generated schemas are problematic                                            | <span class="g">✓</span>       | <span class="r">✗</span> no caveats                          |
-| 10.3 | Recommends human review or dedicated tooling for schema design                               | <span class="r">✗</span>       | <span class="r">✗</span>                                     |
-| 10.4 | Mentions schema design requires understanding data volumes/access patterns                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **11. batch-processing-sweet-spot** — 100-1000 rows per batch, not row-by-row or giant batch | **<span class="g">5/5</span>** | **<span class="r">3/5</span>**                               |
-| 11.1 | Uses batching with batch size between 100 and 1000 rows                                      | <span class="g">✓</span>       | <span class="r">✗</span> single giant INSERT                 |
-| 11.2 | Does NOT insert all 50,000 rows in a single statement                                        | <span class="g">✓</span>       | <span class="r">✗</span> one statement with 50k value tuples |
-| 11.3 | Does NOT insert one row at a time in a loop                                                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 11.4 | Uses NamedExecContext or multi-row INSERT pattern                                            | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 11.5 | Handles errors per batch with context about which batch failed                               | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **12. cursor-pagination-over-offset** — cursor-based pagination instead of OFFSET            | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 12.1 | Uses cursor-based pagination (WHERE created_at > $1) instead of OFFSET                       | <span class="g">✓</span>       | <span class="r">✗</span> OFFSET/LIMIT pattern                |
-| 12.2 | Explains why OFFSET is problematic (re-scans skipped rows)                                   | <span class="g">✓</span>       | <span class="r">✗</span> no mention of OFFSET cost           |
-| 12.3 | Uses LIMIT with ORDER BY for page size                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 12.4 | Returns a cursor value for the next page                                                     | <span class="g">✓</span>       | <span class="r">✗</span> returns page number                 |
-| 12.5 | Uses parameterized queries for the cursor value                                              | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **13. integration-test-with-build-tags** — build tags + transaction rollback isolation       | **<span class="g">4/5</span>** | **<span class="r">3/5</span>**                               |
-| 13.1 | Uses //go:build integration build tag                                                        | <span class="g">✓</span>       | <span class="r">✗</span> no build tag                        |
-| 13.2 | Uses transaction-based test isolation (begin tx, rollback in teardown)                       | <span class="g">✓</span>       | <span class="r">✗</span> TRUNCATE in teardown                |
-| 13.3 | Does NOT test against production database — uses test DSN or testcontainers                  | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 13.4 | Uses testify/suite or similar setup/teardown pattern                                         | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
-| 13.5 | Tests actual SQL correctness (not mocked)                                                    | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-|      | **14. avoid-hidden-sql-features** — no triggers, views, stored procedures                    | **<span class="g">4/5</span>** | **<span class="r">2/5</span>**                               |
-| 14.1 | Advises against triggers for updated_at                                                      | <span class="g">✓</span>       | <span class="r">✗</span> recommends CREATE TRIGGER           |
-| 14.2 | Recommends setting updated_at explicitly in Go code                                          | <span class="g">✓</span>       | <span class="r">✗</span> trigger approach                    |
-| 14.3 | Advises against views for the complex query                                                  | <span class="g">✓</span>       | <span class="r">✗</span> recommends CREATE VIEW              |
-| 14.4 | Explains hidden SQL features create invisible side effects                                   | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 14.5 | Recommends keeping SQL explicit and visible in Go code                                       | <span class="r">✗</span>       | <span class="g">✓</span>                                     |
-|      | **15. pgx-copy-for-bulk-postgres** — pgx.CopyFrom using COPY protocol                        | **<span class="g">5/5</span>** | **<span class="r">2/5</span>**                               |
-| 15.1 | Recommends pgx.CopyFrom using the COPY protocol                                              | <span class="g">✓</span>       | <span class="r">✗</span> multi-row INSERT only               |
-| 15.2 | Shows pgx.CopyFromRows or pgx.CopyFromSlice usage                                            | <span class="g">✓</span>       | <span class="r">✗</span> no COPY usage                       |
-| 15.3 | Mentions COPY is significantly faster than multi-row INSERT                                  | <span class="g">✓</span>       | <span class="r">✗</span> no performance comparison           |
-| 15.4 | Uses pgx.Identifier for the table name                                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
-| 15.5 | Still recommends batching for extremely large datasets                                       | <span class="g">✓</span>       | <span class="g">✓</span>                                     |
 
 </details>
 

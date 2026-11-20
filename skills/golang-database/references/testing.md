@@ -217,5 +217,3 @@ func (s *UserRepoSuite) SetupSuite() {
 - Integration tests MUST use build tags (`//go:build integration`) to separate from unit tests.
 - Integration tests SHOULD use testcontainers-go for reproducible database environments in CI.
 - NEVER test against production databases.
-
-→ See `eric642/cc-skills-golang@golang-testing` skill for general test patterns and CI configuration.

@@ -23,6 +23,5 @@
         "coding",
         "productivity"
     ],
-    "skills": "./skills/",
-    "rules": "./rules/"
+    "skills": "./skills/"
 }

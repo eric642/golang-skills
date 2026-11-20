@@ -246,8 +246,6 @@ With batching per stage, total throughput = min(A_throughput, B_throughput, C_th
 - **Latency matters more than throughput** — A single record now travels through 3 stages in parallel, increasing per-record latency.
 - **Memory is tight** — Each stage's channel buffer is a memory budget; deeply buffered channels can exhaust available RAM.
 
-→ See `eric642/cc-skills-golang@golang-concurrency` skill for detailed channel patterns and when to use worker pools instead.
-
 ## Batch Operations
 
 **Diagnose:** 1- `go test -bench` — benchmark single-item vs batched operations; expect N-fold improvement in throughput when amortizing per-operation overhead (syscalls, round-trips) 2- `go tool trace` — look for repeated short network/disk operations with idle gaps between them; these gaps represent wasted round-trip time that batching eliminates
@@ -277,8 +275,6 @@ for i := 0; i < len(users); i += batchSize {
     tx.Commit()
 }
 ```
-
-→ See `eric642/cc-skills-golang@golang-database` skill for detailed batch patterns and connection pool configuration.
 
 ### HTTP: batch API calls
 

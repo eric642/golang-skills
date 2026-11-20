@@ -1,6 +1,6 @@
 ---
 name: golang-observability
-description: "Golang everyday observability — the always-on signals in production. Covers structured logging with slog, Prometheus metrics, OpenTelemetry distributed tracing, continuous profiling with pprof/Pyroscope, server-side RUM event tracking, alerting, and Grafana dashboards. Apply when instrumenting Go services for production monitoring, setting up metrics or alerting, adding OpenTelemetry tracing, correlating logs with traces, migrating legacy loggers (zap/logrus/zerolog) to slog, adding observability to new features, or implementing GDPR/CCPA-compliant tracking with Customer Data Platforms (CDP). Not for temporary deep-dive performance investigation (→ See `eric642/cc-skills-golang@golang-benchmark` and `eric642/cc-skills-golang@golang-performance` skills)."
+description: "Golang production observability with log/slog structured logging, Prometheus metrics, OpenTelemetry tracing, continuous profiling, and RUM. Use when instrumenting Go services, correlating traces with logs, or configuring alerts."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -29,8 +29,6 @@ paths:
 - **Review mode** — reviewing a PR's instrumentation changes. Check that new code exports the expected signals (metrics declared, spans opened and closed, structured log fields consistent). Sequential.
 - **Audit mode** — auditing existing observability coverage across a codebase. Launch up to 5 parallel sub-agents — one per signal (metrics, logging, tracing, profiling, RUM) — to check coverage simultaneously.
 
-> **Community default.** A company skill that explicitly supersedes `eric642/cc-skills-golang@golang-observability` skill takes precedence.
-
 # Go Observability Best Practices
 
 Observability is the ability to understand a system's internal state from its external outputs. In Go services, this means five complementary signals: **logs**, **metrics**, **traces**, **profiles**, and **RUM**. Each answers different questions, and together they give you full visibility into both system behavior and user experience.
@@ -52,14 +50,6 @@ When using observability libraries (Prometheus client, OpenTelemetry SDK, vendor
 11. **Correlate signals** — inject trace_id into logs, use exemplars to link metrics to traces
 12. **A feature is not done until it is observable** — declare metrics, add proper logging, create spans
 13. **[awesome-prometheus-alerts](https://samber.github.io/awesome-prometheus-alerts/) provides ~500 ready-to-use alerting rules** organized by technology for infrastructure and dependency monitoring
-
-## Cross-References
-
-- → See `eric642/cc-skills-golang@golang-error-handling` skill for the single handling rule.
-- → See `eric642/cc-skills-golang@golang-troubleshooting` skill for using observability signals to diagnose production issues.
-- → See `eric642/cc-skills-golang@golang-security` skill for protecting pprof endpoints and avoiding PII in logs.
-- → See `eric642/cc-skills-golang@golang-context` skill for propagating trace context across service boundaries.
-- → See `samber/cc-skills@promql-cli` skill for querying and exploring PromQL expressions against Prometheus from the CLI.
 
 ### Go 1.26+: slog multi-handler
 

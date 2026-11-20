@@ -1,7 +1,5 @@
 # Metrics with Prometheus
 
-→ See `eric642/cc-skills-golang@golang-troubleshooting` skill for using metrics to diagnose production issues. → See `samber/cc-skills@promql-cli` skill for executing and testing PromQL queries via CLI.
-
 When using the Prometheus client library, refer to the library's official documentation for up-to-date API signatures and examples.
 
 ## Table of Contents

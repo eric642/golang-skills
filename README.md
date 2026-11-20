@@ -150,209 +150,119 @@ Update with `cd ~/.antigravity/skills/cc-skills-golang && git pull`.
 
 ## 🧩 Skills
 
-These skills are designed as **atomic, cross-referencing units**. A skill may reference conventions defined in another (e.g. error-handling rules that affect logging live in `golang-error-handling`, not `golang-observability`). Installing only a subset will give you a partial and potentially inconsistent view of the guidelines. For best results, install all skills together.
+This repository provides **12 orthogonal, self-contained core Go skills**. Each skill owns a complete engineering pillar with zero cross-skill dependencies, using progressive disclosure (`SKILL.md` on activation + on-demand `references/` and `assets/`). Install all 12 skills together (`--all`) or pick any individual skill standalone (`--skill <name>`).
 
 ```
-                         ┌────────────────────────────────────────┐
-                         │             Golang Skills              │
-                         └──────────────────┬─────────────────────┘
-                                            │
-   ┌─────────────────┬──────────────────────┼──────────────────────┐
-   ▼                 ▼                      ▼                      ▼
-┌──────────────┐ ┌──────────────┐ ┌─────────────────┐ ┌──────────────────────┐
-│ Code Quality │ │ Arch & Design│ │    QA & Perf    │ │    Project Start     │
-├──────────────┤ ├──────────────┤ ├─────────────────┤ ├──────────────────────┤
-│ code-style   │ │ design-patt  │ │ testing         │ │ project-layout       │
-│ naming       │ │ concurrency  │ │ benchmark       │ │ popular-libs         │
-│ error-handl  │ │ context      │ │ performance     │ │ cli                  │
-│ safety       │ │ dep-inject   │ │ troubleshoot    │ │ continuous-integ.    │
-│ structs-iface│ │ data-structs │ │ observability   │ │ stay-updated         │
-│ documentation│ │ database     │ │                 │ │ dep-management       │
-│ lint         │ │ modernize    │ │                 │ │ gopls                │
-│ security     │ │ refactoring  │ │                 │ │ pkg-go-dev           │
-└──────────────┘ └──────────────┘ └─────────────────┘ └──────────────────────┘
+                     ┌────────────────────────────────────────┐
+                     │         12 Core Golang Skills          │
+                     └───────────────────┬────────────────────┘
+                                         │
+        ┌───────────────────┬────────────┴────────────┬───────────────────┐
+        ▼                   ▼                         ▼                   ▼
+┌───────────────┐   ┌─────────────────┐       ┌─────────────────┐   ┌──────────────┐
+│ Code & Types  │   │ Arch & Refactor │       │ QA, Perf & Ops  │   │  Deps & CI   │
+├───────────────┤   ├─────────────────┤       ├─────────────────┤   ├──────────────┤
+│ code-quality  │   │ architecture    │       │ testing         │   │ dependencies │
+│ idioms        │   │ refactoring     │       │ performance     │   │ ci           │
+│ concurrency   │   │ database        │       │ observability   │   │              │
+│               │   │                 │       │ security        │   │              │
+└───────────────┘   └─────────────────┘       └─────────────────┘   └──────────────┘
 ```
 
-- ⭐️ Recommended
 - ✅ Published
 - 👷 Work in progress
 - ❌ To-do
 - ⚡ Command available
 - 🧠 Ultrathink automatically
 - 🤖 Ultracode automatically
-- ⚙️ Overridable (see doc below)
-- **Description (tok)**: weight of the `description` field from YAML frontmatter, always loaded into Claude's context for skill triggering
+- **Error rate gap**: difference between Without Skill and With Skill pass rates (`Without% - With%` from [EVALUATIONS.md](./EVALUATIONS.md))
+- **Description (tok)**: weight of the `description` field from YAML frontmatter, always loaded into context for skill triggering
 - **SKILL.md (tok)**: weight of the full `SKILL.md` file loaded when the skill triggers
-- **Directory (tok)**: weight of all files in the skill directory (SKILL.md + referenced markdown files)
+- **Directory (tok)**: weight of all files in the skill directory (`SKILL.md` + `references/` + `assets/`, excluding `evals/`)
 
 <!-- markdownlint-disable table-column-style -->
 
-|  | Skill | Flags | Error rate gap | Description (tok) | SKILL.md (tok) | Directory (tok) |
-| --- | --- | --- | --- | --- | --- | --- |
-| ⭐️ | ✅ `golang-code-style` | ⚡ 🤖 ⚙️ | -40% | 114 | 2,358 | 2,974 |
-| ⭐️ | ✅ `golang-data-structures` | ⚡ | -39% | 93 | 2,608 | 6,327 |
-| ⭐️ | ✅ `golang-database` | ⚡ ⚙️ | -38% | 97 | 2,721 | 7,243 |
-| ⭐️ | ✅ `golang-design-patterns` | ⚡ ⚙️ | -37% | 80 | 2,694 | 9,400 |
-| ⭐️ | ✅ `golang-documentation` | ⚡ 🤖 ⚙️ | -53% | 75 | 3,163 | 11,876 |
-| ⭐️ | ✅ `golang-error-handling` | ⚡ 🤖 ⚙️ | -26% | 141 | 1,734 | 4,693 |
-| ⭐️ | ✅ `golang-how-to` | ⚡ | — | 184 | 4,210 | 17,583 |
-| ⭐️ | ✅ `golang-modernize` | ⚡ 🤖 | -43% | 104 | 3,486 | 15,145 |
-| ⭐️ | ✅ `golang-naming` | ⚡ ⚙️ | -23% | 159 | 3,031 | 7,399 |
-| ⭐️ | ✅ `golang-refactoring` | ⚡ 🧠 🤖 ⚙️ | — | 245 | 3,835 | 20,392 |
-| ⭐️ | ✅ `golang-safety` | ⚡ | -58% | 78 | 2,614 | 5,384 |
-| ⭐️ | ✅ `golang-testing` | ⚡ 🧠 🤖 ⚙️ | -32% | 115 | 4,270 | 8,822 |
-| ⭐️ | ✅ `golang-troubleshooting` | ⚡ 🧠 🤖 | -32% | 173 | 2,993 | 18,035 |
-| ⭐️ | ✅ `golang-security` | ⚡ 🧠 🤖 | -32% | 85 | 3,187 | 21,623 |
-|  | ✅ `golang-benchmark` | ⚡ 🧠 | -50% | 102 | 3,153 | 33,396 |
-|  | ✅ `golang-cli` | ⚡ | -43% | 125 | 2,338 | 6,153 |
-|  | ✅ `golang-concurrency` | ⚡ 🤖 ⚙️ | -39% | 72 | 2,196 | 6,826 |
-|  | ✅ `golang-context` | ⚡ ⚙️ | -34% | 82 | 1,211 | 4,021 |
-|  | ✅ `golang-continuous-integration` | ⚡ | -59% | 177 | 3,542 | 12,804 |
-|  | ✅ `golang-dependency-injection` | ⚡ 🤖 ⚙️ | -49% | 178 | 3,016 | 5,287 |
-|  | ✅ `golang-dependency-management` | ⚡ | -54% | 77 | 2,407 | 5,545 |
-|  | ✅ `golang-structs-interfaces` | ⚡ ⚙️ | -35% | 111 | 3,076 | 3,076 |
-|  | ✅ `golang-lint` | ⚡ 🤖 | -41% | 98 | 1,877 | 6,295 |
-|  | ✅ `golang-observability` | ⚡ 🤖 ⚙️ | -37% | 164 | 3,128 | 19,583 |
-|  | ✅ `golang-performance` | ⚡ 🧠 🤖 | -39% | 130 | 2,226 | 19,820 |
-|  | ✅ `golang-gopls` | ⚡ | — | 219 | 2,317 | 12,312 |
-|  | ✅ `golang-pkg-go-dev` | ⚡ | — | 170 | 3,442 | 5,386 |
-|  | ✅ `golang-popular-libraries` | ⚡ | -30% | 156 | 1,181 | 5,093 |
-|  | ✅ `golang-project-layout` | ⚡ | -38% | 105 | 1,761 | 6,257 |
-|  | ✅ `golang-stay-updated` | ⚡ | -56% | 44 | 1,802 | 1,802 |
+| Skill | Flags | Error rate gap | Description (tok) | SKILL.md (tok) | Directory (tok) |
+| --- | --- | --- | --- | --- | --- |
+| ✅ `golang-architecture` | ⚡ 🤖 | -41% | 63 | 3,710 | 23,292 |
+| ✅ `golang-ci` | ⚡ | -59% | 51 | 3,498 | 11,959 |
+| ✅ `golang-code-quality` | ⚡ | -42% | 56 | 3,616 | 22,252 |
+| ✅ `golang-concurrency` | ⚡ 🤖 | -37% | 48 | 3,432 | 11,217 |
+| ✅ `golang-database` | ⚡ | -38% | 49 | 2,672 | 7,572 |
+| ✅ `golang-dependencies` | ⚡ | -42% | 53 | 3,502 | 14,629 |
+| ✅ `golang-idioms` | ⚡ | -45% | 57 | 4,377 | 17,334 |
+| ✅ `golang-observability` | ⚡ 🤖 | -37% | 45 | 3,001 | 19,256 |
+| ✅ `golang-performance` | ⚡ 🧠 🤖 | -42% | 52 | 4,558 | 65,339 |
+| ✅ `golang-refactoring` | ⚡ 🧠 🤖 | -43% | 51 | 4,876 | 42,134 |
+| ✅ `golang-security` | ⚡ 🧠 🤖 | -32% | 47 | 3,095 | 24,367 |
+| ✅ `golang-testing` | ⚡ 🧠 🤖 | -32% | 49 | 3,119 | 7,994 |
+| **Total (12 skills)** | | **-41%** | **621** | **43,456** | **267,345** |
 
 ## 🧪 Skill evaluations
 
 |             | With Skill          | Without Skill       | Delta     |
 | ----------- | ------------------- | ------------------- | --------- |
-| **Overall** | **2481/2538 (98%)** | **1426/2538 (56%)** | **+42pp** |
+| **Overall** | **2435/2488 (98%)** | **1408/2488 (57%)** | **+41pp** |
 
 See [EVALUATIONS.md](./EVALUATIONS.md) for the full per-skill breakdown.
 
 ## 📖 Skills description
 
-### Code Quality
+### Code & Types
 
-#### `golang-code-style`
+#### `golang-code-quality`
 
-Go code formatting and conventions. gofmt, goimports, linting rules, comment conventions, and project-level style consistency. Overridable by company skills.
+Go code style, naming, linting, and documentation standards. Control-flow readability, MixedCaps and anti-stutter identifier conventions, `golangci-lint` (`.golangci.yml` presets, `nolint` discipline), godoc comments, runnable `Example` functions, and project documentation templates (`README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `llms.txt`).
 
-#### `golang-documentation`
+#### `golang-idioms`
 
-Go documentation standards. Package docs, godoc conventions, code comments, example functions, README structure, and API reference generation. Overridable.
-
-#### `golang-error-handling`
-
-Go error handling best practices. Error creation, wrapping with fmt.Errorf and errors.Is/As, sentinel errors, custom error types, error codes, and panic recovery. Overridable.
-
-#### `golang-lint`
-
-Go linting best practices and golangci-lint configuration. Presets, custom rules, CI integration, inline suppression, and output interpretation.
-
-#### `golang-naming`
-
-Go naming conventions across all identifier types. Packages, constructors, structs, interfaces, constants, errors, receivers, acronyms, test functions. Covers MixedCaps rules, Get-prefix, and utils/helpers anti-patterns. Overridable.
-
-#### `golang-safety`
-
-Defensive Go coding. Prevents panics, silent data corruption, and runtime bugs. nil safety, append aliasing, map concurrent access, float comparison, zero-value design, numeric overflow.
-
-#### `golang-security`
-
-Go security best practices. Injection prevention (SQL, command, XSS), cryptography, filesystem/network safety, secrets management, cookie security, and tool configuration. Audit and review modes.
-
-#### `golang-structs-interfaces`
-
-Go struct and interface design. Composition, embedding, type assertions, interface segregation, struct tags (JSON/YAML/DB), pointer vs value receivers. Overridable.
-
-### Architecture & Design
+Core Go type, collection, error-handling, and defensive safety idioms. Struct layout and tags, consumer-defined interfaces, pointer vs. value receivers, generics, slice/map internals and aliasing safety, error wrapping (`%w`, `errors.Is`/`As`, sentinel and custom errors), typed-nil traps, and numeric overflow protection.
 
 #### `golang-concurrency`
 
-Go concurrency patterns. Goroutines, channels, sync primitives, context cancellation, worker pools, fan-out/fan-in, pipelines. Overridable.
+Go concurrency and `context.Context` patterns. Goroutine lifecycle ownership, channel vs. mutex selection, `errgroup`, `singleflight`, worker pools, fan-out/fan-in pipelines, cancellation, timeouts, `context.WithoutCancel`, and leak/race prevention.
 
-#### `golang-context`
+### Architecture & Refactoring
 
-Idiomatic context.Context usage. Creation, cancellation, timeouts, values, propagation patterns, and common anti-patterns. Overridable.
+#### `golang-architecture`
 
-#### `golang-data-structures`
-
-Go data structures internals and usage. Slices (capacity growth, append aliasing), maps, channels, sync primitives, and when to use each.
-
-#### `golang-database`
-
-Go database access patterns. Parameter binding, connection pooling, transactions, migrations, sqlboiler/sqlc code generation, query builders. Overridable.
-
-#### `golang-dependency-injection`
-
-Dependency injection patterns in Go. Constructor injection, interface-based DI, dig/fx/samber-do comparison, and when DI is worth the complexity. Overridable.
-
-#### `golang-design-patterns`
-
-Idiomatic Go design patterns. Functional options, constructors, builder pattern, middleware chains, circuit breaker, and architecture guides with file trees and code. Overridable.
-
-#### `golang-modernize`
-
-Modernize Go code to use recent language features. Range-over-int, min/max builtins, iterators, slices/maps/cmp/slog stdlib packages, testing patterns (t.Context, b.Loop, synctest), and tooling upgrades.
+Go service and CLI architecture. Standard `cmd/`/`internal/`/`pkg/` and `go.work` layouts, flat vs. clean/hexagonal design, idiomatic Go patterns (functional options, middleware, circuit breakers), constructor and container DI (`uber-go/fx`, `dig`, `samber/do`), Cobra/Viper CLI design, exit codes, and graceful shutdown.
 
 #### `golang-refactoring`
 
-Safe, at-scale refactoring process for existing Go code. Coverage-adaptive safety net, tool-driven behavior-preserving transforms (gopls Rename/Inline/Extract, gofmt -r, eg, gopatch), the Fowler catalog mapped to Go, breaking import cycles, type-alias gradual code repair, and a human-in-the-loop workflow of staged PRs on a refactoring branch.
+Safe, tool-driven Go refactoring, semantic navigation, and language modernization. `gopls` via MCP/LSP/CLI (definition, references, diagnostics, rename, extract/inline), Go version modernization (`modernize`, `slices`/`maps`/`cmp`/`iter`, `b.Loop`, `t.Context`, `synctest`), `gofmt -r`, `gopatch`, breaking import cycles, and staged PR workflows.
 
-### QA & Performance
+#### `golang-database`
 
-#### `golang-benchmark`
+Production Go SQL database access with `database/sql`, `sqlx`, and `pgx` across PostgreSQL, MySQL, and SQLite. Parameterized queries, connection pool sizing, transactions and isolation levels, row scanning, query performance, and database testing patterns.
 
-Go benchmarking, profiling, and performance measurement. pprof, trace, CPU/memory/block profiles, flame graphs, benchmark comparison (benchstat), continuous profiling.
-
-#### `golang-observability`
-
-Go production observability. Structured logging (slog), Prometheus metrics, OpenTelemetry tracing, pprof profiling, RUM tracking, alerting, Grafana dashboards. Overridable.
-
-#### `golang-performance`
-
-Go performance optimization. Allocation reduction, CPU efficiency, memory layout, GC tuning, pooling, caching, hot-path optimization. Review and hot-path modes.
+### QA, Performance & Ops
 
 #### `golang-testing`
 
-Production-ready Go tests. Table-driven tests, fuzzing, fixtures, goroutine leak detection (goleak), snapshot testing, code coverage, integration tests, parallel tests. Overridable.
+Production-ready Go testing. Table-driven tests, `testify` assertions, `t.Helper()`, `t.Parallel()`, fuzzing, goroutine leak detection (`goleak`), HTTP/integration testing with build tags, mocking strategies, `testing/synctest`, and coverage discipline.
 
-#### `golang-troubleshooting`
+#### `golang-performance`
 
-Systematic Go debugging methodology. Common pitfalls, test-driven debugging, pprof capture, Delve debugger, race detection, GODEBUG tracing, production debugging.
+Unified Go debugging, benchmarking, profiling, and hot-path optimization loop (`Diagnose → Measure → Profile → Optimize`). Delve (`dlv`), `-race`, `GODEBUG`, `pprof` and execution `trace`, `testing.B` and `benchstat` CI regression detection, escape analysis, allocation reduction, memory layout, caching, and GC tuning.
 
-### Project Setup
+#### `golang-observability`
 
-#### `golang-cli`
+Always-on Go production telemetry. Structured logging (`log/slog`), Prometheus metrics, OpenTelemetry distributed tracing, trace-log correlation, continuous profiling, RUM tracking, alerting rules, and Grafana dashboards.
 
-Go CLI application development. Project layout, exit codes, signal handling, I/O patterns, argument parsing, and terminal UX.
+#### `golang-security`
 
-#### `golang-continuous-integration`
+Go application security for coding, PR review, and full-codebase SAST audits. Injection prevention (SQL, command, XSS), cryptography, SSRF and network safety, path traversal and filesystem hardening, cookie/session security, secrets management, and `gosec`/`govulncheck` workflows.
 
-CI/CD pipeline configuration for Go projects using GitHub Actions. Build, test, lint, and release workflows.
+### Dependencies & CI
 
-#### `golang-dependency-management`
+#### `golang-dependencies`
 
-Go module dependency strategies. go.mod conventions, versioning, replace directives, tool dependencies, and multi-module workspaces.
+End-to-end Go dependency lifecycle. Stdlib-first library selection, `godig` (`pkg.go.dev` CLI/MCP) package inspection, `go.mod` MVS versioning, `replace` and `tool` directives, multi-module workspaces, upgrades, and `govulncheck` vulnerability auditing.
 
-#### `golang-gopls`
+#### `golang-ci`
 
-Semantic code intelligence for your local build via `gopls`, the official Go language server. Go-to-definition, find references, call/implementation hierarchy, workspace symbol search, diagnostics, safe rename, and refactors (extract/inline/fill/rewrite). Reachable via gopls's own MCP server, Claude Code's native `LSP` tool, or the `gopls` CLI.
-
-#### `golang-pkg-go-dev`
-
-Go package and module exploration via `godig`, a pkg.go.dev API client (CLI + MCP server). Package docs, API references, symbols, code examples, versions, importers, licenses, and known vulnerabilities. Prefer over Context7 for Go packages.
-
-#### `golang-popular-libraries`
-
-Curated recommendations for production-ready Go libraries and frameworks. When the stdlib is enough vs when to reach for a package.
-
-#### `golang-project-layout`
-
-Go project structure and workspace setup. cmd/internal/pkg conventions, monorepo layout, CLI project structure, and when to keep things flat.
-
-#### `golang-stay-updated`
-
-Resources to stay current with Go. Official channels, community hubs, key people to follow, and learning resources.
+CI/CD pipelines and repository automation for Go projects using GitHub Actions. Build, test, lint, integration, Docker, GoReleaser, CodeQL/security scanning, Dependabot/Renovate automation, and AI-driven PR review workflows.
 
 ## 🕵 Use in CI for AI-driven reviews
 
@@ -362,26 +272,26 @@ See [GOLANG-AI-DRIVEN-REVIEW.md](./GOLANG-AI-DRIVEN-REVIEW.md) for full setup in
 
 ## 🎯 Tuning Skill Triggers
 
-If a skill triggers too often or not often enough, please [open an issue](https://github.com/eric642/cc-skills-golang/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Some `SKILL.md` files might have a `When to use` section which is another level of exclusion. Finally, `SKILL.md` files are an entrypoint for lazy loading references with deep knowledge located in `references/`.
+If a skill triggers too often or not often enough, please [open an issue](https://github.com/eric642/cc-skills-golang/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Finally, `SKILL.md` files act as concise entrypoints that lazy-load deep references from `references/` and templates from `assets/` on demand.
 
-## 🔄 Overlap
+## 🧩 Context Efficiency
 
-Claude reports very little overlap between skills in this repo, thanks to cross-reference. I suggest enabling most of the skills and leveraging lazy loading. The recommended ⭐️ skills load ~1,100 tokens of descriptions at startup; full skill content is only pulled in when relevant. Note:
+Consolidating into **12 orthogonal, self-contained core skills** keeps startup overhead minimal while eliminating cross-skill coupling. All 12 skill descriptions load just **621 tokens** at startup (down from 1,382 tokens across the earlier 29-skill catalog); full `SKILL.md` bodies and `references/` files are only pulled into context when relevant. Note:
 
-- I estimate that 50% of `golang-naming` and `golang-code-style` overlap with linters (golangci-lint).
-- A large part of the security rules in `golang-security` have been distilled from the Bearer (SAST) checklist. The skill is still useful for methodology.
-- If your team has its own conventions, create a company skill and declare the override explicitly near the top of its body: `This skill supersedes eric642/cc-skills-golang@golang-naming skill for [company] projects.` Skills marked ⚙️ in the table above support this mechanism.
+- Mechanical style and lint checks belong to `golangci-lint` (configured via the `.golangci.yml` bundled in `golang-code-quality`); the skills focus on design, readability, and judgment calls linters cannot enforce.
+- Security rules in `golang-security` complement static analyzers (`gosec`, `govulncheck`) with threat-modeling and codebase audit methodology.
+- Every skill is standalone with zero cross-skill `@` pointers — install `--all` for full Go coverage or `--skill <name>` for a single domain.
 
 ## ✍️ Contribute
 
-- **100 tokens per skill description** - what? when to use this skill?
-- **1.000–2.500 tokens per SKILL.md** — keep the main file focused on essentials
-- **Use secondary markdown files for depth** — reference them from SKILL.md with relative links (e.g., `[Logging](./logging.md)`). Claude reads these on demand when the topic is relevant, so they don't count against the context budget until needed
-- **Up to 10.000 tokens** for full skill and secondary files
-- **2–4 skills loaded simultaneously** in a typical session — design skills to coexist
-- **Stay below ~10k tokens of total loaded SKILL.md** anytime to avoid degrading response quality
+- **150–250 characters (~30–55 tokens, ≤ 300 max) per skill description** — what? when to use this skill?
+- **≤ 4,000 tokens target (< 5,000 hard ceiling) per `SKILL.md`** — keep the main file focused on essentials (~160–290 lines)
+- **Use secondary markdown files for depth** — reference them from `SKILL.md` with relative links (e.g., `[Logging](references/logging.md)`). They are read on demand when the topic is relevant, so they don't count against the startup budget
+- **Keep skills self-contained** — never add cross-skill `@` or `→ See` pointers between skills; progressive disclosure stays inside each skill directory
+- **2–3 core skills loaded simultaneously** in a typical session — design skills to coexist cleanly
+- **Stay around ~10–12k tokens of total loaded `SKILL.md`** anytime to avoid degrading response quality
 
-For more guidelines, please check `CLAUDE.md`.
+For more guidelines, please check [CLAUDE.md](./CLAUDE.md).
 
 ## 🙏 Acknowledgments
 

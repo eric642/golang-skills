@@ -1,7 +1,5 @@
 # Distributed Tracing with OpenTelemetry
 
-→ See `eric642/cc-skills-golang@golang-context` skill for propagating context across service boundaries. → See `eric642/cc-skills-golang@golang-error-handling` skill for error wrapping idioms, and [`github.com/samber/oops`](https://github.com/samber/oops) below for structured errors with stack traces in spans.
-
 When using the OpenTelemetry Go SDK, refer to the library's official documentation for up-to-date API signatures and examples.
 
 ## Table of Contents
@@ -175,7 +173,7 @@ func (s *OrderService) Create(ctx context.Context, req CreateOrderRequest) (*Ord
 
 When this error is logged or recorded on a span, you get the full stack trace, the domain (`order-service`), an error code (`order_insert_failed`), and structured attributes (`order_id`, `user_id`) — all machine-parseable and searchable in your observability platform.
 
-`oops` errors work with `span.RecordError()`, `errors.Is`/`errors.As`, and `slog` — see the `eric642/cc-skills-golang@golang-error-handling` skill for Go error-handling idioms and [`github.com/samber/oops`](https://github.com/samber/oops) (or `eric642/cc-skills-golang@golang-pkg-go-dev`) for full `oops` usage patterns.
+`oops` errors work with `span.RecordError()`, `errors.Is`/`errors.As`, and `slog` — refer to [`github.com/samber/oops`](https://github.com/samber/oops) for full `oops` usage patterns.
 
 ## Trace Sampling
 

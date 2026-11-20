@@ -192,8 +192,6 @@ func handleRequest(data []byte) []byte {
 - Don't pool objects >32KB — large allocations bypass the pool's size classes and GC already handles them efficiently
 - Don't pool infrequently used objects — pool overhead exceeds benefit when allocations are rare
 
-→ See `eric642/cc-skills-golang@golang-concurrency` skill for `sync.Pool` API reference and basic usage patterns.
-
 ## Memory Layout
 
 **Diagnose:** 1- `fieldalignment ./...` — detect structs with wasted padding bytes; expect warnings like `"struct of size 40 could be 24"` listing which structs benefit from reordering 2- `unsafe.Sizeof`/`Alignof`/`Offsetof` — measure exact byte sizes and field offsets; use to confirm savings before/after and document them in code comments

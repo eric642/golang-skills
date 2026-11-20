@@ -1,6 +1,6 @@
 # Structured Logging with `slog`
 
-→ See `eric642/cc-skills-golang@golang-error-handling` skill for the single handling rule.
+Follow the single-handling rule for errors: either log an error at the top-level boundary or return it to the caller — never both.
 
 ## Table of Contents
 

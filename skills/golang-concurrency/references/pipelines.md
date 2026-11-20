@@ -271,5 +271,3 @@ func TestMain(m *testing.M) {
 | Unbounded goroutine spawning | Use `errgroup.SetLimit` or a semaphore |
 | Sending mutable data through channel | Send copies or immutable values |
 | Blocking send without select | Wrap channel sends in select with `ctx.Done()` |
-
-→ See `eric642/cc-skills-golang@golang-concurrency` skill for sync primitives and channel patterns.

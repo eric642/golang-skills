@@ -1,6 +1,6 @@
 ---
 name: golang-database
-description: "Comprehensive guide for Go database access — parameterized queries, struct scanning, NULLable columns, transactions, isolation levels, SELECT FOR UPDATE, connection pool, batch processing, context propagation, and migration tooling. Use when writing, reviewing, or debugging Golang code that interacts with PostgreSQL, MariaDB, MySQL, or SQLite; for database testing; or for questions about database/sql, sqlx, or pgx. Does NOT generate database schemas or migration SQL."
+description: "Golang SQL database access with database/sql, sqlx, and pgx across PostgreSQL, MySQL, and SQLite. Use when writing parameterized queries, transactions, row scanning, or connection pools. Do not use for schema generation."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -25,8 +25,6 @@ paths:
 
 - **Write mode** — generating new repository functions, query helpers, or transaction wrappers: follow the skill's sequential instructions; launch a background agent to grep for existing query patterns and naming conventions in the codebase before generating new code.
 - **Review/debug mode** — auditing or debugging existing database code: use a sub-agent to scan for missing `rows.Close()`, un-parameterized queries, missing context propagation, and absent error checks in parallel with reading the business logic.
-
-> **Community default.** A company skill that explicitly supersedes `eric642/cc-skills-golang@golang-database` skill takes precedence.
 
 # Go Database Best Practices
 
@@ -104,8 +102,6 @@ if !allowed[sortCol] {
 }
 query := fmt.Sprintf("SELECT id, name, email FROM users ORDER BY %s", sortCol)
 ```
-
-For more injection prevention patterns, see the `eric642/cc-skills-golang@golang-security` skill.
 
 ## Struct Scanning and NULLable Columns
 
@@ -186,8 +182,6 @@ db.Query("SELECT ...")
 db.QueryContext(ctx, "SELECT ...")
 ```
 
-For context patterns in depth, see the `eric642/cc-skills-golang@golang-context` skill.
-
 ## Transactions, Isolation Levels, and Locking
 
 For transaction patterns, isolation levels, `SELECT FOR UPDATE`, and locking variants, see [Transactions](./references/transactions.md).
@@ -229,13 +223,6 @@ Do not rely on triggers, views, materialized views, stored procedures, or row-le
 - **[Testing Database Code](./references/testing.md)** — Mock connections, integration tests with containers, fixtures, schema setup/teardown
 - **[Database Performance](./references/performance.md)** — Connection pool sizing, batch processing, indexing strategy, query optimization
 - **[Struct Scanning](./references/scanning.md)** — Struct tags, NULLable column handling, JSON marshaling patterns
-
-## Cross-References
-
-- → See `eric642/cc-skills-golang@golang-security` skill for SQL injection prevention patterns
-- → See `eric642/cc-skills-golang@golang-context` skill for context propagation to database operations
-- → See `eric642/cc-skills-golang@golang-error-handling` skill for database error wrapping patterns
-- → See `eric642/cc-skills-golang@golang-testing` skill for database integration test patterns
 
 ## References
 

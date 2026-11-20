@@ -2,6 +2,13 @@
 
 The right amount of caution before a refactor is not a fixed policy — it is gated on how well-tested the _blast radius_ already is, not on the project's global coverage number. A codebase sitting at 90% coverage overall can still have the one function you're about to touch at 0%, and a codebase at 30% overall can have your target function fully pinned by table-driven tests. Measure the code you're actually going to change, then pick the tier below.
 
+## Table of Contents
+
+- [The Three Tiers](#the-three-tiers)
+- [Seams — What to Introduce When There's No Net Yet](#seams--what-to-introduce-when-theres-no-net-yet)
+- [Verification Command Reference](#verification-command-reference)
+- [Related References](#related-references)
+
 ## The Three Tiers
 
 - **HIGH coverage on the blast radius (roughly ≥80% function coverage via `go tool cover -func`)** — refactor aggressively with tools, and trust the green bar.
@@ -73,7 +80,7 @@ func (r *Report) Generate(ctx context.Context, id int) (Summary, error) {
 }
 ```
 
-→ See `eric642/cc-skills-golang@golang-design-patterns` skill for constructor and dependency-injection patterns this move builds on, and [catalog.md](catalog.md) in this skill for the Sprout/Wrap mechanics that typically pair with a freshly introduced seam.
+See [catalog.md](catalog.md) for the Sprout/Wrap mechanics that typically pair with a freshly introduced seam, and [structural.md](structural.md) for constructor-injection seams.
 
 ## Verification Command Reference
 
@@ -84,7 +91,7 @@ go build ./...                              # fastest gate — compile errors
 go vet ./...                                 # correctness checks the compiler doesn't do
 go test ./...                                # full test suite
 go test -run TestName ./pkg/...              # target one test while iterating
-go test -race ./...                          # concurrency changes — see eric642/cc-skills-golang@golang-testing for race-detector and testing/synctest mechanics
+go test -race ./...                          # concurrency changes (race detector)
 go test -covermode=atomic -coverpkg=./... -coverprofile=cover.out ./...
 go tool cover -func=cover.out                 # per-function and total coverage, ranked
 go tool cover -html=cover.out                 # visual red/green source view
@@ -92,9 +99,7 @@ go test -bench=. -benchmem -count=10 > new.txt   # capture before AND after with
 benchstat old.txt new.txt                     # `~` means no statistically significant difference — the desired result for a behavior-preserving refactor; anything else is a signal to stop and investigate, not noise to shrug off
 ```
 
-## Cross-References
+## Related References
 
-- → See `eric642/cc-skills-golang@golang-testing` skill for general test-writing craft, race-detector mechanics, and `testing/synctest` — this file assumes them as a baseline and only covers when a refactor's safety net needs to reach for them.
-- → See `eric642/cc-skills-golang@golang-benchmark` skill for interpreting a `benchstat` delta and the full profiling methodology.
 - [catalog.md](catalog.md) — the Fowler refactoring catalog mapped to Go, including the Sprout/Wrap entries referenced in the Feathers-mode and seams sections above.
 - [workflow.md](workflow.md) — the planning gate that measures the blast radius this file's tiers are gated on, and the human-checkpoint rule for touching untested code.

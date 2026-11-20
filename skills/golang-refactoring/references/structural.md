@@ -95,7 +95,6 @@ order/
 - **Caveat: this is a heuristic, not dogma.**
   - Don't mechanically split every struct into an interface-plus-implementation pair on the theory that it's "more testable" — a concrete struct with no interface is simpler to read, and an interface with exactly one implementation and no test-double need is pure indirection.
   - Don't return an interface from a constructor just because "it might be more flexible later" — that flexibility has a name (YAGNI) and a cost (the caller loses type information it might have wanted).
-  - → See `eric642/cc-skills-golang@golang-project-layout` skill for the directory/package layout conventions this section assumes, and `eric642/cc-skills-golang@golang-design-patterns` skill for judging when introducing an interface is the right call versus premature abstraction.
 
 ### Splitting a god package
 
@@ -166,8 +165,7 @@ retract (
 - `init()` ordering and mutable package-level state are a common source of hidden coupling: a caller of a function has no way to see, from the call site, that the function's behavior depends on some other package's `init()` having already run, or on a global variable some unrelated code path mutated earlier in the program's lifetime.
 - That coupling doesn't show up in a signature, so it doesn't show up in a diff, and it's exactly the kind of dependency that makes a piece of code unsafe to move or test in isolation.
 - The refactor is toward explicit construction: a constructor function that returns a struct, with dependencies passed in as parameters rather than reached for through a package-level variable or `init()`-populated singleton.
-  - This doesn't remove the dependency — the code still needs what it needed before — it makes the dependency an explicit, visible seam in the function signature instead of an implicit one buried in the package's `init()`.
-  - → See `eric642/cc-skills-golang@golang-design-patterns` skill for constructor and dependency-injection patterns, and [safety-net.md](safety-net.md) in this skill for how this same seam is what a Feathers-style characterization test exploits to get coverage before a risky change.
+  - This doesn't remove the dependency — the code still needs what it needed before — it makes the dependency an explicit, visible seam in the function signature instead of an implicit one buried in the package's `init()`. See [safety-net.md](safety-net.md) for how this same seam enables a Feathers-style characterization test before a risky change.
 
 ## Generics — When a Refactor Toward Them Is Warranted
 
@@ -175,7 +173,7 @@ retract (
 - When the _behavior_ differs per type — even by one branch — that's an interface, not a generic; a generic with a type switch inside it is usually an interface wearing a disguise.
 - A practical litmus test: reach for a generic when a type parameter would eliminate a type assertion that's currently in the code, and the constraint it needs stays narrow — `comparable`, `cmp.Ordered`, or a small one-method interface.
 - Write the concrete version first; refactor to generic only once the duplication is real and already committed in two or more places, not anticipated for a future third caller that may never arrive.
-- As of this writing, Go has no method-level type parameters, which blocks fluent generic method chaining (`Map` returning a differently-typed receiver) as a design option — plan around that limitation rather than discovering it mid-refactor.
+- Pre-Go 1.27 has no method-level type parameters; Go 1.27+ supports generic methods declaring their own type parameters, though they still cannot satisfy interfaces (see [modernize-versions.md](modernize-versions.md)).
 - Verify a generics migration the same way as any other refactor, no special-casing: `go build ./... && go vet ./...` plus the full test suite for the touched packages.
 
 ## Common Mistakes
@@ -190,7 +188,5 @@ retract (
 
 ## Cross-References
 
-- → See `eric642/cc-skills-golang@golang-project-layout` skill for directory/package layout conventions.
-- → See `eric642/cc-skills-golang@golang-design-patterns` skill for when an interface is the right design choice versus premature abstraction, and for constructor/DI patterns.
-- → See [catalog.md](catalog.md) in this skill for the Fowler catalog entries (Extract Interface, Change Function Declaration, Move Function) these structural moves build on.
-- → See [workflow.md](workflow.md) in this skill for staging a cross-package move or package split as an ordered sequence of small PRs.
+- [catalog.md](catalog.md) — the Fowler catalog entries (Extract Interface, Change Function Declaration, Move Function) these structural moves build on.
+- [workflow.md](workflow.md) — staging a cross-package move or package split as an ordered sequence of small PRs.
