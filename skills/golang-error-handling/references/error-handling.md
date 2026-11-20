@@ -94,7 +94,7 @@ func safeHandler(next http.Handler) http.Handler {
 }
 ```
 
-For structured panic recovery with `samber/oops`, see the `samber/cc-skills-golang@golang-samber-oops` skill.
+For structured panic recovery with stack traces and attributes, `github.com/samber/oops` provides `oops.Recover` and `oops.Recoverf` — see the [`samber/oops` documentation](https://github.com/samber/oops) for details.
 
 ## Why Use `samber/oops`
 

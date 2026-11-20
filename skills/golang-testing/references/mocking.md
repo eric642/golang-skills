@@ -11,7 +11,7 @@
 
 Create interfaces for your dependencies, then mock them.
 
-> For the full testify/mock API (argument matchers, call modifiers, verification), see the `samber/cc-skills-golang@golang-stretchr-testify` skill.
+> For the full `github.com/stretchr/testify` API (`assert`, `require`, `mock` argument matchers/call modifiers/verification, and `suite`), refer to the [`github.com/stretchr/testify` package documentation](https://pkg.go.dev/github.com/stretchr/testify) or look up symbols via `samber/cc-skills-golang@golang-pkg-go-dev`.
 
 ```go
 // Define the interface

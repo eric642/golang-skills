@@ -1,6 +1,6 @@
 ---
 name: golang-popular-libraries
-description: "Golang library and framework selection — vetted production-ready options by category (web, database, testing, logging, messaging), new and experimental stdlib packages, standard-library-first tradeoffs, and maturity signals (maintenance, license, importer counts). Apply when the user asks for library suggestions, wants to compare alternatives, needs to choose a library for a specific task, or when a new dependency is being added to the project. Not for a specific library's API once chosen (→ See that library's dedicated skill, e.g. `samber/cc-skills-golang@golang-samber-lo`), nor for go.mod mechanics, upgrades, or vulnerability audits (→ See `samber/cc-skills-golang@golang-dependency-management` skill)."
+description: "Golang library and framework selection — vetted production-ready options by category (web, database, testing, logging, messaging), new and experimental stdlib packages, standard-library-first tradeoffs, and maturity signals (maintenance, license, importer counts). Apply when the user asks for library suggestions, wants to compare alternatives, needs to choose a library for a specific task, or when a new dependency is being added to the project. Not for looking up a chosen library's API or documentation (→ See `samber/cc-skills-golang@golang-pkg-go-dev` skill or the library's official documentation), nor for go.mod mechanics, upgrades, or vulnerability audits (→ See `samber/cc-skills-golang@golang-dependency-management` skill)."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -67,9 +67,6 @@ Remember: The best library is often no library at all. Go's standard library is 
 ## Cross-References
 
 - → See `samber/cc-skills-golang@golang-dependency-management` skill for adding, auditing, and managing dependencies
-- → See `samber/cc-skills-golang@golang-pkg-go-dev` skill to vet a candidate library on pkg.go.dev — versions, importers, licenses, and known vulnerabilities — before adopting it
-- → See `samber/cc-skills-golang@golang-samber-do` skill for samber/do dependency injection details
-- → See `samber/cc-skills-golang@golang-samber-hot` skill for samber/hot in-memory caching details
-- → See `samber/cc-skills-golang@golang-samber-oops` skill for samber/oops error handling details
-- → See `samber/cc-skills-golang@golang-stretchr-testify` skill for testify testing details
-- → See `samber/cc-skills-golang@golang-grpc` skill for gRPC implementation details
+- → See `samber/cc-skills-golang@golang-pkg-go-dev` skill to vet a candidate library on pkg.go.dev — versions, importers, licenses, and known vulnerabilities — or to inspect a chosen library's API signatures, examples, and documentation (alongside its official documentation)
+- → See `samber/cc-skills-golang@golang-gopls` skill to browse an adopted library's resolved source and symbols in the local build
+- → See `samber/cc-skills-golang@golang-dependency-injection` skill for dependency injection architecture and library tradeoffs (`samber/do`, `uber-go/dig`, `uber-go/fx`)

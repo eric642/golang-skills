@@ -1,6 +1,6 @@
 ---
 name: golang-error-handling
-description: "Idiomatic Golang error handling — creation, wrapping with %w, errors.Is/As, errors.Join, custom error types, sentinel errors, panic/recover, the single handling rule, structured logging with slog, HTTP request logging middleware, and samber/oops for production errors. Built to make logs usable at scale with log aggregation 3rd-party tools. Apply when creating, wrapping, inspecting, or logging errors in Go code. For samber/oops specifics → See `samber/cc-skills-golang@golang-samber-oops` skill; for slog handler ecosystem → See `samber/cc-skills-golang@golang-samber-slog` skill."
+description: "Idiomatic Golang error handling — creation, wrapping with %w, errors.Is/As, errors.Join, custom error types, sentinel errors, panic/recover, the single handling rule, structured logging with slog, HTTP request logging middleware, and `github.com/samber/oops` for production errors. Built to make logs usable at scale with log aggregation 3rd-party tools. Apply when creating, wrapping, inspecting, or logging errors in Go code, or when using `github.com/samber/oops` or `github.com/samber/slog-*` handlers."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -73,7 +73,7 @@ When auditing error handling across a large codebase, use up to 5 parallel sub-a
 
 ## Cross-References
 
-- → See `samber/cc-skills-golang@golang-samber-oops` for full samber/oops API, builder patterns, and logger integration
+- → See `samber/cc-skills-golang@golang-pkg-go-dev` for looking up current `github.com/samber/oops` and `github.com/samber/slog-*` package APIs and examples
 - → See `samber/cc-skills-golang@golang-observability` for structured logging setup, log levels, and request logging middleware
 - → See `samber/cc-skills-golang@golang-safety` for nil interface trap and nil error comparison pitfalls
 - → See `samber/cc-skills-golang@golang-naming` for error naming conventions (ErrNotFound, PathError)

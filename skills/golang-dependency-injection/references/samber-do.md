@@ -1,10 +1,10 @@
 # samber/do — Generics-Based DI
 
-> **For the full samber/do API, patterns, and advanced features, see the `samber/cc-skills-golang@golang-samber-do` skill.**
-
 Type-safe dependency injection using Go generics. No reflection, no code generation, simple API.
 
 - Docs: [do.samber.dev](https://do.samber.dev) | [github.com/samber/do/v2](https://github.com/samber/do)
+
+Before writing `samber/do` code, refer to the library's official documentation for up-to-date API signatures and examples.
 
 ## Core Pattern
 
@@ -33,4 +33,4 @@ injector.ShutdownOnSignalsWithContext(ctx, os.Interrupt)
 - **Simple API** — `Provide`, `Invoke`, `Shutdown` — that's most of what you need
 - **Package system** — organize services by domain without manual wiring order
 
-→ See `samber/cc-skills-golang@golang-samber-do` for full application setup, package organization, lifecycle management, debugging, testing with clone + override, and complete API reference.
+For full application setup, package organization (`do.Package`), lifecycle management (`Healthchecker`/`Shutdowner`), debugging (`ExplainInjector`), and testing with `Clone` + `Override`, see the official [`samber/do` documentation](https://do.samber.dev) or query `github.com/samber/do/v2` via the `samber/cc-skills-golang@golang-pkg-go-dev` skill.

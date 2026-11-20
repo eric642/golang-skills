@@ -31,9 +31,9 @@ For non-Golang skills, please visit [cc-skills](https://github.com/samber/cc-ski
 **Install with [skills](https://skills.sh/) CLI** (universal, works with any [Agent Skills](https://agentskills.io)-compatible tool):
 
 ```bash
-npx skills add https://github.com/samber/cc-skills-golang --all
+npx skills add https://github.com/eric642/cc-skills-golang --all
 # or a single skill:
-npx skills add https://github.com/samber/cc-skills-golang --skill golang-performance
+npx skills add https://github.com/eric642/cc-skills-golang --skill golang-performance
 ```
 
 <!-- prettier-ignore-start -->
@@ -42,8 +42,9 @@ npx skills add https://github.com/samber/cc-skills-golang --skill golang-perform
 <summary>Claude Code</summary>
 
 ```bash
-/plugin marketplace add samber/cc
-/plugin install cc-skills-golang@samber
+npx skills add https://github.com/eric642/cc-skills-golang -a claude-code --all
+# or clone into the discovery directory:
+git clone https://github.com/eric642/cc-skills-golang.git ~/.claude/skills/cc-skills-golang
 ```
 
 </details>
@@ -54,9 +55,9 @@ npx skills add https://github.com/samber/cc-skills-golang --skill golang-perform
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/samber/cc-skills-golang.git ~/.openclaw/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.openclaw/skills/cc-skills-golang
 # or in workspace:
-git clone https://github.com/samber/cc-skills-golang.git ~/.openclaw/workspace/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.openclaw/workspace/skills/cc-skills-golang
 ```
 
 </details>
@@ -65,7 +66,7 @@ git clone https://github.com/samber/cc-skills-golang.git ~/.openclaw/workspace/s
 <summary>Gemini CLI</summary>
 
 ```bash
-gemini extensions install https://github.com/samber/cc-skills-golang
+gemini extensions install https://github.com/eric642/cc-skills-golang
 ```
 
 Update with `gemini extensions update cc-skills-golang`.
@@ -78,7 +79,7 @@ Update with `gemini extensions update cc-skills-golang`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/samber/cc-skills-golang.git  ~/.cursor/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.cursor/skills/cc-skills-golang
 ```
 
 Cursor auto-discovers skills from `.agents/skills/` and `.cursor/skills/`.
@@ -91,9 +92,9 @@ Cursor auto-discovers skills from `.agents/skills/` and `.cursor/skills/`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-/plugin install https://github.com/samber/cc-skills-golang
+/plugin install https://github.com/eric642/cc-skills-golang
 # or
-git clone https://github.com/samber/cc-skills-golang.git ~/.copilot/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.copilot/skills/cc-skills-golang
 ```
 
 Copilot auto-discovers skills from `.copilot/skills/`.
@@ -106,7 +107,7 @@ Copilot auto-discovers skills from `.copilot/skills/`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/samber/cc-skills-golang.git ~/.agents/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.agents/skills/cc-skills-golang
 ```
 
 OpenCode auto-discovers skills from `.agents/skills/`, `.opencode/skills/`, and `.claude/skills/`.
@@ -119,13 +120,13 @@ OpenCode auto-discovers skills from `.agents/skills/`, `.opencode/skills/`, and 
 Install the plugin via the Codex CLI:
 
 ```bash
-codex plugin add github:samber/cc-skills
+codex plugin add github:eric642/cc-skills-golang
 ```
 
-Update with `codex plugin update cc-skills`. Falls back to a manual clone if the marketplace path is unavailable:
+Update with `codex plugin update cc-skills-golang`. Falls back to a manual clone if the marketplace path is unavailable:
 
 ```bash
-git clone https://github.com/samber/cc-skills.git ~/.agents/skills/cc-skills
+git clone https://github.com/eric642/cc-skills-golang.git ~/.agents/skills/cc-skills-golang
 ```
 
 Codex auto-discovers skills from `~/.agents/skills/` and `.agents/skills/`.
@@ -138,7 +139,7 @@ Codex auto-discovers skills from `~/.agents/skills/` and `.agents/skills/`.
 Clone and symlink into the cross-client discovery path:
 
 ```bash
-git clone https://github.com/samber/cc-skills-golang.git ~/.antigravity/skills/cc-skills-golang
+git clone https://github.com/eric642/cc-skills-golang.git ~/.antigravity/skills/cc-skills-golang
 ```
 
 Update with `cd ~/.antigravity/skills/cc-skills-golang && git pull`.
@@ -149,7 +150,7 @@ Update with `cd ~/.antigravity/skills/cc-skills-golang && git pull`.
 
 ## 🧩 Skills
 
-These skills are designed as **atomic, cross-referencing units**. A skill may reference conventions defined in another (e.g. error-handling rules that affect logging live in `golang-error-handling`, not `golang-observability`). Installing only a subset will give you a partial and potentially inconsistent view of the guidelines. For best results, install all general-purpose skills together.
+These skills are designed as **atomic, cross-referencing units**. A skill may reference conventions defined in another (e.g. error-handling rules that affect logging live in `golang-error-handling`, not `golang-observability`). Installing only a subset will give you a partial and potentially inconsistent view of the guidelines. For best results, install all skills together.
 
 ```
                          ┌────────────────────────────────────────┐
@@ -170,21 +171,6 @@ These skills are designed as **atomic, cross-referencing units**. A skill may re
 │ lint         │ │ modernize    │ │                 │ │ gopls                │
 │ security     │ │ refactoring  │ │                 │ │ pkg-go-dev           │
 └──────────────┘ └──────────────┘ └─────────────────┘ └──────────────────────┘
-
-    ┌─────────────────────────────────────────────────────────────────────────┐
-    │                      Framework / Library Skills                         │
-    ├──────────────┬────────────────┬──────────────┬─────────────┬───────────┤
-    │   APIs       │      DI        │  Frameworks  │  samber/*   │  Testing  │
-    ├──────────────┼────────────────┼──────────────┼─────────────┼───────────┤
-    │ grpc         │ google-wire    │ spf13-cobra  │ samber-lo   │ stretchr- │
-    │ graphql      │ uber-dig       │ spf13-viper  │ samber-mo   │  testify  │
-    │ swagger      │ uber-fx        │              │ samber-ro   │           │
-    │              │                │              │ samber-do   │           │
-    │              │                │              │ samber-hot  │           │
-    │              │                │              │ samber-slog │           │
-    │              │                │              │ samber-oops │           │
-    └──────────────┴────────────────┴──────────────┴─────────────┴───────────┘
-
 ```
 
 - ⭐️ Recommended
@@ -198,8 +184,6 @@ These skills are designed as **atomic, cross-referencing units**. A skill may re
 - **Description (tok)**: weight of the `description` field from YAML frontmatter, always loaded into Claude's context for skill triggering
 - **SKILL.md (tok)**: weight of the full `SKILL.md` file loaded when the skill triggers
 - **Directory (tok)**: weight of all files in the skill directory (SKILL.md + referenced markdown files)
-
-**General purpose:**
 
 <!-- markdownlint-disable table-column-style -->
 
@@ -224,7 +208,7 @@ These skills are designed as **atomic, cross-referencing units**. A skill may re
 |  | ✅ `golang-concurrency` | ⚡ 🤖 ⚙️ | -39% | 72 | 2,196 | 6,826 |
 |  | ✅ `golang-context` | ⚡ ⚙️ | -34% | 82 | 1,211 | 4,021 |
 |  | ✅ `golang-continuous-integration` | ⚡ | -59% | 177 | 3,542 | 12,804 |
-|  | ✅ `golang-dependency-injection` | ⚡ 🤖 ⚙️ | -47% | 178 | 3,016 | 5,287 |
+|  | ✅ `golang-dependency-injection` | ⚡ 🤖 ⚙️ | -49% | 178 | 3,016 | 5,287 |
 |  | ✅ `golang-dependency-management` | ⚡ | -54% | 77 | 2,407 | 5,545 |
 |  | ✅ `golang-structs-interfaces` | ⚡ ⚙️ | -35% | 111 | 3,076 | 3,076 |
 |  | ✅ `golang-lint` | ⚡ 🤖 | -41% | 98 | 1,877 | 6,295 |
@@ -236,33 +220,11 @@ These skills are designed as **atomic, cross-referencing units**. A skill may re
 |  | ✅ `golang-project-layout` | ⚡ | -38% | 105 | 1,761 | 6,257 |
 |  | ✅ `golang-stay-updated` | ⚡ | -56% | 44 | 1,802 | 1,802 |
 
-**Tools:**
-
-| Skill | Flags | Error rate gap | Description (tok) | SKILL.md (tok) | Directory (tok) |
-| --- | --- | --- | --- | --- | --- |
-| ✅ `golang-google-wire` | ⚡ | -16% | 122 | 2,670 | 7,400 |
-| ✅ `golang-graphql` |  | -16% | 76 | 3,070 | 7,941 |
-| ✅ `golang-grpc` | ⚡ | -41% | 70 | 2,341 | 5,157 |
-| ✅ `golang-spf13-cobra` | ⚡ | — | 176 | 2,580 | 7,351 |
-| ✅ `golang-spf13-viper` | ⚡ | — | 170 | 2,551 | 7,098 |
-| ✅ `golang-swagger` | ⚡ | — | 144 | 2,342 | 3,347 |
-| ✅ `golang-uber-dig` | ⚡ | -10% | 107 | 2,585 | 6,257 |
-| ✅ `golang-uber-fx` | ⚡ | -5% | 118 | 2,825 | 7,060 |
-| ✅ `golang-samber-do` | ⚡ | -81% | 71 | 2,145 | 3,660 |
-| ✅ `golang-samber-hot` | ⚡ | -54% | 119 | 1,986 | 7,416 |
-| ✅ `golang-samber-lo` | ⚡ | -40% | 166 | 2,610 | 10,288 |
-| ✅ `golang-samber-mo` | ⚡ 🧠 | -48% | 82 | 2,967 | 11,382 |
-| ✅ `golang-samber-oops` | ⚡ | -59% | 70 | 2,544 | 2,856 |
-| ✅ `golang-samber-ro` | ⚡ 🧠 | -50% | 153 | 2,976 | 11,192 |
-| ✅ `golang-samber-slog` | ⚡ | -19% | 119 | 3,120 | 9,842 |
-| ❌ `golang-temporal` |  | — | 0 | 0 | 0 |
-| ✅ `golang-stretchr-testify` | ⚡ | -47% | 92 | 1,858 | 2,677 |
-
 ## 🧪 Skill evaluations
 
 |             | With Skill          | Without Skill       | Delta     |
 | ----------- | ------------------- | ------------------- | --------- |
-| **Overall** | **3348/3439 (97%)** | **1957/3439 (57%)** | **+40pp** |
+| **Overall** | **2481/2538 (98%)** | **1426/2538 (56%)** | **+42pp** |
 
 See [EVALUATIONS.md](./EVALUATIONS.md) for the full per-skill breakdown.
 
@@ -322,7 +284,7 @@ Go database access patterns. Parameter binding, connection pooling, transactions
 
 #### `golang-dependency-injection`
 
-Dependency injection patterns in Go. Constructor injection, interface-based DI, wire/dig/fx comparison, and when DI is worth the complexity. Overridable.
+Dependency injection patterns in Go. Constructor injection, interface-based DI, dig/fx/samber-do comparison, and when DI is worth the complexity. Overridable.
 
 #### `golang-design-patterns`
 
@@ -392,80 +354,6 @@ Go project structure and workspace setup. cmd/internal/pkg conventions, monorepo
 
 Resources to stay current with Go. Official channels, community hubs, key people to follow, and learning resources.
 
-### APIs
-
-#### `golang-graphql`
-
-GraphQL API development in Go using gqlgen/graphql-go. Schema definition, resolvers, subscriptions, dataloader, and federation.
-
-#### `golang-grpc`
-
-gRPC in Go. Protobuf organization, service definitions, streaming, interceptors, error codes, and code generation workflow.
-
-#### `golang-swagger`
-
-OpenAPI/Swagger docs with swaggo/swag. Annotation comments, code generation, framework integrations (gin, echo, fiber, chi), security definitions.
-
-### Dependency Injection
-
-#### `golang-google-wire`
-
-Compile-time dependency injection with google/wire. Provider sets, injector generation, wire.Build, and structured DI patterns.
-
-#### `golang-uber-dig`
-
-Reflection-based DI with uber-go/dig. Provide/Invoke, dig.In/dig.Out, named values, value groups, optional dependencies, and Decorate.
-
-#### `golang-uber-fx`
-
-Application framework with uber-go/fx. fx.New, fx.Provide/Invoke, fx.Module, lifecycle hooks, fx.Annotate, fx.Decorate, signal-aware Run.
-
-### Frameworks
-
-#### `golang-spf13-cobra`
-
-CLI command trees with spf13/cobra. Command hierarchy, RunE hooks, flag management, shell completion, usage templates, and testing with SetArgs.
-
-#### `golang-spf13-viper`
-
-Layered configuration with spf13/viper. Flag > env > file > KV > default precedence, BindPFlag, hot reload, test isolation, and remote KV integration.
-
-### samber/\*
-
-#### `golang-samber-do`
-
-Dependency injection with samber/do. Type-safe service containers, lifecycle management, scopes, health checks, and graceful shutdown.
-
-#### `golang-samber-hot`
-
-In-memory caching with samber/hot. 9 eviction algorithms (LRU, LFU, TinyLFU, W-TinyLFU, S3FIFO, ARC, SIEVE...), TTL, loaders, sharding, stale-while-revalidate, Prometheus metrics.
-
-#### `golang-samber-lo`
-
-Functional programming helpers with samber/lo. 500+ type-safe generic functions for slices, maps, channels, strings. Immutable (lo), parallel (lop), mutable (lom), iterators (loi), SIMD.
-
-#### `golang-samber-mo`
-
-Monadic types with samber/mo. Option, Result, Either, Future, IO, Task, State for type-safe nullable values, error handling, and functional composition.
-
-#### `golang-samber-oops`
-
-Structured error handling with samber/oops. Error builders, stack traces, error codes, context attributes, public vs developer messages, panic recovery, and APM integration.
-
-#### `golang-samber-ro`
-
-Reactive streams with samber/ro. 150+ type-safe operators, cold/hot observables, 5 subject types, 40+ plugins, automatic backpressure, and Go context integration.
-
-#### `golang-samber-slog`
-
-Structured logging pipeline with samber/slog-\*\*\*\* packages. Multi-handler routing (slog-multi), sampling, formatting, HTTP middleware, and 20+ backend sinks.
-
-### Testing
-
-#### `golang-stretchr-testify`
-
-Testing with stretchr/testify. assert, require, mock, and suite packages. Assertions, mock expectations, argument matchers, suite lifecycle, and custom matchers.
-
 ## 🕵 Use in CI for AI-driven reviews
 
 Add AI agents as PR reviewers alongside traditional static analysis. When configured with this skill plugin, the agent applies the relevant Go skills per review area — catching architectural drift, logic bugs, and concurrency hazards that linters cannot detect.
@@ -474,7 +362,7 @@ See [GOLANG-AI-DRIVEN-REVIEW.md](./GOLANG-AI-DRIVEN-REVIEW.md) for full setup in
 
 ## 🎯 Tuning Skill Triggers
 
-If a skill triggers too often or not often enough, please [open an issue](https://github.com/samber/cc-skills-golang/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Some `SKILL.md` files might have a `When to use` section which is another level of exclusion. Finally, `SKILL.md` files are an entrypoint for lazy loading references with deep knowledge located in `references/`.
+If a skill triggers too often or not often enough, please [open an issue](https://github.com/eric642/cc-skills-golang/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Some `SKILL.md` files might have a `When to use` section which is another level of exclusion. Finally, `SKILL.md` files are an entrypoint for lazy loading references with deep knowledge located in `references/`.
 
 ## 🔄 Overlap
 

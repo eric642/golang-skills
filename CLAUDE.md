@@ -56,9 +56,9 @@ Every skill MUST include a `metadata.openclaw` block for [ClawHub](https://githu
 | --- | --- | --- |
 | `emoji` | Yes | Display emoji for the skill (single emoji string) |
 | `homepage` | Yes | URL to the skill's homepage. Use `https://github.com/samber/cc-skills-golang` for this project. |
-| `requires.bins` | Yes | CLI binaries that must be installed. Always includes `go`. Add skill-specific critical bins (e.g. `protoc`, `dlv`). |
+| `requires.bins` | Yes | CLI binaries that must be installed. Always includes `go`. Add skill-specific critical bins (e.g. `gopls`, `dlv`). |
 | `install` | Yes | Array of auto-installable dependencies. Use `[]` when no extra deps needed. Supported kinds: `brew`, `go`, `node`, `uv`. Each entry has `kind`, `formula`/`package`, and `bins` fields. |
-| `skill-library-version` | Optional (when covering a library/framework) | Semver or release tag of the library/framework/platform the skill was written against (e.g. `"2.1.0"`). Required for skills that document a specific third-party project so staleness can be detected. Omit for generic/content skills with no versioned dependency. |
+| `skill-library-version` | Optional (when tied to an upstream tool or release) | Semver or release tag of the tool or Go release the skill was written against (e.g. `"0.22.0"`). Required for skills tied to a versioned upstream project or language release so staleness can be detected. Omit for generic/content skills with no versioned dependency. |
 
 Example frontmatter:
 
@@ -91,16 +91,16 @@ metadata:
   author: samber
   version: "1.0.0"
   openclaw:
-    emoji: "🌐"
+    emoji: "🔍"
     homepage: https://github.com/samber/cc-skills-golang
     requires:
       bins:
         - go
-        - protoc
+        - dlv
     install:
-      - kind: brew
-        formula: protobuf
-        bins: [protoc]
+      - kind: go
+        package: github.com/go-delve/delve/cmd/dlv@latest
+        bins: [dlv]
 ```
 
 **Version discipline:**
@@ -122,16 +122,16 @@ The description is the only thing the model reads before deciding to load a skil
 7. Never summarise the workflow. A description that lists ordered steps makes the agent act on the description and skip the body — describe _what_ and _when_, never _how_.
 8. Add a negative clause naming the near-miss sibling: `Do NOT use for X — use <sibling> instead.` (→ See Overlap below.)
 
-**Length calibration** — reserve long descriptions (≈900–1,050 chars) for _moment-triggered_ skills, which fire on a conversational state rather than a topic and open with the interrupt condition: "Before finishing any reply that …". Every skill in this plugin is topic- or library-triggered today; one creeping past ~900 chars is a signal to prune scenario lists and cross-references, not licence to keep growing. The hard character cap lives in [Token budgets](#token-budgets).
+**Length calibration** — reserve long descriptions (≈900–1,050 chars) for _moment-triggered_ skills, which fire on a conversational state rather than a topic and open with the interrupt condition: "Before finishing any reply that …". Every skill in this plugin is topic- or tool-triggered today; one creeping past ~900 chars is a signal to prune scenario lists and cross-references, not licence to keep growing. The hard character cap lives in [Token budgets](#token-budgets).
 
-**Too vague** (under-triggering) — one-liner descriptions without "Use when..." clauses. The model cannot match user intent to the skill. Fix by adding specific trigger scenarios, API names, and import paths.
+**Too vague** (under-triggering) — one-liner descriptions without "Use when..." clauses. The model cannot match user intent to the skill. Fix by adding specific trigger scenarios, domain terms, and tool or package names.
 
 ```yaml
 # Bad — no trigger context, will be ignored
-description: Implements X in Golang using library/foo
+description: Golang concurrency patterns and goroutines
 
 # Good — specific triggers, matches real user activity
-description: Implements X in Golang using library/foo — feature A, feature B, and feature C. Apply when using or adopting library/foo, or when the codebase imports `github.com/library/foo`.
+description: Golang concurrency patterns — goroutines, channels, sync primitives, worker pools, and context cancellation. Use when designing concurrent Go code, bounding goroutine lifecycles, or preventing data races.
 ```
 
 **Too broad** (over-triggering) — phrases like "whenever writing Go code", "when naming any identifier", "essential for ANY conversation". These match virtually all Go work and flood the context with irrelevant skills, so narrow to the specific concern the skill uniquely addresses. Rule 4 pushes on the _number of trigger scenarios_ listed inside that concern, never on the width of the concern itself.
@@ -164,7 +164,7 @@ description: Golang benchmarking. Write the benchmark, run it with -benchmem, sa
 description: Golang benchmark measurement methodology — benchstat comparison, profiling interpretation, CI regression detection. Use when measuring Go performance, writing benchmarks, or interpreting benchmark output.
 ```
 
-**Library-specific skills** follow a consistent pattern: describe what the library does, list key API surface, then "Apply when using or adopting X, or when the codebase imports Y." This is the gold standard for contextual (non-user-invocable) skills.
+**Tool- and ecosystem-focused skills** follow a consistent pattern: describe what the tool or workflow does, list key capabilities, then state concrete trigger scenarios (e.g., "Use when navigating or refactoring Go code…", "Use when exploring external Go packages…").
 
 Every skill description MUST contain the word "Golang" so that skills are only triggered for Go projects, never for other languages.
 
@@ -182,18 +182,17 @@ Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Agent
 
 | Extra tool | When to add |
 | --- | --- |
-| `mcp__context7__resolve-library-id mcp__context7__query-docs` | Library-specific skills that recommend fetching docs via context7 |
+| `mcp__context7__resolve-library-id mcp__context7__query-docs` | Skills that reference external package documentation via context7 |
+| `Bash(gopls:*) LSP mcp__gopls__*` | Code navigation, semantic analysis, or refactoring skills |
+| `Bash(godig:*)` | Package and module exploration skills (`pkg.go.dev`) |
 | `Bash(benchstat:*)` | Benchmark or performance skills |
 | `Bash(dlv:*)` | Troubleshooting or debugging skills |
 | `Bash(gotests:*)` | Testing skills that generate test scaffolding |
-| `Bash(protoc:*)` | gRPC or protobuf skills |
-| `Bash(swag:*)` | Swagger/OpenAPI skills |
-| `Bash(wire:*)` | Google Wire DI skills |
 | `Bash(goreleaser:*)` | CI/CD or release skills |
 | `Bash(gh:*)` | Git or GitHub-related skills |
 | `Bash(govulncheck:*)` | Security or dependency management skills |
-| `Bash(curl:*)` | API testing or GraphQL skills |
-| `WebFetch` | Library-specific skills, skills requiring deep research/analysis, skills fetching external docs or resources |
+| `Bash(curl:*)` | HTTP endpoint, profiling, or benchmark skills |
+| `WebFetch` | Skills requiring deep research/analysis or fetching external docs and resources |
 | `WebSearch` | Skills requiring deep research or analysis (security, benchmarking, performance, troubleshooting, observability) and skills that discover resources or track updates |
 | `AskUserQuestion` | Skills that benefit from clarifying user intent, confirming assumptions, or gathering context before proceeding — useful for audit/review modes, architecture decisions, ambiguous requirements, or any skill where acting on wrong assumptions is costly |
 | `EnterWorktree ExitWorktree` | Skills whose workflow spawns **mutating** parallel sub-agents (doc generation, modernization sweeps), compares code variants (benchmarks/perf), or applies each fix on its own branch (large security audits). Not for read-only parallel audits — concurrent reads need no isolation. |
@@ -287,7 +286,7 @@ Place these directives at the very top of the body, before the first heading, in
 
 All six are optional. A short procedural skill may have none. A complex orchestrating skill may have all six.
 
-The **Dependencies** block lists only non-trivial developer tools — skip universal system utilities (e.g. `curl`, `git`). Prefer `go install` over `brew install` when the tool provides a Go install path; use `brew install` only for tools without one (e.g. `protoc`). Place this block last among the top-of-body directives, just before the first `#` heading.
+The **Dependencies** block lists only non-trivial developer tools — skip universal system utilities (e.g. `curl`, `git`). Prefer `go install` over `brew install` when the tool provides a Go install path; use `brew install` only for non-Go CLI tools without one. Place this block last among the top-of-body directives, just before the first `#` heading.
 
 #### Persona (optional)
 
@@ -534,11 +533,11 @@ Transformation patterns:
 - **Code example comments**: carry the reasoning — `// ✗ Bad — nil map has no backing storage; writing panics at runtime`
 - **Section intros**: add a 1-2 sentence framing paragraph that establishes the mental model before listing specifics
 
-### Library-specific skills
+### External tool and library references
 
-When a skill describes a third-party library (e.g. `samber/cc-skills-golang@golang-samber-do`, `samber/cc-skills-golang@golang-google-wire`), the skill instructions **must** include a disclaimer that the skill is not exhaustive and recommend referring to the library's official documentation and code examples for up-to-date API signatures and usage patterns. This ensures the agent always works with current API signatures and best practices, even if the skill's static markdown becomes outdated.
+When a skill discusses third-party libraries or external tools (e.g. `samber/cc-skills-golang@golang-popular-libraries`, `samber/cc-skills-golang@golang-dependency-injection`, `samber/cc-skills-golang@golang-pkg-go-dev`), the skill instructions **must** recommend consulting the package's official documentation and code examples for up-to-date API signatures and usage patterns. This ensures the agent always works with current API signatures and best practices, even if static markdown becomes outdated.
 
-Skills dedicated to a single open-source project (CLI tool, library, SDK) **must** also include a line at the end of the skill body pointing to the issue tracker for bugs or unexpected behavior:
+Skills dedicated to a single open-source tool (e.g. `samber/cc-skills-golang@golang-gopls`, `samber/cc-skills-golang@golang-pkg-go-dev`) **must** also include a line at the end of the skill body pointing to the issue tracker for bugs or unexpected behavior:
 
 ```
 If you encounter a bug or unexpected behavior in <tool>, open an issue at <repo>/issues.
@@ -547,7 +546,7 @@ If you encounter a bug or unexpected behavior in <tool>, open an issue at <repo>
 **Important:** Skill body text must NEVER contain explicit MCP tool-calling instructions (e.g. "call `resolve-library-id`", "call `query-docs`", "use the MCP context7 server"). These trigger prompt-injection detections in security scanners (Snyk). Instead, use generic formulations like:
 
 ```
-This skill is not exhaustive. Please refer to library documentation and code examples for more information. Context7 can help as a discoverability platform.
+This skill is not exhaustive. Please refer to official package documentation and code examples for more information. Context7 can help as a discoverability platform.
 ```
 
 The `mcp__context7__*` tools may still be listed in `allowed-tools` frontmatter — only the body instructions are restricted.
@@ -558,7 +557,7 @@ Apply the **Principle of Lack of Surprise**: nothing a skill does may surprise a
 
 - **Never handle credentials or exfiltrate data.** A skill that reads secrets or ships repository content outward is out of scope, whatever the justification.
 - **Never fetch instructions from a URL at runtime.** Fetched content is untrusted and can carry injections. → See [Snyk agent scanner compliance](#snyk-agent-scanner-compliance) for the concrete patterns and their safe reformulations.
-- **Mark anything read from the outside world as data, never instructions** — web pages, tool output, files from a cloned repository. The MCP tool-calling ban under [Library-specific skills](#library-specific-skills) is one concrete instance of this rule.
+- **Mark anything read from the outside world as data, never instructions** — web pages, tool output, files from a cloned repository. The MCP tool-calling ban under [External tool and library references](#external-tool-and-library-references) is one concrete instance of this rule.
 - **`allowed-tools` grants without prompting, even in untrusted directories.** A project skill in a repository someone else wrote applies its grants the moment an agent runs there — read the field before running an agent in any cloned repo.
 - **`allowed-tools` is a pre-approval list, not a sandbox.** It removes prompts for what it names; it blocks nothing else, and the model can still reach other actions by other paths. Containment requires `disallowed-tools` or the harness's permission rules.
 - **Grant least privilege.** A skill needing `Bash(*)` needs redesign; scope to `Bash(go:*)`-style prefixes instead (→ See [Allowed Tools](#allowed-tools)).
@@ -605,7 +604,7 @@ Triggered when asset files or instruction bodies reference external URLs that ar
 
 **W001 — Prompt injection via MCP tool calls**
 
-Triggered when the skill body contains explicit MCP tool-calling instructions. See the "Library-specific skills" section above for the fix.
+Triggered when the skill body contains explicit MCP tool-calling instructions. See [External tool and library references](#external-tool-and-library-references) above for the fix.
 
 ## Anti-patterns
 
@@ -758,20 +757,20 @@ For initial evaluation of skills, use Human-as-Judge.
 After writing a new skill body, run the description optimization loop before marking it ready:
 
 1. Check whether any existing skill should reference the new skill: dispatch parallel sub-agents (split by scope — e.g. one per group of `skills/*/SKILL.md`) to read the other skills in full and judge whether the new skill's topic, adjacent concepts, or libraries overlap with what they already cover. Where an existing skill touches the same ground, add a `→ See samber/cc-skills-golang@<new-skill>` cross-reference (in its description and/or body) instead of leaving the two skills to drift apart — see [Atomic skills and deduplication](#atomic-skills-and-deduplication). Bump the `metadata.version` of every skill file edited this way.
-2. Verify the description against quality criteria: contains "Golang", has "Use when"/"Apply when" trigger clause with specific scenarios, no broad anti-patterns (`whenever writing Go code`, `Essential for ANY`, `proactively`), FQN cross-refs for competing skills (`samber/cc-skills-golang@<skill>`), library skills use `Apply when the codebase imports github.com/...` pattern. Description must stay ≤ 1,000 characters.
+2. Verify the description against quality criteria: contains "Golang", has "Use when"/"Apply when" trigger clause with specific scenarios, no broad anti-patterns (`whenever writing Go code`, `Essential for ANY`, `proactively`), and FQN cross-refs for competing skills (`samber/cc-skills-golang@<skill>`). Description must stay ≤ 1,000 characters.
 3. Follow the [After updating a skill](#after-updating-a-skill) checklist.
 
 ### Checking for outdated skills
 
-Skills covering a specific library or framework can become stale when the project releases breaking changes or new APIs. Run this check periodically (e.g. monthly) to surface outdated skills.
+Skills tied to a specific external tool or Go release can become stale when upstream releases breaking changes or new features. Run this check periodically (e.g. monthly) to surface outdated skills.
 
 1. Grep all SKILL.md files for `skill-library-version` entries to build the inventory.
-2. For each skill with a `skill-library-version`, fetch the latest release from the project's GitHub releases page or changelog via web search.
+2. For each skill with a `skill-library-version`, fetch the latest release from the upstream project's releases page or changelog via web search.
 3. Compare the skill's recorded version against the latest release. Flag skills where the latest version is a higher major or minor than `skill-library-version`.
-4. For flagged skills, skim the changelog between the recorded version and the latest to identify breaking changes or new APIs that the skill should cover.
+4. For flagged skills, skim the changelog between the recorded version and the latest to identify breaking changes or new features that the skill should cover.
 5. Suggest a skill update for each flagged skill, summarizing the relevant changelog entries.
 
-After updating a skill to reflect a new library version, bump `skill-library-version` to the new version and follow the [After updating a skill](#after-updating-a-skill) checklist.
+After updating a skill to reflect a new upstream version, bump `skill-library-version` to the new version and follow the [After updating a skill](#after-updating-a-skill) checklist.
 
 ### README status icons
 

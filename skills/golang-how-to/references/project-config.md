@@ -108,12 +108,12 @@ golang-troubleshooting
 
 Additional skills to suggest based on codebase context:
 
-- Database layer detected (`sql`, `gorm`, `sqlc`) → suggest `golang-database`
-- CI config detected (`.github/workflows/`) → suggest `golang-continuous-integration`
-- Cobra imports detected → suggest `golang-spf13-cobra`
-- Viper imports detected → suggest `golang-spf13-viper`
-- samber/lo imports detected → suggest `golang-samber-lo`
-- Any other library-specific import → suggest the matching library skill
+- Database layer detected (`database/sql`, `pgx`, `gorm`, `sqlc`) → suggest `golang-database`
+- CI config detected (`.github/workflows/`, `.goreleaser.yaml`) → suggest `golang-continuous-integration`
+- CLI entrypoint or flags/config detected (`cmd/`, `spf13/cobra`, `spf13/viper`, `urfave/cli`) → suggest `golang-cli`
+- DI container or multi-service wiring detected (`uber-go/fx`, `uber-go/dig`, `samber/do`) → suggest `golang-dependency-injection`
+- Concurrent workers, channels, or goroutine pools detected (`errgroup`, `sync`) → suggest `golang-concurrency` and `golang-context`
+- Production telemetry detected (`log/slog`, `prometheus`, `go.opentelemetry.io/otel`) → suggest `golang-observability`
 
 ## Step 4 — Write the block
 

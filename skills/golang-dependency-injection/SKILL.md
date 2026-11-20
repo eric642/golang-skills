@@ -1,6 +1,6 @@
 ---
 name: golang-dependency-injection
-description: "Comprehensive guide for dependency injection (DI) in Golang. Covers why DI matters (testability, loose coupling, separation of concerns, lifecycle management), manual constructor injection, and DI library comparison (google/wire, uber-go/dig, uber-go/fx, samber/do). Use this skill when designing service architecture, setting up dependency injection, refactoring tightly coupled code, managing singletons or service factories, or when the user asks about inversion of control, service containers, or wiring dependencies in Go. For a specific DI library, → See `samber/cc-skills-golang@golang-google-wire`, `samber/cc-skills-golang@golang-uber-dig`, `samber/cc-skills-golang@golang-uber-fx`, or `samber/cc-skills-golang@golang-samber-do` skills."
+description: "Comprehensive guide for dependency injection (DI) in Golang. Covers why DI matters (testability, loose coupling, separation of concerns, lifecycle management), manual constructor injection, and DI library comparison (`go.uber.org/dig`, `go.uber.org/fx`, `github.com/samber/do`). Use this skill when designing service architecture, setting up dependency injection, refactoring tightly coupled code, managing singletons or service factories, or when the user asks about inversion of control, service containers, or wiring dependencies in Go (including codebases importing `go.uber.org/dig`, `go.uber.org/fx`, or `github.com/samber/do`)."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -34,7 +34,7 @@ paths:
 
 Dependency injection (DI) means passing dependencies to a component rather than having it create or find them. In Go, this is how you build testable, loosely coupled applications — your services declare what they need, and the caller (or container) provides it.
 
-This skill is not exhaustive. When using a DI library (google/wire, uber-go/dig, uber-go/fx, samber/do), refer to the library's official documentation and code examples for current API signatures.
+This skill is not exhaustive. When using a DI library (`go.uber.org/dig`, `go.uber.org/fx`, or `github.com/samber/do`), refer to the library's official documentation and code examples (or the `samber/cc-skills-golang@golang-pkg-go-dev` skill) for current API signatures.
 
 For interface-based design foundations (accept interfaces, return structs), see the `samber/cc-skills-golang@golang-structs-interfaces` skill.
 
@@ -113,29 +113,28 @@ Manual DI breaks down when:
 
 ## DI Library Comparison
 
-Go has three main approaches to DI libraries:
+Go has two main actively maintained approaches to DI libraries — runtime reflection (`uber-go/dig` and `uber-go/fx`) and compile-time generics (`samber/do`):
 
-- [google/wire examples](./references/google-wire.md) — Compile-time code generation
-- [uber-go/dig + fx examples](./references/uber-dig-fx.md) — Reflection-based framework
-- [samber/do examples](./references/samber-do.md) — Generics-based, no code generation
+- [uber-go/dig + fx examples](./references/uber-dig-fx.md) — Reflection-based container (`dig`) and application framework (`fx`)
+- [samber/do examples](./references/samber-do.md) — Generics-based container, no reflection or code generation
 
 ### Decision Table
 
-| Criteria | Manual | google/wire | uber-go/dig + fx | samber/do |
+| Criteria | Manual | uber-go/dig | uber-go/fx | samber/do |
 | --- | --- | --- | --- | --- |
 | **Project size** | Small (< 10 services) | Medium-Large | Large | Any size |
-| **Type safety** | Compile-time | Compile-time (codegen) | Runtime (reflection) | Compile-time (generics) |
-| **Code generation** | None | Required (`wire_gen.go`) | None | None |
-| **Reflection** | None | None | Yes | None |
-| **API style** | N/A | Provider sets + build tags | Struct tags + decorators | Simple, generic functions |
-| **Lazy loading** | Manual | N/A (all eager) | Built-in (fx) | Built-in |
+| **Type safety** | Compile-time | Runtime (reflection) | Runtime (reflection) | Compile-time (generics) |
+| **Code generation** | None | None | None | None |
+| **Reflection** | None | Yes | Yes | None |
+| **API style** | Plain constructors | `Provide`/`Invoke` + `dig.In`/`Out` | Modules + annotations + hooks | Generic `Provide`/`Invoke` functions |
+| **Lazy loading** | Manual | On `Invoke` | Providers lazy until invoked | Built-in (on first invoke) |
 | **Singletons** | Manual | Built-in | Built-in | Built-in |
-| **Transient/factory** | Manual | Manual | Built-in | Built-in |
-| **Scopes/modules** | Manual | Provider sets | Module system (fx) | Built-in (hierarchical) |
-| **Health checks** | Manual | Manual | Manual | Built-in interface |
-| **Graceful shutdown** | Manual | Manual | Built-in (fx) | Built-in interface |
+| **Transient/factory** | Manual | Manual (factory funcs) | Manual (factory funcs) | Built-in (`ProvideTransient`) |
+| **Scopes/modules** | Manual | Scopes (`container.Scope`) | Module system (`fx.Module`) | Built-in (hierarchical scopes + packages) |
+| **Health checks** | Manual | Manual | Manual | Built-in (`Healthchecker` interface) |
+| **Graceful shutdown** | Manual (`defer`) | Manual | Built-in (`OnStart`/`OnStop`) | Built-in (`Shutdowner` interface) |
 | **Container cloning** | N/A | N/A | N/A | Built-in |
-| **Debugging** | Print statements | Compile errors | `fx.Visualize()` | `ExplainInjector()`, web interface |
+| **Debugging** | Print statements | `dig.Visualize()` | `fx.Visualize()` | `ExplainInjector()`, web UI |
 | **Go version** | Any | Any | Any | 1.18+ (generics) |
 | **Learning curve** | None | Medium | High | Low |
 
@@ -164,7 +163,7 @@ api.Run()
 defer i.Shutdown() // shutdown and health checks come from the container
 ```
 
-google/wire and uber-go/fx express the same graph differently: wire generates the manual sequence above at build time from a `wire.Build` provider list (cleanup via `func()` returned by providers, no lifecycle hooks), while fx registers providers with `fx.Provide` and resolves them by reflection at runtime with `OnStart`/`OnStop` hooks. Full wiring examples for each: [google/wire](./references/google-wire.md), [uber-go/dig + fx](./references/uber-dig-fx.md), [samber/do](./references/samber-do.md).
+`uber-go/dig` and `uber-go/fx` express the same graph via runtime reflection: `dig` resolves constructors on `container.Invoke` without lifecycle management, while `fx` builds on `dig` with `fx.Provide`, `fx.Module`, and `OnStart`/`OnStop` lifecycle hooks. Full wiring examples for each approach: [manual DI](./references/manual-di.md), [uber-go/dig + fx](./references/uber-dig-fx.md), [samber/do](./references/samber-do.md).
 
 ## Testing with DI
 
@@ -251,14 +250,13 @@ This is particularly useful for integration tests where you want most services t
 
 ## Cross-References
 
-- → See `samber/cc-skills-golang@golang-samber-do` skill for detailed samber/do usage patterns
 - → See `samber/cc-skills-golang@golang-structs-interfaces` skill for interface design and composition
 - → See `samber/cc-skills-golang@golang-testing` skill for testing with dependency injection
 - → See `samber/cc-skills-golang@golang-project-layout` skill for DI initialization placement
+- → See `samber/cc-skills-golang@golang-pkg-go-dev` skill for looking up current `samber/do`, `uber-go/fx`, and `uber-go/dig` package APIs
 
 ## References
 
 - [samber/do/v2 documentation](https://do.samber.dev) | [github.com/samber/do/v2](https://github.com/samber/do)
-- [google/wire user guide](https://github.com/google/wire/blob/main/docs/guide.md)
-- [uber-go/fx documentation](https://uber-go.github.io/fx/)
-- [uber-go/dig](https://github.com/uber-go/dig)
+- [uber-go/fx documentation](https://uber-go.github.io/fx/) | [github.com/uber-go/fx](https://github.com/uber-go/fx)
+- [uber-go/dig documentation](https://pkg.go.dev/go.uber.org/dig) | [github.com/uber-go/dig](https://github.com/uber-go/dig)

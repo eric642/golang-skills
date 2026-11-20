@@ -19,21 +19,21 @@ For each Go task, load the **primary skill** and all applicable **secondary skil
 | Intent | Primary Skill | Also Load |
 | --- | --- | --- |
 | Design an API, choose a pattern | `golang-design-patterns` | `golang-structs-interfaces`, `golang-naming` |
+| Build a REST, gRPC, or GraphQL service (net/http, grpc-go, gqlgen, OpenAPI) | `golang-design-patterns` | `golang-error-handling`, `golang-testing`, `golang-security`, `golang-pkg-go-dev` |
 | Name a type, function, or package | `golang-naming` | `golang-code-style` |
-| Handle errors idiomatically | `golang-error-handling` | `golang-safety` (nil-heavy code) |
+| Handle errors idiomatically or add structured context (errors, samber/oops) | `golang-error-handling` | `golang-safety` (nil-heavy code), `golang-observability` (spans/logs) |
 | Write goroutines, channels, sync | `golang-concurrency` | `golang-context` (if cancellation) |
 | Pass deadlines / cancel operations | `golang-context` | `golang-concurrency` (if goroutines) |
 | Design structs, embed, use interfaces | `golang-structs-interfaces` | `golang-design-patterns` |
+| Choose slices, maps, or collection helpers (stdlib slices/maps, samber/lo) | `golang-data-structures` | `golang-performance`, `golang-safety` |
 | Database queries and transactions | `golang-database` | `golang-error-handling`, `golang-security` |
-| Build a gRPC service | `golang-grpc` | `golang-testing`, `golang-error-handling` |
-| Build a GraphQL API | `golang-graphql` | `golang-testing`, `golang-error-handling` |
-| Build a CLI command tree | `golang-spf13-cobra` | `golang-cli`, `golang-spf13-viper` (if config) |
-| Layer config from flags/env/file | `golang-spf13-viper` | `golang-spf13-cobra` |
-| Write tests | `golang-testing` | `golang-stretchr-testify` (if using testify) |
+| Build a CLI or layer config from flags/env/files (spf13/cobra, spf13/viper) | `golang-cli` | `golang-project-layout`, `golang-error-handling` |
+| Wire services with dependency injection (constructors, uber-go/fx, uber-go/dig, samber/do) | `golang-dependency-injection` | `golang-structs-interfaces`, `golang-design-patterns` |
+| Write unit, integration, or fuzz tests (testing, stretchr/testify) | `golang-testing` | `golang-benchmark` (if benchmarking) |
 | Apply optimization patterns | `golang-performance` | `golang-benchmark` (measure first) |
 | Measure with pprof / benchstat | `golang-benchmark` | `golang-performance` (fix), `golang-troubleshooting` (root cause) |
 | Debug a panic or unexpected behavior | `golang-troubleshooting` | `golang-safety`, `golang-benchmark` (if perf-related) |
-| Monitor in production | `golang-observability` | `golang-performance` (if SLO breach) |
+| Monitor in production or set up structured logging/metrics/traces (log/slog, OTel, Prometheus) | `golang-observability` | `golang-performance` (if SLO breach), `golang-error-handling` |
 | Audit security vulnerabilities | `golang-security` | `golang-safety`, `golang-lint` |
 | Review formatting and style | `golang-code-style` | `golang-naming`, `golang-lint` |
 | Refactor or restructure existing code | `golang-refactoring` | `golang-naming`, `golang-code-style`, `golang-project-layout` |
@@ -41,14 +41,12 @@ For each Go task, load the **primary skill** and all applicable **secondary skil
 | Write godoc / README / CHANGELOG | `golang-documentation` | `golang-naming` |
 | Set up a new project structure | `golang-project-layout` | `golang-design-patterns`, `golang-dependency-injection`, `golang-lint` |
 | Set up CI/CD pipeline | `golang-continuous-integration` | `golang-lint`, `golang-security` |
-| Choose a library | `golang-popular-libraries` | relevant library-specific skill |
+| Choose a third-party library | `golang-popular-libraries` | `golang-pkg-go-dev`, `golang-dependency-management` |
+| Add, upgrade, or audit go.mod dependencies | `golang-dependency-management` | `golang-pkg-go-dev`, `golang-security` |
 | Look up a package's docs, versions, importers, or CVEs | `golang-pkg-go-dev` | `golang-dependency-management` |
 | Navigate, diagnose, or refactor local code | `golang-gopls` | — |
 | Adopt new Go language features | `golang-modernize` | `golang-lint` |
-| Use samber/lo (slice/map helpers) | `golang-samber-lo` | `golang-data-structures`, `golang-performance` |
-| Use samber/oops (structured errors) | `golang-samber-oops` | `golang-error-handling` |
-| Use log/slog | `golang-samber-slog` | `golang-observability`, `golang-error-handling` |
-| Use dependency injection | `golang-dependency-injection` | `golang-google-wire` or `golang-uber-dig` or `golang-uber-fx` or `golang-samber-do` |
+| Track Go ecosystem news, blogs, and releases | `golang-stay-updated` | `golang-pkg-go-dev` |
 
 All skill identifiers above are short forms of `samber/cc-skills-golang@<name>`.
 
@@ -57,11 +55,11 @@ All skill identifiers above are short forms of `samber/cc-skills-golang@<name>`.
 Key clusters and their owners:
 
 - **Performance**: `golang-performance` (optimization) · `golang-benchmark` (measurement) · `golang-troubleshooting` (root cause) · `golang-observability` (always-on production)
-- **DI**: `golang-dependency-injection` (concepts/decision) · `golang-google-wire` (compile-time) · `golang-uber-dig` (runtime reflection) · `golang-uber-fx` (lifecycle) · `golang-samber-do` (type-safe container)
-- **samber/\***: `golang-samber-lo` (finite transforms) · `golang-samber-ro` (reactive streams) · `golang-samber-mo` (monadic types)
-- **Errors**: `golang-error-handling` (idioms) · `golang-samber-oops` (structured errors) · `golang-safety` (prevent panics)
+- **DI & architecture**: `golang-dependency-injection` (constructor wiring vs DI libraries like uber-go/fx, uber-go/dig, samber/do) · `golang-design-patterns` (architectural & API patterns) · `golang-structs-interfaces` (interface & receiver design)
+- **Errors & panics**: `golang-error-handling` (idioms, wrapping, structured error libraries like samber/oops) · `golang-safety` (prevent nil/slice/map panics) · `golang-troubleshooting` (debug crashes)
 - **Style**: `golang-code-style` · `golang-naming` · `golang-lint` · `golang-documentation`
-- **CLI**: `golang-cli` (architecture) · `golang-spf13-cobra` (command tree) · `golang-spf13-viper` (config layering)
+- **CLI vs service setup**: `golang-cli` (CLI architecture, subcommands, flag/env/file config with spf13/cobra & spf13/viper) · `golang-project-layout` (cmd/internal/pkg layout, workspaces)
+- **Testing vs benchmarking**: `golang-testing` (unit/integration/fuzz tests, stretchr/testify, mocking) · `golang-benchmark` (benchstat, profiling, regression gates)
 - **Package lookup**: `golang-pkg-go-dev` (query pkg.go.dev) · `golang-gopls` (navigate local build) · `golang-popular-libraries` (which lib) · `golang-dependency-management` (manage go.mod) · `golang-security` (CVE scan)
 - **Gap — type vs arch**: `golang-structs-interfaces` vs `golang-design-patterns`
 - **Gap — goroutine vs cancel**: `golang-concurrency` + `golang-context` — load both when cancelling goroutines via context
@@ -104,9 +102,4 @@ Key clusters and their owners:
 | Code Quality | `golang-code-style` `golang-documentation` `golang-error-handling` `golang-lint` `golang-naming` `golang-safety` `golang-security` `golang-structs-interfaces` |
 | Architecture & Design | `golang-concurrency` `golang-context` `golang-data-structures` `golang-database` `golang-dependency-injection` `golang-design-patterns` `golang-modernize` `golang-refactoring` |
 | QA & Performance | `golang-benchmark` `golang-observability` `golang-performance` `golang-testing` `golang-troubleshooting` |
-| Project Setup | `golang-cli` `golang-continuous-integration` `golang-dependency-management` `golang-gopls` `golang-pkg-go-dev` `golang-popular-libraries` `golang-project-layout` `golang-stay-updated` |
-| APIs | `golang-graphql` `golang-grpc` `golang-swagger` |
-| Dependency Injection | `golang-dependency-injection` `golang-google-wire` `golang-uber-dig` `golang-uber-fx` `golang-samber-do` |
-| Frameworks | `golang-spf13-cobra` `golang-spf13-viper` |
-| samber/\* | `golang-samber-do` `golang-samber-hot` `golang-samber-lo` `golang-samber-mo` `golang-samber-oops` `golang-samber-ro` `golang-samber-slog` |
-| Testing | `golang-stretchr-testify` `golang-testing` |
+| Project Setup | `golang-cli` `golang-continuous-integration` `golang-dependency-management` `golang-gopls` `golang-how-to` `golang-pkg-go-dev` `golang-popular-libraries` `golang-project-layout` `golang-stay-updated` |

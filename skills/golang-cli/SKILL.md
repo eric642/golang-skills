@@ -1,6 +1,6 @@
 ---
 name: golang-cli
-description: "Golang CLI application development. Use when building, modifying, or reviewing a Go CLI tool — especially for command structure, flag handling, configuration layering, version embedding, exit codes, I/O patterns, signal handling, shell completion, argument validation, and CLI unit testing. Also triggers when code uses cobra, viper, or urfave/cli. For cobra-specific APIs → See `samber/cc-skills-golang@golang-spf13-cobra` skill; for viper configuration layering → See `samber/cc-skills-golang@golang-spf13-viper` skill."
+description: "Golang CLI application development. Use when building, modifying, or reviewing a Go CLI tool — especially for command structure, flag handling, configuration layering, version embedding, exit codes, I/O patterns, signal handling, shell completion, argument validation, and CLI unit testing. Also triggers when code imports `github.com/spf13/cobra`, `github.com/spf13/viper`, or `github.com/urfave/cli`. For up-to-date Cobra or Viper API signatures, see `samber/cc-skills-golang@golang-pkg-go-dev`."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -31,7 +31,7 @@ paths:
 
 Use Cobra + Viper as the default stack for Go CLI applications. Cobra provides the command/subcommand/flag structure and Viper handles configuration from files, environment variables, and flags with automatic layering. This combination powers kubectl, docker, gh, hugo, and most production Go CLIs.
 
-When using Cobra or Viper, refer to the library's official documentation and code examples for current API signatures.
+When using `github.com/spf13/cobra` or `github.com/spf13/viper`, refer to each library's official documentation and code examples for current API signatures (or see the `samber/cc-skills-golang@golang-pkg-go-dev` skill for `pkg.go.dev` symbol lookup).
 
 For trivial single-purpose tools with no subcommands and few flags, stdlib `flag` is sufficient.
 

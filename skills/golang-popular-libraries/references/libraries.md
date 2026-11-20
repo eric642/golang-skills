@@ -210,8 +210,6 @@
 
 **do** (<https://github.com/samber/do>) Dependency injection library for Go. Simple, runtime DI with service locator pattern and health checks.
 
-**Wire** (<https://github.com/google/wire>) Code-generated dependency injection for Go. Compile-time dependency injection without reflection.
-
 **Dig** (<https://github.com/uber-go/dig>) Dependency injection container for Go. Runtime DI with lifecycle management.
 
 **Fx** (<https://github.com/uber-go/fx>) Application framework for Go. Built on Dig, provides lifecycle management, dependency injection, and observability.

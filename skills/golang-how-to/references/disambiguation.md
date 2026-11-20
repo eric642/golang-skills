@@ -1,24 +1,23 @@
 # Competing clusters — deep disambiguation
 
-Thirteen clusters where skills overlap. Each cluster includes a boundary table, concrete routing examples, and notes on gap cases not yet explicit in source skill descriptions.
+Twelve clusters where skills overlap. Each cluster includes a boundary table, concrete routing examples, and notes on gap cases not yet explicit in source skill descriptions.
 
 ---
 
 ## Table of Contents
 
 - [1. Performance cluster](#1-performance-cluster)
-- [2. Dependency injection cluster](#2-dependency-injection-cluster)
-- [3. samber/\* functional cluster](#3-samber-functional-cluster)
-- [4. Error handling cluster](#4-error-handling-cluster)
-- [5. Style / naming / lint / docs cluster](#5-style--naming--lint--docs-cluster)
-- [6. CLI cluster](#6-cli-cluster)
-- [7. Testing cluster](#7-testing-cluster)
-- [8. design-patterns vs structs-interfaces](#8-design-patterns-vs-structs-interfaces)
-- [9. concurrency vs context](#9-concurrency-vs-context)
-- [10. safety vs security](#10-safety-vs-security)
-- [11. modernize vs lint](#11-modernize-vs-lint)
-- [12. Package lookup / discovery cluster](#12-package-lookup--discovery-cluster)
-- [13. golang-refactoring vs. the target-state rule skills](#13-golang-refactoring-vs-the-target-state-rule-skills)
+- [2. Dependency injection & wiring cluster](#2-dependency-injection--wiring-cluster)
+- [3. Error handling & logging cluster](#3-error-handling--logging-cluster)
+- [4. Style / naming / lint / docs cluster](#4-style--naming--lint--docs-cluster)
+- [5. CLI & configuration cluster](#5-cli--configuration-cluster)
+- [6. Testing & benchmarking cluster](#6-testing--benchmarking-cluster)
+- [7. design-patterns vs structs-interfaces](#7-design-patterns-vs-structs-interfaces)
+- [8. concurrency vs context](#8-concurrency-vs-context)
+- [9. safety vs security](#9-safety-vs-security)
+- [10. modernize vs lint](#10-modernize-vs-lint)
+- [11. Package lookup / discovery cluster](#11-package-lookup--discovery-cluster)
+- [12. golang-refactoring vs. the target-state rule skills](#12-golang-refactoring-vs-the-target-state-rule-skills)
 
 ## 1. Performance cluster
 
@@ -40,65 +39,45 @@ Four skills form a "deep analysis" cluster. `golang-observability` is the always
 
 ---
 
-## 2. Dependency injection cluster
+## 2. Dependency injection & wiring cluster
 
-Start with `golang-dependency-injection` for library selection. Then use the library-specific skill once the choice is made.
-
-| Skill | Unique territory |
-| --- | --- |
-| `samber/cc-skills-golang@golang-dependency-injection` | Concepts (why DI, manual injection), constructor patterns, library comparison table |
-| `samber/cc-skills-golang@golang-google-wire` | Compile-time codegen: `wire.Build`, `wire.NewSet`, `wire.Bind`, `ProviderSet` |
-| `samber/cc-skills-golang@golang-uber-dig` | Runtime reflection: `dig.Provide`, `dig.In`/`dig.Out`, value groups, `Decorate` |
-| `samber/cc-skills-golang@golang-uber-fx` | Full application framework on top of dig: `fx.New`, `fx.Module`, lifecycle hooks, `fx.Annotate` |
-| `samber/cc-skills-golang@golang-samber-do` | Type-safe container, `do.Provide`, scopes, health checks, graceful shutdown |
-
-**Routing examples:**
-
-- "Should I use DI in my project?" → `golang-dependency-injection`.
-- "My project uses google/wire, `wire.Build` is failing" → `golang-google-wire`.
-- "I want lifecycle hooks with my DI container" → `golang-uber-fx` (not `golang-uber-dig` — dig is lower-level).
-- "I want type-safe DI without code generation" → `golang-samber-do` or `golang-uber-dig`.
-
----
-
-## 3. samber/\* functional cluster
-
-The three core skills cover three distinct programming models. They rarely compete in the same task.
-
-| Skill | Unique territory | Does NOT own |
-| --- | --- | --- |
-| `samber/cc-skills-golang@golang-samber-lo` | Finite collections: `lo.Map`, `lo.Filter`, `lo.Reduce`, `lo.Uniq`, `lo.GroupBy` — 500+ helpers | Infinite streams, event-driven pipelines |
-| `samber/cc-skills-golang@golang-samber-ro` | Infinite/event-driven: observables, subjects, operators like `Map`/`Filter`/`Throttle`, backpressure | Finite slice transforms |
-| `samber/cc-skills-golang@golang-samber-mo` | Monadic types: `mo.Option[T]`, `mo.Result[T]`, `mo.Either[L,R]`, `mo.Future[T]` | Slice helpers, reactive streams |
-
-**Routing examples:**
-
-- "Transform a slice of users into a map by ID" → `golang-samber-lo` (`lo.KeyBy`).
-- "Stream events from a channel with backpressure and rate limiting" → `golang-samber-ro`.
-- "Return an optional value without using nil" → `golang-samber-mo` (`mo.Some`/`mo.None`).
-- "Compose error-returning functions without if-err chains" → `golang-samber-mo` (`mo.Result[T]`).
-
-> Note: `golang-samber-mo` is currently absent from the mutual cross-reference between `lo` and `ro` in their descriptions. The boundary above reflects the intended design.
-
----
-
-## 4. Error handling cluster
+`golang-dependency-injection` owns DI concepts, manual constructor injection, and container comparison/wiring (`go.uber.org/dig`, `go.uber.org/fx`, `github.com/samber/do`). Surrounding skills own type boundaries, options/lifecycle idioms, and package placement.
 
 | Skill | Unique territory |
 | --- | --- |
-| `samber/cc-skills-golang@golang-error-handling` | Idiomatic error flow: `fmt.Errorf("%w")`, `errors.Is`/`errors.As`, sentinel errors, single-handling rule, `panic`/`recover` |
-| `samber/cc-skills-golang@golang-samber-oops` | `oops.New().Code().User().Hint()` builder, stack traces, APM integration, `oops.Recover` |
-| `samber/cc-skills-golang@golang-safety` | Preventing errors from occurring: nil checks, zero-value design, integer overflow guards, append aliasing |
+| `samber/cc-skills-golang@golang-dependency-injection` | DI concepts, manual constructor wiring, composition root rules, and selecting/using `uber-go/dig`, `uber-go/fx`, or `samber/do` |
+| `samber/cc-skills-golang@golang-structs-interfaces` | Consumer-side interface definitions ("accept interfaces, return structs"), interface segregation |
+| `samber/cc-skills-golang@golang-design-patterns` | Functional options, constructor APIs, graceful shutdown, and clean/hexagonal/DDD architectures |
+| `samber/cc-skills-golang@golang-project-layout` | Where composition roots live (`cmd/<app>/main.go`) vs domain/adapter packages (`internal/`) |
+| `samber/cc-skills-golang@golang-pkg-go-dev` | Current `pkg.go.dev` symbol docs and runnable examples for `go.uber.org/fx`, `go.uber.org/dig`, or `github.com/samber/do/v2` |
+
+**Routing examples:**
+
+- "Should I use manual DI or a container in my project?" → `golang-dependency-injection`.
+- "I want lifecycle hooks (`OnStart`/`OnStop`) with `uber-go/fx` or type-safe generics with `samber/do`" → `golang-dependency-injection` (+ `golang-pkg-go-dev` for current package signatures).
+- "Where should I define the repository interface that my service depends on?" → `golang-structs-interfaces` + `golang-dependency-injection`.
+- "Where does service wiring belong in a multi-binary repo?" → `golang-project-layout` + `golang-dependency-injection`.
+
+---
+
+## 3. Error handling & logging cluster
+
+| Skill | Unique territory |
+| --- | --- |
+| `samber/cc-skills-golang@golang-error-handling` | Idiomatic error flow: `fmt.Errorf("%w")`, `errors.Is`/`errors.As`, sentinel errors, single-handling rule, `panic`/`recover`, structured error context with `github.com/samber/oops` |
+| `samber/cc-skills-golang@golang-observability` | Production `log/slog` pipelines, log levels, multi-sink handlers (e.g. `samber/slog-*`), HTTP logging middleware, metrics, and traces |
+| `samber/cc-skills-golang@golang-safety` | Preventing runtime failures before they occur: nil checks, zero-value design, integer overflow guards, append aliasing |
 
 **Routing examples:**
 
 - "How should I wrap errors so callers can match them?" → `golang-error-handling`.
-- "I want structured errors with HTTP codes and stack traces" → `golang-samber-oops`.
+- "I want structured errors with error codes and stack traces (`github.com/samber/oops`)" → `golang-error-handling` (+ `golang-pkg-go-dev` for full `oops` builder API).
+- "How should I route `log/slog` records to JSON stdout and Sentry?" → `golang-observability`.
 - "My service panics on nil pointer dereference" → `golang-safety` (defensive coding) AND `golang-troubleshooting` (debugging the existing crash).
 
 ---
 
-## 5. Style / naming / lint / docs cluster
+## 4. Style / naming / lint / docs cluster
 
 These four skills each own a distinct slice of "code quality". Source descriptions include explicit mutual disclaimers.
 
@@ -118,39 +97,40 @@ These four skills each own a distinct slice of "code quality". Source descriptio
 
 ---
 
-## 6. CLI cluster
+## 5. CLI & configuration cluster
 
 | Skill | Unique territory |
 | --- | --- |
-| `samber/cc-skills-golang@golang-cli` | Exit codes, signal handling (SIGTERM), stdin/stdout/stderr patterns, progress bars, terminal detection |
-| `samber/cc-skills-golang@golang-spf13-cobra` | `cobra.Command`, `PersistentPreRunE`, `Args` validators, `ValidArgsFunction`, `SetArgs` in tests |
-| `samber/cc-skills-golang@golang-spf13-viper` | `viper.BindPFlag`, `AutomaticEnv`, `ReadInConfig`, `OnConfigChange`, test isolation with `viper.Reset()` |
+| `samber/cc-skills-golang@golang-cli` | CLI architecture, exit codes, signal handling (`SIGTERM`), stdin/stdout/stderr discipline, `github.com/spf13/cobra` command trees, completions, and `github.com/spf13/viper` config layering |
+| `samber/cc-skills-golang@golang-project-layout` | `cmd/<app>/` layout for single- and multi-binary repositories, 12-factor environment conventions |
+| `samber/cc-skills-golang@golang-pkg-go-dev` | Exact `pkg.go.dev` symbol signatures and examples for `spf13/cobra`, `spf13/viper`, or `charmbracelet/bubbletea` |
 
 **Routing examples:**
 
 - "My CLI should exit with code 2 on bad args" → `golang-cli`.
-- "How do I add shell completion to my cobra command?" → `golang-spf13-cobra`.
-- "How do I override config values with env vars?" → `golang-spf13-viper`.
-- "I'm building a new CLI from scratch" → `golang-cli` (architecture) + `golang-spf13-cobra` (command tree) + `golang-spf13-viper` (config).
+- "How do I add shell completion to my Cobra command or override config values with Viper env vars?" → `golang-cli` (+ `golang-pkg-go-dev` if checking specific API signatures).
+- "I'm building a new CLI with both an admin binary and a worker binary" → `golang-cli` + `golang-project-layout`.
 
 ---
 
-## 7. Testing cluster
+## 6. Testing & benchmarking cluster
 
 | Skill | Unique territory |
 | --- | --- |
-| `samber/cc-skills-golang@golang-testing` | Test strategy, table-driven patterns, `t.Parallel()`, `testcontainers`, goleak, coverage, fuzz |
-| `samber/cc-skills-golang@golang-stretchr-testify` | `assert.Equal`, `require.NoError`, `mock.On`, `mock.AssertExpectations`, `testify/suite` lifecycle |
+| `samber/cc-skills-golang@golang-testing` | Test strategy, table-driven patterns, `t.Parallel()`, mocks, `github.com/stretchr/testify` (`assert`/`require`/`mock`/`suite`), `testcontainers`, `goleak`, coverage, fuzzing |
+| `samber/cc-skills-golang@golang-benchmark` | `testing.B`, `b.Loop`, `benchstat` statistical comparison, pprof profile analysis, CI regression detection |
+| `samber/cc-skills-golang@golang-database` | SQL/repository integration tests, transaction rollback fixtures, test database setup |
 
 **Routing examples:**
 
-- "How do I write a table-driven test in Go?" → `golang-testing`.
-- "How do I assert a mock was called with specific args?" → `golang-stretchr-testify`.
-- "How do I detect goroutine leaks in tests?" → `golang-testing` (goleak).
+- "How do I write a table-driven test or assert mock expectations with `stretchr/testify`?" → `golang-testing` (+ `golang-pkg-go-dev` for `testify/mock` signatures).
+- "How do I detect goroutine leaks in tests?" → `golang-testing` (`goleak`).
+- "How do I compare two benchmark runs for statistical significance?" → `golang-benchmark` (`benchstat`).
+- "How do I test my PostgreSQL repository without mocking SQL?" → `golang-database` + `golang-testing`.
 
 ---
 
-## 8. design-patterns vs structs-interfaces
+## 7. design-patterns vs structs-interfaces
 
 These two skills overlap on "how to design Go types". The split is: type-level design vs. architectural use of types.
 
@@ -159,7 +139,7 @@ These two skills overlap on "how to design Go types". The split is: type-level d
 | `samber/cc-skills-golang@golang-structs-interfaces` | Composition over inheritance, embedding, type assertions, struct tag conventions, pointer vs value receivers, interface segregation | How types combine into architectural patterns |
 | `samber/cc-skills-golang@golang-design-patterns` | Functional options, middleware chains, circuit breaker, graceful shutdown, retry patterns | Low-level type mechanics |
 
-**Overlap zone:** "DI via interfaces" — defining small interfaces is `golang-structs-interfaces`; wiring multiple components together via those interfaces is `golang-design-patterns`.
+**Overlap zone:** "DI via interfaces" — defining small interfaces is `golang-structs-interfaces`; wiring multiple components together via those interfaces is `golang-design-patterns` and `golang-dependency-injection`.
 
 **Routing examples:**
 
@@ -172,7 +152,7 @@ These two skills overlap on "how to design Go types". The split is: type-level d
 
 ---
 
-## 9. concurrency vs context
+## 8. concurrency vs context
 
 These skills overlap when goroutines are cancelled via context.
 
@@ -193,7 +173,7 @@ These skills overlap when goroutines are cancelled via context.
 
 ---
 
-## 10. safety vs security
+## 9. safety vs security
 
 Both skills prevent bugs, but with different threat models.
 
@@ -213,7 +193,7 @@ Both skills prevent bugs, but with different threat models.
 
 ---
 
-## 11. modernize vs lint
+## 10. modernize vs lint
 
 Both skills suggest code changes, but for different reasons.
 
@@ -233,7 +213,7 @@ Both skills suggest code changes, but for different reasons.
 
 ---
 
-## 12. Package lookup / discovery cluster
+## 11. Package lookup / discovery cluster
 
 These four skills all touch "third-party packages", but each owns a different stage. `golang-pkg-go-dev` is the read-only lookup layer (query facts about an _existing_ import path on pkg.go.dev); the others decide, manage, or remediate.
 
@@ -267,7 +247,7 @@ See the `samber/cc-skills-golang@golang-gopls` skill for the full gopls referenc
 
 ---
 
-## 13. golang-refactoring vs. the target-state rule skills
+## 12. golang-refactoring vs. the target-state rule skills
 
 `golang-refactoring` owns the _process_ of changing existing Go code safely at scale — planning, blast-radius mapping, ordering staged PRs, tool-driven mechanics (gopls Rename/Inline, `gofmt -r`, `eg`, `gopatch`), and the human-in-the-loop git model. It does not own what the resulting code should look like — that is split across five existing skills, each answering "refactor toward what?"
 

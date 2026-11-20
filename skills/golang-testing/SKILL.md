@@ -1,6 +1,6 @@
 ---
 name: golang-testing
-description: "Production-ready Golang tests — table-driven tests, testify suites and mocks, parallel tests, fuzzing, fixtures, goroutine leak detection with goleak, snapshot testing, code coverage, integration tests, idiomatic test naming. Use when writing or reviewing Go tests, choosing a testing approach, setting up Go test CI, or debugging flaky/slow tests. For testify-specific APIs see `samber/cc-skills-golang@golang-stretchr-testify`; for measurement methodology see `samber/cc-skills-golang@golang-benchmark`."
+description: "Production-ready Golang tests — table-driven tests, testify (`github.com/stretchr/testify` assert, require, mock, suite), parallel tests, fuzzing, fixtures, goroutine leak detection with goleak, snapshot testing, code coverage, integration tests, idiomatic test naming. Use when writing or reviewing Go tests, choosing a testing approach, setting up Go test CI, or debugging flaky/slow tests. Not for benchmark measurement methodology (→ See `samber/cc-skills-golang@golang-benchmark` skill)."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang.
@@ -397,7 +397,7 @@ Many test best practices are enforced automatically by linters: `thelper`, `para
 
 ## Cross-References
 
-- → See `samber/cc-skills-golang@golang-stretchr-testify` skill for detailed testify API (assert, require, mock, suite)
+- For detailed `github.com/stretchr/testify` (`assert`, `require`, `mock`, `suite`) API signatures and examples, refer to its [package documentation](https://pkg.go.dev/github.com/stretchr/testify) (or → See `samber/cc-skills-golang@golang-pkg-go-dev` skill)
 - → See `samber/cc-skills-golang@golang-database` skill (testing.md) for database integration test patterns
 - → See `samber/cc-skills-golang@golang-concurrency` skill for goroutine leak detection with goleak
 - → See `samber/cc-skills-golang@golang-continuous-integration` skill for CI test configuration and GitHub Actions workflows
