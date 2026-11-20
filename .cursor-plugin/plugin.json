@@ -1,16 +1,16 @@
 {
-    "name": "cc-skills-golang",
+    "name": "golang-skills",
     "displayName": "Skills for Golang",
-    "description": "AI Agent Skills for production-ready Go projects",
+    "description": "Production-ready Golang engineering skills for AI coding agents",
     "version": "1.0.0",
     "author": {
         "name": "eric642",
         "email": "wangzhouquan78@gmail.com"
     },
-    "homepage": "https://github.com/eric642/cc-skills-golang",
-    "repository": "https://github.com/eric642/cc-skills-golang",
+    "homepage": "https://github.com/eric642/golang-skills",
+    "repository": "https://github.com/eric642/golang-skills",
     "license": "MIT",
-    "logo": "assets/cc-skills-golang-logo-512.png",
+    "logo": "assets/golang-skills-logo-512.png",
     "keywords": [
         "plugin",
         "go",

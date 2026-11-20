@@ -1,15 +1,15 @@
 {
-    "name": "cc-skills-golang",
-    "description": "AI Agent Skills for production-ready Go projects",
+    "name": "golang-skills",
+    "description": "Production-ready Golang engineering skills for AI coding agents",
     "version": "1.0.0",
     "author": {
         "name": "eric642",
         "email": "wangzhouquan78@gmail.com"
     },
-    "homepage": "https://github.com/eric642/cc-skills-golang",
-    "repository": "https://github.com/eric642/cc-skills-golang",
+    "homepage": "https://github.com/eric642/golang-skills",
+    "repository": "https://github.com/eric642/golang-skills",
     "license": "MIT",
-    "icon": "./assets/cc-skills-golang-logo-512.png",
+    "icon": "./assets/golang-skills-logo-512.png",
     "keywords": [
         "claude-code",
         "claude-code-plugin",

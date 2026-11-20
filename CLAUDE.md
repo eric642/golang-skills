@@ -54,7 +54,7 @@ Every skill MUST include a `metadata.openclaw` block for [ClawHub](https://githu
 | Field | Required | Description |
 | --- | --- | --- |
 | `emoji` | Yes | Display emoji for the skill (single emoji string) |
-| `homepage` | Yes | URL to the skill's homepage. Use `https://github.com/eric642/cc-skills-golang` for this project. |
+| `homepage` | Yes | URL to the skill's homepage. Use `https://github.com/eric642/golang-skills` for this project. |
 | `requires.bins` | Yes | CLI binaries that must be installed. Always includes `go`. Add skill-specific critical bins (e.g. `gopls`, `dlv`). |
 | `install` | Yes | Array of auto-installable dependencies. Use `[]` when no extra deps needed. Supported kinds: `brew`, `go`, `node`, `uv`. Each entry has `kind`, `formula`/`package`, and `bins` fields. |
 | `skill-library-version` | Optional (when tied to an upstream tool or release) | Semver or release tag of the tool or Go release the skill was written against (e.g. `"0.22.0"`). Required for skills tied to a versioned upstream project or language release so staleness can be detected. Omit for generic/content skills with no versioned dependency. |
@@ -73,7 +73,7 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "🔧"
-    homepage: https://github.com/eric642/cc-skills-golang
+    homepage: https://github.com/eric642/golang-skills
     requires:
       bins:
         - go
@@ -91,7 +91,7 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "🔍"
-    homepage: https://github.com/eric642/cc-skills-golang
+    homepage: https://github.com/eric642/golang-skills
     requires:
       bins:
         - go

@@ -24,16 +24,16 @@ For non-Golang skills, please visit [cc-skills](https://github.com/samber/cc-ski
 
 <!-- prettier-ignore-end -->
 
-<img width="1414" height="491" alt="Agent Skills for production-ready Golang projects" src="./assets/cc-skills-golang-banner.png" />
+<img width="1414" height="491" alt="Agent Skills for production-ready Golang projects" src="./assets/golang-skills-banner.png" />
 
 ## 🚀 How to use
 
 **Install with [skills](https://skills.sh/) CLI** (universal, works with any [Agent Skills](https://agentskills.io)-compatible tool):
 
 ```bash
-npx skills add https://github.com/eric642/cc-skills-golang --all
+npx skills add https://github.com/eric642/golang-skills --all
 # or a single skill:
-npx skills add https://github.com/eric642/cc-skills-golang --skill golang-performance
+npx skills add https://github.com/eric642/golang-skills --skill golang-performance
 ```
 
 <!-- prettier-ignore-start -->
@@ -42,9 +42,9 @@ npx skills add https://github.com/eric642/cc-skills-golang --skill golang-perfor
 <summary>Claude Code</summary>
 
 ```bash
-npx skills add https://github.com/eric642/cc-skills-golang -a claude-code --all
+npx skills add https://github.com/eric642/golang-skills -a claude-code --all
 # or clone into the discovery directory:
-git clone https://github.com/eric642/cc-skills-golang.git ~/.claude/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.claude/skills/golang-skills
 ```
 
 </details>
@@ -55,9 +55,9 @@ git clone https://github.com/eric642/cc-skills-golang.git ~/.claude/skills/cc-sk
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/eric642/cc-skills-golang.git ~/.openclaw/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.openclaw/skills/golang-skills
 # or in workspace:
-git clone https://github.com/eric642/cc-skills-golang.git ~/.openclaw/workspace/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.openclaw/workspace/skills/golang-skills
 ```
 
 </details>
@@ -66,10 +66,10 @@ git clone https://github.com/eric642/cc-skills-golang.git ~/.openclaw/workspace/
 <summary>Gemini CLI</summary>
 
 ```bash
-gemini extensions install https://github.com/eric642/cc-skills-golang
+gemini extensions install https://github.com/eric642/golang-skills
 ```
 
-Update with `gemini extensions update cc-skills-golang`.
+Update with `gemini extensions update golang-skills`.
 
 </details>
 
@@ -79,7 +79,7 @@ Update with `gemini extensions update cc-skills-golang`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/eric642/cc-skills-golang.git ~/.cursor/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.cursor/skills/golang-skills
 ```
 
 Cursor auto-discovers skills from `.agents/skills/` and `.cursor/skills/`.
@@ -92,9 +92,9 @@ Cursor auto-discovers skills from `.agents/skills/` and `.cursor/skills/`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-/plugin install https://github.com/eric642/cc-skills-golang
+/plugin install https://github.com/eric642/golang-skills
 # or
-git clone https://github.com/eric642/cc-skills-golang.git ~/.copilot/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.copilot/skills/golang-skills
 ```
 
 Copilot auto-discovers skills from `.copilot/skills/`.
@@ -107,7 +107,7 @@ Copilot auto-discovers skills from `.copilot/skills/`.
 Copy skills into the cross-client discovery directory:
 
 ```bash
-git clone https://github.com/eric642/cc-skills-golang.git ~/.agents/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.agents/skills/golang-skills
 ```
 
 OpenCode auto-discovers skills from `.agents/skills/`, `.opencode/skills/`, and `.claude/skills/`.
@@ -120,13 +120,13 @@ OpenCode auto-discovers skills from `.agents/skills/`, `.opencode/skills/`, and 
 Install the plugin via the Codex CLI:
 
 ```bash
-codex plugin add github:eric642/cc-skills-golang
+codex plugin add github:eric642/golang-skills
 ```
 
-Update with `codex plugin update cc-skills-golang`. Falls back to a manual clone if the marketplace path is unavailable:
+Update with `codex plugin update golang-skills`. Falls back to a manual clone if the marketplace path is unavailable:
 
 ```bash
-git clone https://github.com/eric642/cc-skills-golang.git ~/.agents/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.agents/skills/golang-skills
 ```
 
 Codex auto-discovers skills from `~/.agents/skills/` and `.agents/skills/`.
@@ -139,10 +139,10 @@ Codex auto-discovers skills from `~/.agents/skills/` and `.agents/skills/`.
 Clone and symlink into the cross-client discovery path:
 
 ```bash
-git clone https://github.com/eric642/cc-skills-golang.git ~/.antigravity/skills/cc-skills-golang
+git clone https://github.com/eric642/golang-skills.git ~/.antigravity/skills/golang-skills
 ```
 
-Update with `cd ~/.antigravity/skills/cc-skills-golang && git pull`.
+Update with `cd ~/.antigravity/skills/golang-skills && git pull`.
 
 </details>
 
@@ -272,7 +272,7 @@ See [GOLANG-AI-DRIVEN-REVIEW.md](./GOLANG-AI-DRIVEN-REVIEW.md) for full setup in
 
 ## 🎯 Tuning Skill Triggers
 
-If a skill triggers too often or not often enough, please [open an issue](https://github.com/eric642/cc-skills-golang/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Finally, `SKILL.md` files act as concise entrypoints that lazy-load deep references from `references/` and templates from `assets/` on demand.
+If a skill triggers too often or not often enough, please [open an issue](https://github.com/eric642/golang-skills/issues) suggesting a description change. The `description` field in SKILL.md frontmatter is the primary triggering mechanism — small wording adjustments can significantly improve trigger accuracy. Finally, `SKILL.md` files act as concise entrypoints that lazy-load deep references from `references/` and templates from `assets/` on demand.
 
 ## 🧩 Context Efficiency
 

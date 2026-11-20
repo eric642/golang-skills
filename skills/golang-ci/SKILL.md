@@ -9,7 +9,7 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "🚀"
-    homepage: https://github.com/eric642/cc-skills-golang
+    homepage: https://github.com/eric642/golang-skills
     requires:
       bins:
         - go
@@ -255,7 +255,7 @@ The Claude Code GitHub App integration is configured via the `/install-github-ap
 Copy skills into your repo, then append [copilot-review-instructions.md](./assets/copilot-review-instructions.md) to `.github/copilot-instructions.md`:
 
 ```bash
-npx skills add https://github.com/eric642/cc-skills-golang --agent github-copilot --skill '*' -y --copy
+npx skills add https://github.com/eric642/golang-skills --agent github-copilot --skill '*' -y --copy
 ln -s .agents .copilot
 ```
 

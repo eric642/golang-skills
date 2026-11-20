@@ -9,7 +9,7 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "📦"
-    homepage: https://github.com/eric642/cc-skills-golang
+    homepage: https://github.com/eric642/golang-skills
     requires:
       bins:
         - go
