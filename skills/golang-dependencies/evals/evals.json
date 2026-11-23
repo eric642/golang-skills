@@ -622,6 +622,60 @@
           "text": "Applies the 'standard library first' principle"
         }
       ]
+    },
+    {
+      "id": 23,
+      "name": "godig-uninstalled-module-symbol-doc",
+      "description": "Tests whether the agent uses godig overview, symbol doc <Type.Method>, and symbol examples with -o md to inspect an external Go module's API without modifying go.mod or dumping full package docs",
+      "prompt": "Before deciding whether to adopt github.com/riverqueue/river in our Go service, I want to inspect its module overview and the exact method signature and runnable examples for Client.InsertTx from the terminal — without adding it to go.mod or dumping the entire package documentation. How should I look this up?",
+      "trap": "Without the skill, the model suggests running go doc (which fails for modules absent from go.mod), temporarily running go get, or scraping pkg.go.dev via curl, missing godig's read-only overview, symbol doc <path> <Type.Method> -o md, and symbol examples commands",
+      "assertions": [
+        {
+          "id": "23.1",
+          "text": "Recommends godig to query pkg.go.dev read-only without adding the module to go.mod"
+        },
+        {
+          "id": "23.2",
+          "text": "Uses godig overview github.com/riverqueue/river -o md for the compact module summary"
+        },
+        {
+          "id": "23.3",
+          "text": "Uses godig symbol doc github.com/riverqueue/river Client.InsertTx -o md (Type.Method syntax) instead of full package doc"
+        },
+        {
+          "id": "23.4",
+          "text": "Uses godig symbol examples github.com/riverqueue/river Client.InsertTx -o md for runnable symbol examples"
+        },
+        {
+          "id": "23.5",
+          "text": "Passes -o md for Markdown output"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "name": "godig-server-side-symbol-filtering",
+      "description": "Tests whether the agent uses godig symbols with server-side Go boolean --filter expressions to list specific exported functions without downloading the module",
+      "prompt": "I want to list only the exported top-level functions (excluding types, methods, and constants) in github.com/samber/lo whose names start with 'Group' from the CLI, without downloading the module into my Go workspace. What command should I use?",
+      "trap": "Without the skill, the model tries go doc piped to grep (which fails when the module is not in go.mod) or regex flags, missing godig symbols with server-side Go boolean --filter expressions",
+      "assertions": [
+        {
+          "id": "24.1",
+          "text": "Uses godig symbols github.com/samber/lo without modifying go.mod"
+        },
+        {
+          "id": "24.2",
+          "text": "Uses --filter with a Go boolean expression checking kind==\"Function\" (capitalized)"
+        },
+        {
+          "id": "24.3",
+          "text": "Filters symbol names in the boolean expression using hasPrefix(name,\"Group\") or contains(name,\"Group\") wrapped in single quotes"
+        },
+        {
+          "id": "24.4",
+          "text": "Passes -o md for Markdown output"
+        }
+      ]
     }
   ]
 }

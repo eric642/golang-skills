@@ -1,6 +1,6 @@
 ---
 name: golang-dependencies
-description: "Golang dependency lifecycle — stdlib-first library selection, godig pkg.go.dev lookup, go.mod MVS, replace/tool directives, upgrades, and govulncheck audits. Use when choosing libraries, inspecting published modules, or managing go.mod."
+description: "Golang package docs and dependencies — pkg.go.dev API/symbol lookup (godig), stdlib-first selection, go.mod MVS, directives, upgrades, and govulncheck. Use when querying Go library APIs, docs, or signatures, choosing packages, or managing go.mod."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code, Codex or similar harness, and for projects using Golang. Requires internet access for pkg.go.dev lookups via godig.
@@ -24,10 +24,6 @@ metadata:
         bins: [govulncheck]
     skill-library-version: "0.2.0"
 allowed-tools: Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Bash(godig:*) Bash(govulncheck:*) mcp__godig__* mcp__context7__resolve-library-id mcp__context7__query-docs Bash(gopls:*) LSP mcp__gopls__* Agent AskUserQuestion WebFetch WebSearch
-paths:
-  - "**/go.mod"
-  - "**/go.sum"
-  - "**/go.work"
 ---
 
 **Persona:** You are a Go dependency steward and ecosystem expert. You treat every external package as a long-term maintenance commitment — preferring the standard library first, vetting candidates with objective `pkg.go.dev` data, and keeping `go.mod` minimal, verified, and auditable.
@@ -65,18 +61,19 @@ Full vetted catalog in [libraries.md](references/libraries.md) and developer too
 | Integration testing | `testcontainers-go` | Isolated fresh container per suite; prefer over shared manual `docker-compose up` |
 | Slice/map utilities | `slices` / `maps` stdlib (Go 1.21+) | `samber/lo` only for functional helpers (`Map`, `Filter`, `GroupBy`) absent from stdlib |
 
-## 2. Inspecting Published Modules (`godig` / `pkg.go.dev`)
+## 2. Querying Package Docs & Published Modules (`godig` / `pkg.go.dev`)
 
-`godig` queries the **published Go ecosystem** (`pkg.go.dev` + `vuln.go.dev` OSV) — read-only, no authentication, works for modules not yet in `go.mod`. By contrast, `gopls` reasons about **your locally resolved build** (`go.sum` + `replace` forks), `govulncheck` runs whole-tree reachability audits, and Context7 is a fallback for non-Go or unindexed docs.
+Prefer `godig` over web search or `go doc` when looking up Go package APIs, function signatures, exported symbols, or runnable examples (both third-party modules and stdlib packages on `pkg.go.dev`) — training memory goes stale across releases and `go doc` fails on modules absent from `go.mod`, whereas `godig` returns exact published declarations read-only without authentication. Fall back to web search or Context7 only when `godig` is unavailable or offline. By contrast, `gopls` reasons about **your locally resolved build** (`go.sum` + `replace` forks), and `govulncheck` runs whole-tree reachability audits.
 
 ### Core `godig` Commands (always pass `-o md` for chat output)
 
 | Command | Purpose |
 | --- | --- |
 | `godig overview <path> -o md` | **Start here** — compact summary (metadata, recent versions, licenses, vulns) in one call |
-| `godig search <query> --limit 5 -o md` | Find packages (optional `--symbol` and `--filter`) |
-| `godig symbol doc <path> <Symbol> -o md` | Single symbol signature + doc (token-efficient vs LARGE `package doc`) |
-| `godig symbols <path> --filter 'kind=="Function"' -o md` | List exported symbols filtered server-side with Go boolean expressions |
+| `godig symbol doc <path> <Sym> -o md` | Signature + doc for `<Func>`, `<Type>` (includes struct fields), or `<Type.Method>` (e.g. `Conn.CopyFrom`) |
+| `godig symbol examples <path> <Sym> -o md` | Runnable `pkg.go.dev` examples for `<Func>`, `<Type>`, or `<Type.Method>` |
+| `godig symbols <path> --filter 'kind=="Function"' -o md` | List exported symbols (`kind`: `Function`/`Method`/`Type`/`Variable`/`Constant`, `name`, `parent`) |
+| `godig search <query> --limit 5 -o md` | Find packages across `pkg.go.dev` (optional `--symbol` and `--filter`) |
 | `godig versions <path> -o md` / `major-versions` | All versions (newest first) or separate `/vN` major modules |
 | `godig imported-by <path> --limit 20 -o md` | Popularity & adoption signal before vetting a dependency |
 | `godig dependencies <path> -o md` | Inspect a published module's `go.mod` footprint before adopting it |
